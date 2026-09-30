@@ -13,6 +13,11 @@ Push ke `main` menjalankan `.github/workflows/deploy-cpanel.yml` setelah setup d
 Host FTPS: `yuuka.kawaiihost.net`, port `21`, explicit TLS dengan verifikasi sertifikat.
 Path tujuan FTP `/` adalah root akun khusus tadi, bukan root hosting.
 
+Server FTPS tidak mengirim rantai intermediate lengkap. Workflow melengkapi YR2 dan
+Root YR cross-sign dari [Let's Encrypt](https://letsencrypt.org/certificates/),
+memverifikasinya terhadap CA sistem sebelum digunakan. Verifikasi sertifikat tetap aktif.
+Salinan sertifikat publik berada di `.github/certs/` dan tidak diunggah ke website.
+
 ## Perilaku
 
 Hanya file HTML tingkat atas serta file Git di `assets/` dan `forms/` yang diunggah.

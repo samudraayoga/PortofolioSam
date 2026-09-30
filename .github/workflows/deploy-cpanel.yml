@@ -48,6 +48,13 @@ jobs:
       - name: Install FTPS client
         run: sudo apt-get update && sudo apt-get install -y lftp
 
+      - name: Complete hosting certificate chain
+        run: |
+          openssl verify -CAfile /etc/ssl/certs/ca-certificates.crt \
+            -untrusted .github/certs/letsencrypt-yr-by-x1.pem \
+            .github/certs/letsencrypt-yr2.pem
+          cat /etc/ssl/certs/ca-certificates.crt .github/certs/*.pem > /tmp/cpanel-ca.pem
+
       - name: Upload website over FTPS
         env:
           LFTP_PASSWORD: ${{ secrets.CPANEL_FTP_PASSWORD }}
@@ -58,6 +65,7 @@ jobs:
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
+            set ssl:ca-file /tmp/cpanel-ca.pem;
             set net:max-retries 2;
             set net:timeout 30;
             mirror --reverse --verbose --parallel=2 --no-perms --no-symlinks ./_site/ /;
