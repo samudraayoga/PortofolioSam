@@ -1321,6 +1321,16 @@ section,
   object-position: center;
 }
 
+.raho-project-gallery .swiper-slide {
+  background: #0a0a0a;
+}
+
+.raho-project-gallery .swiper-slide img {
+  width: 100%;
+  height: clamp(280px, 40vw, 480px);
+  object-fit: contain;
+}
+
 .portfolio .portfolio-content .portfolio-info {
   opacity: 0;
   position: absolute;
