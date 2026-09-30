@@ -1,0 +1,65 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cpanel-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.CPANEL_DEPLOY_ENABLED == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Prepare website files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          import subprocess
+
+          target = Path('_site')
+          target.mkdir()
+          files = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          for name in filter(None, files):
+              source = Path(name)
+              if not (source.parts[0] in ('assets', 'forms') or
+                      (len(source.parts) == 1 and source.suffix == '.html')):
+                  continue
+              if any(part.startswith('.') for part in source.parts) or source.is_symlink():
+                  continue
+              destination = target / source
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, destination)
+          assert (target / 'index.html').is_file(), 'Missing index.html'
+          PY
+
+      - name: Install FTPS client
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Upload website over FTPS
+        env:
+          LFTP_PASSWORD: ${{ secrets.CPANEL_FTP_PASSWORD }}
+        run: |
+          test -n "$LFTP_PASSWORD" || { echo 'Missing CPANEL_FTP_PASSWORD secret'; exit 1; }
+          lftp --env-password -u github-deploy@samudrayoga.my.id ftp://yuuka.kawaiihost.net:21 -e '
+            set cmd:fail-exit true;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate true;
+            set net:max-retries 2;
+            set net:timeout 30;
+            mirror --reverse --verbose --parallel=2 --no-perms --no-symlinks ./_site/ /;
+            bye;
+          '
