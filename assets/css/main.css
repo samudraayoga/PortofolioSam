@@ -1313,6 +1313,10 @@ section,
   flex-direction: column;
 }
 
+.index-page .main > #portfolio:first-child {
+  padding-top: 120px;
+}
+
 .portfolio .portfolio-content img {
   transition: 0.3s;
   width: 100%;
