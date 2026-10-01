@@ -1317,6 +1317,31 @@ section,
   padding-top: 120px;
 }
 
+.portfolio-intro { margin: 0 0 32px; font-size: 16px; color: var(--heading-color); }
+.portfolio-intro span { color: #b9c1bc; }
+.index-page #hero { min-height: 440px; padding: 70px 0; }
+.index-page #hero::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(0,0,0,.65), rgba(0,0,0,.12)); }
+.index-page #hero h2 { font-size: clamp(32px, 4vw, 52px); }
+.index-page #hero p { font-size: clamp(18px, 2vw, 24px); }
+.index-page #about .content { overflow-wrap: anywhere; }
+.skills-project-grid .skill-icon-item { padding: 24px 16px; }
+.skills-project-grid .skill-category-icon { display: block; font-size: 32px; color: var(--accent-color); margin-bottom: 16px; }
+.skills-project-grid .skill-icon-item p { font-size: 13px; color: #b9c1bc; margin: 12px 0 0; line-height: 1.7; }
+.portfolio .project-grid .portfolio-item { display: flex; }
+.portfolio .project-grid .portfolio-content { width: 100%; border: 1px solid #29352e; border-radius: 8px; background: #111713; }
+.portfolio .project-grid .portfolio-content .portfolio-info { position: relative; inset: auto; opacity: 1; background: transparent; padding: 20px; flex: 1; }
+.portfolio .project-grid .portfolio-content .portfolio-info h4 { padding: 0; background: transparent; font-size: 17px; font-weight: 600; display: block; line-height: 1.5; }
+.portfolio .project-grid .portfolio-content .portfolio-info p { position: static; display: block; text-align: left; font-size: 13px; font-weight: 400; margin-bottom: 14px; }
+.portfolio .project-grid .portfolio-content .portfolio-info .preview-link,
+.portfolio .project-grid .portfolio-content .portfolio-info .details-link { position: static; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; font-size: 23px; line-height: 1; }
+.portfolio .project-grid .portfolio-content:hover img { transform: none; }
+.portfolio .project-grid a:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 3px; }
+@media (max-width: 575px) {
+  .portfolio-intro span { display: block; margin-top: 8px; }
+  .index-page #hero { min-height: 360px; }
+  .index-page #hero img { object-position: 60% center; }
+}
+
 .featured-projects { margin-bottom: 56px; }
 .featured-project {
   display: flex;
