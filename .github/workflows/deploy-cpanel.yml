@@ -26,6 +26,8 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import hashlib
+          import re
           import shutil
           import subprocess
 
@@ -43,6 +45,13 @@ jobs:
               destination.parent.mkdir(parents=True, exist_ok=True)
               shutil.copyfile(source, destination)
           assert (target / 'index.html').is_file(), 'Missing index.html'
+          # A new URL prevents browsers from reusing the hosting's week-long CSS cache.
+          css_version = hashlib.sha256((target / 'assets/css/main.css').read_bytes()).hexdigest()[:12]
+          for page in target.glob('*.html'):
+              html = page.read_text()
+              html = re.sub(r'assets/css/main\.css(?:\?v=[a-zA-Z0-9_-]+)?',
+                            f'assets/css/main.css?v={css_version}', html)
+              page.write_text(html)
           PY
 
       - name: Install FTPS client
