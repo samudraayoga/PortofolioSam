@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#163847">
+  <meta name="description" content="MLBB Heroes Matchup Decision Support System: aplikasi SwiftUI untuk membantu memilih counter hero Mobile Legends melalui perhitungan matchup yang transparan.">
+  <title>MLBB Heroes Matchup — Karya Samudra</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/mlbb.css">
+</head>
+<body class="case-page mlbb-page">
+  <a class="skip-link" href="#studi-kasus">Langsung ke studi kasus</a>
+  <header class="case-header">
+    <div class="case-container case-nav">
+      <a class="case-brand" href="index.html" aria-label="Samudra, kembali ke beranda"><span aria-hidden="true">✦</span> SAMUDRA</a>
+      <a class="case-back" href="index.html#karya"><span aria-hidden="true">←</span> Semua karya</a>
+    </div>
+  </header>
+  <main id="studi-kasus">
+    <section class="case-hero">
+      <div class="case-container">
+        <div class="case-eyebrow"><span aria-hidden="true">✦</span> Catatan karya / 04</div>
+        <div class="case-hero-grid">
+          <div>
+            <p class="case-product">MOBILE LEGENDS · iOS APP</p>
+            <h1>MLBB Heroes Matchup<br>Decision Support System<span>.</span></h1>
+            <p class="case-lead">Membantu pemain memilih counter hero dengan memahami gaya bermain, keunggulan, dan kelemahan lawan—langsung dari aplikasi SwiftUI.</p>
+            <div class="case-hero-actions"><a class="btn btn-gold" href="#galeri">Lihat aplikasi <span aria-hidden="true">↓</span></a><a class="case-text-link" href="#mekanisme">Cara kerja matchup <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <aside class="case-summary" aria-label="Informasi proyek">
+            <span class="case-summary-mark" aria-hidden="true">✦</span>
+            <dl>
+              <div><dt>Kategori</dt><dd>iOS App, Design</dd></div>
+              <div><dt>Proyek</dt><dd>Front End</dd></div>
+              <div><dt>Tanggal proyek</dt><dd><time datetime="2025-10-10">10 Oktober 2025</time></dd></div>
+            </dl>
+          </aside>
+        </div>
+        <div class="case-hero-foot"><span>SwiftUI</span><span>Top 5 counter picks</span><span>Perhitungan lokal</span></div>
+      </div>
+    </section>
+
+    <section class="case-container case-gallery-section" id="galeri" aria-labelledby="gallery-heading">
+      <div class="case-section-heading"><div><p class="case-eyebrow">Di balik antarmuka</p><h2 id="gallery-heading">Dari pilihan hero ke counter pick.</h2></div><p>Dua tampilan aplikasi: jelajahi hero, lalu pahami rekomendasi beserta alasan skornya.</p></div>
+      <div class="mlbb-gallery">
+        <figure class="mlbb-screen">
+          <div class="mlbb-screen-stage"><img src="assets/mlbb/heroes.png" alt="Halaman Matchup Heroes dengan 126 hero, daftar Hayabusa, Tigreal, Franco, dan Harley, serta kolom pencarian hero" width="800" height="1694" decoding="async"></div>
+          <figcaption>
+            <span class="mlbb-screen-number">01 / DAFTAR HERO</span>
+            <h3>Mulai dari hero lawan.</h3>
+            <p>Daftar menampilkan 126 hero beserta role dan gaya bermainnya. Kolom pencarian membantu pengguna menemukan hero yang ingin dianalisis.</p>
+            <a href="assets/mlbb/heroes.png" target="_blank" rel="noopener noreferrer">Buka ukuran penuh <span aria-hidden="true">↗</span><span class="sr-only">: daftar hero (tab baru)</span></a>
+          </figcaption>
+        </figure>
+        <figure class="mlbb-screen">
+          <div class="mlbb-screen-stage"><img src="assets/mlbb/counter-picks.png" alt="Detail Harley dengan traits Burst, Blink, Poke, Mobility dan weaknesses Lockdown, Burst Window, Squishy; counter picks yang terlihat adalah Franco +36, Tigreal +25, dan Khufra +25" width="778" height="1704" decoding="async"></div>
+          <figcaption>
+            <span class="mlbb-screen-number">02 / HASIL MATCHUP</span>
+            <h3>Rekomendasi dengan alasan.</h3>
+            <p>Detail hero memperlihatkan traits, weaknesses, serta daftar counter dengan skor dan faktor pendukungnya. Pada contoh Harley, Franco berada di urutan pertama dengan skor +36.</p>
+            <a href="assets/mlbb/counter-picks.png" target="_blank" rel="noopener noreferrer">Buka ukuran penuh <span aria-hidden="true">↗</span><span class="sr-only">: hasil matchup Harley (tab baru)</span></a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="case-container case-story" aria-labelledby="context-heading">
+      <div class="case-story-title"><p class="case-eyebrow">Konteks proyek</p><h2 id="context-heading">Memahami matchup,<br>membantu menentukan pilihan.</h2></div>
+      <div class="case-story-copy">
+        <h3>Tentang aplikasi</h3>
+        <p>MLBB Heroes Matchup Decision Support System merupakan aplikasi SwiftUI untuk membantu pemain kasual Mobile Legends mengambil keputusan saat memilih hero. Berangkat dari kebiasaan memilih berdasarkan intuisi, proyek ini menyediakan cara yang lebih terstruktur untuk memahami hubungan antarkarakter.</p>
+        <p>Sistem menggunakan <strong>mesin penilaian berbasis aturan</strong> yang dibangun dengan Swift. Hero dievaluasi melalui tiga faktor utama: gaya bermain atau archetype, traits, dan weaknesses. Hubungan antara ketiganya membentuk rekomendasi counter yang dapat dijelaskan kepada pengguna.</p>
+        <h3>Data dan perhitungan</h3>
+        <p>Data hero disimpan dalam berkas JSON lokal, dengan referensi daring dan masukan pemain berpengalaman sebagai sumber informasi. Seluruh perhitungan berjalan di perangkat sehingga proses rekomendasi tidak bergantung pada server eksternal.</p>
+      </div>
+    </section>
+
+    <section class="case-features-section" id="mekanisme" aria-labelledby="mechanism-heading">
+      <div class="case-container">
+        <div class="case-section-heading"><div><p class="case-eyebrow">Mekanisme rekomendasi</p><h2 id="mechanism-heading">Tiga faktor, satu penilaian matchup.</h2></div><p>Setiap pilihan hero menghasilkan lima counter yang direkomendasikan, lengkap dengan skor yang transparan.</p></div>
+        <div class="case-features">
+          <article><span class="case-feature-number">01 / PLAYSTYLE</span><h3>Kenali gaya bermain</h3><p>Archetype seperti teamfight, pickoff, dan split-push memiliki hubungan counter. Hubungan ini menjadi salah satu dasar penilaian antara hero pilihan dan kandidat lawannya.</p></article>
+          <article><span class="case-feature-number">02 / TRAITS &amp; WEAKNESSES</span><h3>Temukan titik kelemahan</h3><p>Traits kandidat dipasangkan dengan weaknesses hero target untuk melihat bagaimana kemampuannya dapat memanfaatkan kelemahan lawan.</p></article>
+          <article><span class="case-feature-number">03 / TOP 5 COUNTER PICKS</span><h3>Jelaskan hasil penilaian</h3><p>Skor dinormalisasi untuk menjaga perbandingan tetap adil dan menghindari penghitungan ganda. Pengguna dapat melihat peringkat serta faktor yang berkontribusi pada skor.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-container case-stack-section" aria-labelledby="stack-heading">
+      <div class="case-section-heading"><div><p class="case-eyebrow">Fondasi aplikasi</p><h2 id="stack-heading">Dibangun untuk berjalan lokal.</h2></div><p>Antarmuka iOS dan logika matchup berada dalam satu aplikasi.</p></div>
+      <dl class="case-stack">
+        <div><dt>SwiftUI</dt><dd>Antarmuka daftar hero, pencarian, detail karakter, dan hasil rekomendasi.</dd></div>
+        <div><dt>Swift</dt><dd>Implementasi logika aplikasi dan mesin perhitungan matchup.</dd></div>
+        <div><dt>JSON lokal</dt><dd>Penyimpanan data hero yang digunakan dalam proses evaluasi.</dd></div>
+        <div><dt>Rule-based scoring</dt><dd>Aturan penilaian berdasarkan archetype, traits, dan weaknesses dengan normalisasi skor.</dd></div>
+      </dl>
+    </section>
+
+    <section class="case-closing">
+      <div class="case-container"><span class="case-closing-star" aria-hidden="true">✦</span><p class="case-eyebrow">Petualangan berikutnya</p><h2>Punya ide aplikasi<br>yang ingin dikembangkan?</h2><a class="btn btn-gold" href="index.html#kontak">Mari terhubung <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+  <footer class="case-container case-footer"><a href="index.html#karya">← Kembali ke semua karya</a><p>© 2026 Yoga Samudra Heriyanto</p></footer>
+</body>
+</html>

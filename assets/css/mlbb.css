@@ -1,0 +1,97 @@
+/* Keep the portfolio landscape around the original portrait app screenshots. */
+.mlbb-page {
+  --ink: #f4f2e8;
+  --case-gold: #e5cc94;
+  --case-teal: #b6decd;
+  --case-muted: #ccdadd;
+  --mlbb-seam: #163847;
+  --mlbb-border: #decfa647;
+  --mlbb-panel: #112f3cdb;
+  color: var(--ink);
+  background: var(--mlbb-seam);
+}
+.mlbb-page main {
+  background-color: var(--mlbb-seam);
+  background-image: linear-gradient(180deg, #16384799, transparent 300px),
+    linear-gradient(#0a222ec4, #0a222ec4), url('../landscape.png');
+  background-position: center top, center, 58% center;
+  background-size: 100% 100%, 100% 100%, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll, scroll, fixed;
+}
+.mlbb-page .case-header { background: var(--mlbb-seam); border-color: var(--mlbb-border); }
+.mlbb-page .case-hero { background: linear-gradient(180deg, #16384740, transparent); }
+.mlbb-page .case-hero h1 { font-size: clamp(34px, 4.4vw, 53px); }
+.mlbb-page .case-summary { background: var(--mlbb-panel); border-color: #e7d2a55c; }
+.mlbb-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.mlbb-screen {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--mlbb-panel);
+  border: 1px solid var(--mlbb-border);
+  box-shadow: 0 18px 40px #071b284d;
+}
+.mlbb-screen-stage {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 770px;
+  padding: 30px;
+  background: radial-gradient(ellipse at 50% 35%, #32525799, #091d27e6 75%);
+  border-bottom: 1px solid var(--mlbb-border);
+}
+.mlbb-screen-stage img { width: 100%; height: 100%; object-fit: contain; min-width: 0; }
+.mlbb-screen figcaption { flex: 1; display: flex; flex-direction: column; align-items: flex-start; padding: 26px; }
+.mlbb-screen-number { color: var(--case-gold); font-size: 10px; letter-spacing: 1.2px; }
+.mlbb-screen h3 { font: 500 25px/1.4 var(--serif); margin: 12px 0 10px; }
+.mlbb-screen p { font-size: 14px; line-height: 1.85; color: var(--case-muted); margin: 0 0 18px; }
+.mlbb-screen figcaption > a {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  margin-top: auto;
+  color: #c5e5d7;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.mlbb-page .case-story { border-color: var(--mlbb-border); }
+.mlbb-page .case-story-copy strong { color: #f3e7c8; }
+.mlbb-page .case-features-section { background: #0c293659; border-color: var(--mlbb-border); }
+.mlbb-page .case-features article { background: var(--mlbb-panel); border-color: var(--mlbb-border); }
+.mlbb-page .case-feature-number { color: #e5cc94; }
+.mlbb-page .case-stack > div { border-color: var(--mlbb-border); }
+.mlbb-page .case-stack dt { color: #c5e5d7; }
+.mlbb-page .case-closing { background: linear-gradient(180deg, #16384740, var(--mlbb-seam)); border-top: 1px solid var(--mlbb-border); }
+.mlbb-page .case-footer { color: #c4d3d3; }
+.mlbb-page .skip-link { background: #f0d99f; color: #163847; }
+
+@media (min-width: 641px) and (max-width: 1000px) {
+  .mlbb-screen-stage { height: 660px; padding: 22px; }
+}
+@media (max-width: 850px) {
+  .mlbb-page .case-hero-grid { grid-template-columns: minmax(0, 1fr) 230px; }
+  .mlbb-page .case-features { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .mlbb-page .case-hero-grid { grid-template-columns: 1fr; }
+  .mlbb-page .case-hero h1 { font-size: clamp(31px, 8vw, 45px); }
+  .mlbb-gallery { grid-template-columns: 1fr; gap: 22px; }
+  .mlbb-screen-stage { height: auto; padding: 22px; }
+  .mlbb-screen-stage img { width: min(100%, 330px); height: auto; }
+  .mlbb-screen figcaption { padding: 22px; }
+  .mlbb-screen h3 { font-size: 24px; }
+}
+/* Scrolling backgrounds avoid fixed-background repainting on touch devices. */
+@media (max-width: 640px), (hover: none) {
+  .mlbb-page main {
+    background-attachment: scroll;
+    background-position: center top, center, 62% top;
+    background-size: 100% 100%, 100% 100%, auto 1200px;
+    background-repeat: no-repeat, no-repeat, repeat-y;
+  }
+}

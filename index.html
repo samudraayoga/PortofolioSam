@@ -1,604 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Portofolio</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- User Icon Logo (Bootstrap Icons) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <style>
-    .user-icon-logo {
-      font-size: 32px;
-      color: #fff;
-      margin-right: 10px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-  </style>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css?v=4ccfdeeff526" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#16384a">
+  <meta name="description" content="Portofolio Yoga Samudra Heriyanto — IT Developer, Full-Stack Developer, dan AI Engineer. Jelajahi keahlian, karya, dan perjalanan saya.">
+  <title>Samudra — Kode & Petualangan</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script src="assets/typed.umd.js" defer></script>
+  <script src="assets/js/script.js" defer></script>
+  <link rel="stylesheet" href="assets/css/motion.css">
+  <link rel="stylesheet" href="assets/css/scenery.css?v=20261003-2">
+  <script src="assets/js/motion.js" defer></script>
 </head>
+<body class="portfolio-page">
+  <a class="skip-link" href="#profil">Langsung ke konten</a>
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8Z"/><path d="m12 7 1.5 3.5L17 12l-3.5 1.5L12 17l-1.5-3.5L7 12l3.5-1.5Z"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/><path d="M12 1v2m11 9h-2M12 23v-2M1 12h2"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></symbol>
+      <symbol id="i-cap" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5Zm4 2v7c4 3 8 3 12 0v-7m4-2v8"/></symbol>
+      <symbol id="i-scroll" viewBox="0 0 24 40"><rect x="5" y="2" width="14" height="25" rx="7"/><path d="M12 7v6m-4 19 4 4 4-4"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+      <symbol id="i-nodes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/><path d="m6 6 4 4m4 4 4 4m-4-8 4-4M6 18l4-4"/></symbol>
+      <symbol id="i-network" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="6" rx="1"/><rect x="2" y="16" width="7" height="6" rx="1"/><rect x="15" y="16" width="7" height="6" rx="1"/><path d="M12 8v4m-7 4v-4h14v4"/></symbol>
+      <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12c6 4 12 4 18 0M12 12v4"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7L10 14M10 3H3v18h18v-7"/></symbol>
+    </defs>
+  </svg>
 
-<body class="index-page">
+  <main>
+    <section class="hero" id="beranda" aria-label="Perkenalan Samudra">
+      <img class="landscape" src="assets/landscape.png" alt="" fetchpriority="high" width="1672" height="941">
+      <div class="sparkles" aria-hidden="true"><i class="sparkle"></i><i class="sparkle"></i><i class="sparkle"></i><i class="sparkle"></i><i class="sparkle"></i></div>
+      <div class="container">
+        <header class="site-header">
+          <a href="#beranda" class="brand" aria-label="Samudra, kembali ke beranda"><svg class="brand-mark" aria-hidden="true"><use href="#i-star"/></svg><span class="brand-name">SAMUDRA<small>A DEVELOPER'S JOURNEY</small></span></a>
+          <nav class="desktop-nav" id="main-nav" aria-label="Navigasi utama">
+            <a class="active" href="#profil">Profil</a><a href="#keahlian">Keahlian</a><a href="#karya">Karya</a><a href="#perjalanan">Perjalanan</a>
+          </nav>
+          <div class="header-actions">
+            <button class="theme-toggle" aria-label="Aktifkan suasana malam" aria-pressed="false" title="Ganti suasana"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+            <a class="header-contact" href="#kontak">Mari terhubung <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <button class="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Buka menu navigasi"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+          </div>
+        </header>
+        <div class="hero-content">
+          <div class="hero-copy">
+            <div class="eyebrow"><svg aria-hidden="true"><use href="#i-star"/></svg>Selamat datang, penjelajah</div>
+            <h1>Merangkai kode.<br>Menjelajah.</h1>
+            <p class="hero-profession" aria-label="I'm a Software Engineer, a Fullstack Developer, an AI Engineer"><span aria-hidden="true">I'm <span class="typed" data-typed-items="a Software Engineer, a Fullstack Developer, an AI Engineer">a Software Engineer</span></span></p>
+            <p class="hero-intro">Saya <strong>Yoga Samudra Heriyanto</strong>, IT Developer yang mengubah kebutuhan bisnis menjadi aplikasi, sistem ERP, dan solusi berbasis AI.</p>
+            <div class="hero-buttons"><a class="btn btn-gold" href="#karya"><svg aria-hidden="true"><use href="#i-compass"/></svg>Jelajahi karya<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-outline" href="assets/CV-Samudra-2026.pdf" download>Unduh CV<svg aria-hidden="true"><use href="#i-download"/></svg></a></div>
+            <p class="hero-footnote"><span class="status-dot" aria-hidden="true"></span>Berawal dari rasa ingin tahu. Bergerak lewat karya.</p>
+          </div>
+          <div class="character-stage">
+            <div class="orbit" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
+            <span class="character-label" aria-hidden="true">THE CURIOUS BUILDER</span>
+            <div class="vision" title="Anemo · Semangat eksplorasi" aria-hidden="true"><img src="assets/anemo.webp" alt="" width="1440" height="1440" decoding="async"></div>
+            <div class="portrait-card">
+              <div class="portrait-window"><img id="portrait" src="assets/samudra-formal.jpeg" alt="Potret formal Yoga Samudra Heriyanto mengenakan jas abu-abu" width="1086" height="1448"><div class="portrait-caption"><span>✦ &nbsp; THE DEVELOPER &nbsp; ✦</span><h2>Samudra</h2><p>Logika dalam kode. Imajinasi tanpa batas.</p></div></div>
+              <div class="portrait-tabs" role="group" aria-label="Pilih foto profil"><button type="button" data-portrait="formal" aria-pressed="true">Formal</button><button type="button" data-portrait="casual" aria-pressed="false">02 · Di luar kode</button></div>
+            </div>
+            <button class="profile-trigger" data-open-profile><svg aria-hidden="true"><use href="#i-user"/></svg>Profil karakter <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+        <div class="hero-bottom">
+          <div class="hero-facts">
+            <div class="hero-fact"><svg aria-hidden="true"><use href="#i-pin"/></svg><div><small>Berbasis di</small><strong>Jakarta Barat, Indonesia</strong></div></div>
+            <div class="hero-fact"><svg aria-hidden="true"><use href="#i-code"/></svg><div><small>Fokus eksplorasi</small><strong>Full-Stack & AI Engineering</strong></div></div>
+            <div class="hero-fact"><svg aria-hidden="true"><use href="#i-cap"/></svg><div><small>Latar akademik</small><strong>Ilmu Komputer · UPNYK</strong></div></div>
+          </div>
+          <a class="scroll-link" href="#profil">Mulai perjalanan<svg aria-hidden="true"><use href="#i-scroll"/></svg></a>
+        </div>
+      </div>
+    </section>
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+    <div class="paper">
+      <section id="profil" class="section container">
+        <div class="about">
+          <div><div class="section-kicker"><span class="diamond"></span>Kisah sang penjelajah</div><h2>Rasa ingin tahu adalah<br>kompas saya.</h2></div>
+          <div class="about-right"><p>Dari memahami jaringan komputer hingga merancang sistem AI, saya senang mencari tahu bagaimana teknologi dapat menjawab kebutuhan nyata.</p><p>Saya lulusan Ilmu Komputer UPN Veteran Yogyakarta dengan pengalaman dalam pengembangan full-stack, pengelolaan proyek ERP, serta integrasi multi-agent dan RAG. Bagi saya, solusi yang baik lahir dari pemahaman masalah yang tepat.</p><div class="about-tags"><span class="tag">System thinking</span><span class="tag">Full-stack development</span><span class="tag">AI & automation</span></div><div class="signature">Yoga Samudra H.</div></div>
+        </div>
+        <div id="keahlian" class="skills-section">
+          <div class="section-heading"><div><div class="eyebrow">Konstelasi keahlian</div><h2>Bekal untuk setiap tantangan.</h2></div><p>Keahlian yang saling terhubung untuk membawa sebuah ide menjadi solusi. Pilih untuk menjelajahi.</p></div>
+          <div class="talent-grid" role="tablist" aria-label="Kategori keahlian">
+            <button class="talent-card" id="skill-fullstack" role="tab" aria-selected="true" aria-controls="skill-panel" tabindex="0" data-skill="fullstack"><div class="talent-top"><span class="talent-icon"><svg aria-hidden="true"><use href="#i-code"/></svg></span><span class="talent-number">I</span></div><h3>Full-Stack Development</h3><p>Merangkai antarmuka, logika, dan data menjadi satu pengalaman.</p><span class="talent-arrow" aria-hidden="true">↗</span></button>
+            <button class="talent-card" id="skill-ai" role="tab" aria-selected="false" aria-controls="skill-panel" tabindex="-1" data-skill="ai"><div class="talent-top"><span class="talent-icon"><svg aria-hidden="true"><use href="#i-nodes"/></svg></span><span class="talent-number">II</span></div><h3>AI & Automation</h3><p>Menghubungkan pengetahuan dan proses melalui kecerdasan buatan.</p><span class="talent-arrow" aria-hidden="true">↗</span></button>
+            <button class="talent-card" id="skill-systems" role="tab" aria-selected="false" aria-controls="skill-panel" tabindex="-1" data-skill="systems"><div class="talent-top"><span class="talent-icon"><svg aria-hidden="true"><use href="#i-network"/></svg></span><span class="talent-number">III</span></div><h3>Systems & Networks</h3><p>Memahami fondasi, merancang sistem, dan menjaga konektivitas.</p><span class="talent-arrow" aria-hidden="true">↗</span></button>
+          </div>
+          <div class="skill-detail" id="skill-panel" role="tabpanel" aria-labelledby="skill-fullstack" tabindex="0"><div class="skill-detail-label"><svg aria-hidden="true"><use href="#i-star"/></svg>Perangkat dalam perjalanan</div><div class="skill-items" id="skill-items"><span>JavaScript</span><span>React</span><span>Next.js</span><span>Django</span><span>SQL</span><span>PostgreSQL</span></div></div>
+        </div>
+      </section>
 
-      <a href="#portfolio" class="logo d-flex align-items-center">
-        <!-- User Icon Logo -->
-        <h1 class="sitename">Portfolio</h1>
-      </a>
+      <section id="karya" class="works-section section container">
+        <div class="section-heading"><div><div class="eyebrow">Catatan karya</div><h2>Ide yang menemukan bentuk.</h2></div><p>Eksplorasi pengembangan sistem bisnis, solusi AI, dan aplikasi iOS.</p></div>
+        <div class="works-grid">
+          <article class="work-card work-card-erp">
+            <div class="work-art art-erp-proof"><img src="assets/erp/inventory.png" alt="Master Inventori ERP Raho Premier; data akun dan inventori internal diburamkan" width="1728" height="922" loading="lazy" decoding="async"></div>
+            <div class="work-body">
+              <div class="work-category">Fullstack Developer</div>
+              <h3>ERP Raho Premier</h3>
+              <p>Sistem ERP internal untuk pengelolaan inventori dan administrasi operasional Raho Premier.</p>
+              <div class="work-tech" aria-label="Teknologi utama"><span>Next.js</span><span>PostgreSQL</span><span>Prisma</span><span>Redis / BullMQ</span></div>
+              <a href="erp.html" class="work-link">Jelajahi proyek ERP<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+          <article class="work-card"><div class="work-art art-ai" aria-hidden="true"><span class="art-corner">QUEST</span><svg class="constellation" viewBox="0 0 300 190"><g stroke="#99c7d4" stroke-opacity=".6"><path d="m150 90-90-45 10 103 80-58 90 44-16-105-74 61-80 58 170-14M60 45l164-16M150 90l-2 82"/><circle cx="150" cy="90" r="37" stroke-dasharray="3 7"/><circle cx="150" cy="90" r="53" opacity=".4"/></g><g fill="#c2e6e6" stroke="#d9eeee"><circle cx="60" cy="45" r="5"/><circle cx="70" cy="148" r="5"/><circle cx="240" cy="134" r="5"/><circle cx="224" cy="29" r="5"/><circle cx="148" cy="172" r="3"/></g><path d="m150 66 7 17 17 7-17 7-7 17-7-17-17-7 17-7Z" fill="#d7ebde" stroke="#f4e2b4"/></svg><span class="art-label">KNOWLEDGE, CONNECTED</span></div><div class="work-body"><div class="work-category">AI Engineering · RAG</div><h3>AI Agent & RAG</h3><p>Menghubungkan sistem multi-agent dengan ERP dan basis data perusahaan.</p><button data-project="ai" class="work-link">Buka catatan karya<svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div></article>
+          <article class="work-card work-card-chat">
+            <div class="work-art art-chat-proof"><img src="assets/chatbot/overview.png" alt="Dokumentasi RAHO WhatsApp Chatbot AI: alur Rule, RAG, AI, serta Outbox dan Worker" width="1708" height="962" loading="lazy" decoding="async"></div>
+            <div class="work-body">
+              <div class="work-category">Full-Stack · System Design</div>
+              <h3>AI-Powered WhatsApp Chatbot</h3>
+              <p>Chatbot layanan pelanggan dengan knowledge base, RAG, inbox bersama, dan pengalihan ke tim CS.</p>
+              <div class="work-tech" aria-label="Teknologi utama"><span>Next.js</span><span>Express</span><span>PostgreSQL</span><span>RAG</span></div>
+              <a href="chatbot.html" class="work-link">Jelajahi proyek chatbot<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+          <article class="work-card work-card-mlbb">
+            <div class="work-art art-mlbb-proof">
+              <img src="assets/mlbb/heroes.png" alt="Daftar dan pencarian hero pada aplikasi iOS MLBB Heroes Matchup" width="800" height="1694" loading="lazy" decoding="async">
+              <img src="assets/mlbb/counter-picks.png" alt="Detail Harley dengan traits, weakness, dan rekomendasi counter hero beserta skor" width="778" height="1704" loading="lazy" decoding="async">
+            </div>
+            <div class="work-body">
+              <div class="work-category">iOS App · Front End · Design</div>
+              <h3>MLBB Heroes Matchup</h3>
+              <p>Aplikasi pendukung keputusan untuk memilih hero Mobile Legends melalui lima rekomendasi counter dengan skor yang dapat dijelaskan.</p>
+              <div class="work-tech" aria-label="Teknologi utama"><span>Swift</span><span>SwiftUI</span><span>JSON</span></div>
+              <a href="mlbb.html" class="work-link">Jelajahi proyek MLBB<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </section>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#portfolio" class="active">Portfolio</a></li>
-          <li><a href="#hero">Profile</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#resume">Resume</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
+      <section id="perjalanan" class="journey-section section container">
+        <div class="section-heading"><div><div class="eyebrow">Jejak petualangan</div><h2>Setiap langkah, sebuah pelajaran.</h2></div><p>Perjalanan dari ruang kelas dan laboratorium menuju pengembangan solusi bisnis.</p></div>
+        <div class="journey-list">
+          <article class="journey-item"><div class="journey-date">Juni 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-case"/></svg></div><div class="journey-body"><p class="journey-type">Pengembangan teknologi</p><h3>IT Developer</h3><p class="journey-company">Raho Premier</p><p>Mengembangkan ERP, arsitektur AI agent, dan dashboard chatbot WhatsApp.</p></div><button class="journey-toggle" aria-label="Lihat detail pengalaman di Raho Premier" aria-expanded="false" aria-controls="journey-raho"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-raho" hidden><ul><li>Memimpin pengembangan ERP sebagai Project Manager dan Full-Stack Developer, dari arsitektur dan perencanaan hingga implementasi serta pengelolaan jadwal.</li><li>Merancang fitur dan alur kerja sesuai kebutuhan bisnis dan operasional.</li><li>Merancang alur agent, integrasi basis data, sistem multi-agent, dan arsitektur RAG menggunakan Openclaw.</li><li>Mengembangkan dashboard chatbot WhatsApp berbasis AI dengan Next.js.</li></ul></div></article>
+          <article class="journey-item"><div class="journey-date">Sep 2025 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-network"/></svg></div><div class="journey-body"><p class="journey-type">Infrastruktur & konektivitas</p><h3>IT Support Intern</h3><p class="journey-company">PT Harrisma Buwana Jaya</p><p>Mendukung instalasi dan konfigurasi infrastruktur jaringan di lokasi pelanggan.</p></div><button class="journey-toggle" aria-label="Lihat detail pengalaman di Harrisma" aria-expanded="false" aria-controls="journey-harrisma"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-harrisma" hidden><ul><li>Membantu instalasi jaringan kabel dan nirkabel.</li><li>Melakukan crimping kabel UTP, terminasi RJ45, dan pengujian konektivitas.</li><li>Memasang, mengonfigurasi, dan menguji router Wi-Fi serta access point.</li></ul></div></article>
+          <article class="journey-item"><div class="journey-date">Agu 2024 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-code"/></svg></div><div class="journey-body"><p class="journey-type">Praktik & operasional</p><h3>Asisten & Administrator Laboratorium</h3><p class="journey-company">Laboratorium Informatika UPNYK</p><p>Membimbing praktikum dan menjaga kesiapan lingkungan belajar.</p></div><button class="journey-toggle" aria-label="Lihat detail pengalaman laboratorium" aria-expanded="false" aria-controls="journey-lab"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-lab" hidden><ul><li>Membimbing 2 kelas praktikum per minggu dan menyusun ujian praktik jaringan serta sistem.</li><li>Mengelola jadwal, dokumentasi, dan operasional laboratorium.</li><li>Menyiapkan, memelihara, dan menangani gangguan pada 20 komputer per sesi.</li></ul></div></article>
+          <article class="journey-item"><div class="journey-date">Jul 2023 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-cap"/></svg></div><div class="journey-body"><p class="journey-type">Berbagi pengetahuan</p><h3>Asisten Dosen</h3><p class="journey-company">UPN Veteran Yogyakarta</p><p>Mendampingi pembelajaran Jaringan Komputer dan Algoritma Pemrograman.</p></div><button class="journey-toggle" aria-label="Lihat detail pengalaman asisten dosen" aria-expanded="false" aria-controls="journey-teaching"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-teaching" hidden><ul><li>Mendampingi lebih dari 4 kelas setiap minggu.</li><li>Membimbing diskusi, tugas, dan praktik jaringan serta mengevaluasi pekerjaan mahasiswa.</li></ul></div></article>
+        </div>
+        <div class="education-ribbon"><svg aria-hidden="true"><use href="#i-cap"/></svg><div><p>Sarjana Ilmu Komputer · UPN Veteran Yogyakarta</p><small>Pondasi akademik untuk terus menjelajah · IPK 3,52 / 4,00</small></div><span class="education-year">Agustus 2022 — Januari 2026</span></div>
+      </section>
     </div>
-  </header>
 
-  <main class="main">
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <p class="portfolio-intro">Samudra Yoga <span>· Fullstack Developer &amp; System Designer</span></p>
-        <h2>Portfolio</h2>
-        <div><span>My</span> <span class="description-title">Works</span></div>
-      </div>
-
-      <div class="container">
-
-        <div class="featured-projects row g-4" aria-label="Featured projects">
-          <div class="col-lg-6 d-flex">
-            <article class="featured-project" data-aos="fade-up">
-              <a class="featured-image" href="port6.html" aria-label="View AI-Powered WhatsApp Chatbot">
-                <img src="assets/img/portfolio/chatbot-cover.png" alt="AI-Powered WhatsApp Chatbot project preview">
-                <span class="featured-badge"><i class="bi bi-star-fill" aria-hidden="true"></i> Featured project</span>
-              </a>
-              <div class="featured-body">
-                <p class="featured-role">Fullstack Developer · System Designer</p>
-                <h3><a href="port6.html">AI-Powered WhatsApp Chatbot</a></h3>
-                <p class="featured-summary">Helps customer service teams answer repetitive questions with a knowledge base, RAG, and human handoff.</p>
-                <ul class="featured-tech" aria-label="Selected technologies">
-                  <li>Next.js</li>
-                  <li>Express</li>
-                  <li>PostgreSQL</li>
-                  <li>RAG</li>
-                </ul>
-                <a class="featured-cta" href="port6.html">Explore project <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
-              </div>
-            </article>
-          </div>
-          <div class="col-lg-6 d-flex">
-            <article class="featured-project" data-aos="fade-up">
-              <a class="featured-image" href="port3.html" aria-label="View ERP Raho Premier">
-                <img src="assets/img/portfolio/raho-cover.png" alt="ERP Raho Premier project preview">
-                <span class="featured-badge"><i class="bi bi-star-fill" aria-hidden="true"></i> Featured project</span>
-              </a>
-              <div class="featured-body">
-                <p class="featured-role">Fullstack Developer</p>
-                <h3><a href="port3.html">ERP Raho Premier</a></h3>
-                <p class="featured-summary">An internal ERP for Raho Premier, with inventory and system management interfaces.</p>
-                <ul class="featured-tech" aria-label="Selected technologies">
-                  <li>Next.js</li>
-                  <li>PostgreSQL</li>
-                  <li>Prisma</li>
-                  <li>Redis / BullMQ</li>
-                </ul>
-                <a class="featured-cta" href="port3.html">Explore project <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <h3 class="more-projects-title">More projects</h3>
-
-        <div class="more-projects">
-
-          <div class="row gy-4 project-grid" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-md-6 portfolio-item">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/mlbb0.png" class="img-fluid" alt="MLBB Heroes Matchup Decision Support System">
-                <div class="portfolio-info">
-                  <h4>MLBB Heroes Matchup Decision Support System</h4>
-                  <p>iOS App</p>
-                  <a href="assets/img/portfolio/mlbb0.png" title="MLBB Heroes Matchup Decision Support System" aria-label="Preview MLBB Heroes Matchup Decision Support System" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="port2.html" aria-label="View MLBB Heroes Matchup Decision Support System" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 portfolio-item">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/nd1.png" class="img-fluid" alt="Nightdrip Coffee">
-                <div class="portfolio-info">
-                  <h4>Nightdrip Coffee</h4>
-                  <p>Web Ordering App <span class="portfolio-url-text">nightdrip.web.id</span></p>
-                  <a href="assets/img/portfolio/nd1.png" title="Nightdrip Coffee" aria-label="Preview Nightdrip Coffee" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="port4.html" aria-label="View Nightdrip Coffee" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 portfolio-item">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/klas.png" class="img-fluid" alt="Banana Classification">
-                <div class="portfolio-info">
-                  <h4>Banana Classification</h4>
-                  <p>Machine Learning · iOS App</p>
-                  <a href="assets/img/portfolio/klas.png" title="Banana Classification" aria-label="Preview Banana Classification" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" aria-label="View Banana Classification" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-6 portfolio-item">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/bs1.png" class="img-fluid" alt="BreakShot">
-                <div class="portfolio-info">
-                  <h4>BreakShot</h4>
-                  <p>Billiards Booking App</p>
-                  <a href="assets/img/portfolio/bs1.png" title="BreakShot" aria-label="Preview BreakShot" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="port5.html" aria-label="View BreakShot" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Portfolio Section -->
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="assets/img/fotoc.png" alt="" data-aos="fade-in">
-
-      <div class="container" data-aos="zoom-out" data-aos-delay="100">
-        <h2>Samudra Yoga</h2>
-        <p>I'm <span class="typed" data-typed-items="a Software Engineer, a Fullstack Developer, an AI Engineer"></span><span class="typed-cursor typed-cursor--blink"></span></p>
-        <div class="social-links">
-          <a href="https://wa.me/6282137971051"><i class="bi bi-whatsapp"></i></a>
-          <a href="https://www.facebook.com/samudrayogaa"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/samudrayogaa/"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/yogasamudraheriyanto/"><i class="bi bi-linkedin"></i></a>
-        </div>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About</h2>
-        <div><span>Learn More</span> <span class="description-title">About Me</span></div>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/profile-img.jpg" class="img-fluid" alt="Profile Photo">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>Building useful software, end to end.</h2>
-            <p class="fst-italic py-3">
-              I develop web applications and AI-assisted tools, from the user interface to the backend and system architecture. My work includes internal business systems and customer support automation.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>082137971051</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Yogyakarta, Indonesia</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Computer Science</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>samudrayoga4477@gmail.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
-                </ul>
-              </div>
-            </div>
-            <p class="py-3">
-              I graduated from Universitas Pembangunan Nasional "Veteran" Yogyakarta in 2026 with a Bachelor's degree in Computer Science.
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /About Section -->
-
-    <!-- Activities Section -->
-    <section id="activities" class="about section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Activities</h2>
-        <div><span>My</span> <span class="description-title">Experience</span></div>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/foto1.jpg" class="img-fluid d-block mx-auto" style="max-width: 260px;" alt="Guest Speaker">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>Guest Speaker</h2>
-            <p class="fst-italic py-3">I spoke at the “Get to Know ITC” seminar at UPN Veteran Yogyakarta in 2025, introducing students to information technology and computer science.</p>
-          </div>
-        </div>
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/foto2.jpeg" class="img-fluid d-block mx-auto" style="max-width: 260px;" alt="Media and Information">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>Media and Information</h2>
-            <p class="fst-italic py-3">I contributed to the Media and Information division of Himatif from 2023 to 2025, managing communication channels and creating content for student activities.</p>
-          </div>
-        </div>
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/foto4.jpeg" class="img-fluid d-block mx-auto" style="max-width: 260px;" alt="Documentation PKKBN UPNYK 2024">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>Documentation PKKBN UPNYK 2024</h2>
-            <p class="fst-italic py-3">I documented PKKBN UPNYK 2024, capturing activities and key moments during the new student orientation program.</p>
-          </div>
-        </div>
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/foto3.jpeg" class="img-fluid d-block mx-auto" style="max-width: 260px;" alt="Coordinator of Publication">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>Coordinator of Publication</h2>
-            <p class="fst-italic py-3">I coordinated the publication team for VIP UPNYK 2024, overseeing promotional materials and event communications.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /Activities Section -->
-    
-    <!-- Skills Section -->
-    <section id="skills" class="skills section">
-      
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Skills</h2>
-        <div><span>My</span> <span class="description-title">Skills</span></div>
-      </div>
-      
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="skills-icon-grid skills-project-grid">
-          <div class="skill-icon-item">
-            <i class="bi bi-code-slash skill-category-icon" aria-hidden="true"></i>
-            <h4>Frontend</h4>
-            <p>Next.js · React · TypeScript · JavaScript</p>
-          </div>
-          <div class="skill-icon-item">
-            <i class="bi bi-server skill-category-icon" aria-hidden="true"></i>
-            <h4>Backend</h4>
-            <p>Node.js · Express · Prisma</p>
-          </div>
-          <div class="skill-icon-item">
-            <i class="bi bi-database skill-category-icon" aria-hidden="true"></i>
-            <h4>Data &amp; Queues</h4>
-            <p>PostgreSQL · Redis · BullMQ</p>
-          </div>
-          <div class="skill-icon-item">
-            <i class="bi bi-chat-dots skill-category-icon" aria-hidden="true"></i>
-            <h4>AI Integration</h4>
-            <p>Knowledge bases · RAG · WhatsApp automation</p>
-          </div>
-          <div class="skill-icon-item">
-            <i class="bi bi-phone skill-category-icon" aria-hidden="true"></i>
-            <h4>Mobile &amp; ML</h4>
-            <p>Swift · Python</p>
-          </div>
-          <div class="skill-icon-item">
-            <i class="bi bi-diagram-3 skill-category-icon" aria-hidden="true"></i>
-            <h4>System Design</h4>
-            <p>Application architecture · Background workers</p>
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /Skills Section -->
-
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-        <div><span>My</span> <span class="description-title">Resume</span></div>
-      </div>
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Summary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Yoga Samudra Heriyanto, S.Kom</h4>
-              <p><em>Fullstack Developer and System Designer with experience in internal ERP systems, AI-assisted customer support, and IT support.</em></p>
-              <ul>
-                <li>Yogyakarta, Indonesia</li>
-                <li>(+62) 821-3797-1051</li>
-                <li>samudrayoga4477@gmail.com</li>
-              </ul>
-            </div>
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Bachelor of Computer Science</h4>
-              <h5>2022 - 2026</h5>
-              <p><em>UPN Veteran Yogyakarta, Sleman, DI Yogyakarta</em></p>
-            </div>
-
-            <div class="resume-item">
-              <h4>Senior High School</h4>
-              <h5>2017 - 2020</h5>
-              <p><em>SMK Nasional Berbah, Yogyakarta</em></p>
-            </div>
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>IT Developer</h4>
-              <h5>July 2026 - Present</h5>
-              <p><em>Raho Premier</em></p>
-              <ul>
-                <li>Develop an internal ERP for inventory and system management using Next.js, PostgreSQL, and Prisma.</li>
-                <li>Build an AI-powered WhatsApp chatbot to help customer service teams handle repetitive questions using knowledge bases and RAG.</li>
-                <li>Design and implement frontend interfaces, backend APIs, and system architecture for internal business applications.</li>
-                <li>Implement background processing and message queues with Redis and BullMQ, including chatbot handoff to human operators.</li>
-              </ul>
-            </div>
-
-            <div class="resume-item">
-              <h4>Assistant Lecturer</h4>
-              <h5>2024 - Present</h5>
-              <p><em>UPN Veteran Yogyakarta, Sleman, DI Yogyakarta</em></p>
-              <ul>
-                <li>Teaching courses in computer science and information technology</li>
-                <li>Conducting research and publishing papers in the field of computer science</li>
-                <li>Mentoring students and providing academic support</li>
-              </ul>
-            </div>
-
-            <div class="resume-item">
-              <h4>Laboratory Administrator</h4>
-              <h5>2024</h5>
-              <p><em>UPN Veteran Yogyakarta, Sleman, DI Yogyakarta</em></p>
-              <ul>
-                <li>Maintenance of laboratory equipment</li>
-                <li>Managing laboratory supplies and inventory</li>
-                <li>Assisting in the setup and organization of laboratory sessions</li>
-              </ul>
-            </div>
-
-            <div class="resume-item">
-              <h4>IT Support Intern</h4>
-              <h5>2025 - 2026</h5>
-              <p><em>PT Harrisma Buwana Jaya, Yogyakarta</em></p>
-              <ul>
-                <li>Provided technical support to end-users and resolved hardware and software issues</li>
-                <li>Maintained and updated computer hardware and software systems</li>
-                <li>Assisted in the installation and configuration of new software and hardware</li>
-              </ul>
-            </div>
-
-            <h3 class="resume-title">Certifications</h3>
-            <div class="resume-item">
-              <h4>BNSP - Video Editor</h4>
-              <h5>2024 - 2027</h5>
-            </div>
-
-            <div class="resume-item">
-              <h4>BNSP - Junior Cyber Security</h4>
-              <h5>2025 - 2028</h5>
-            </div>
-
-            <div class="resume-item">
-              <h4>BNSP - Intermediate Network Administrator</h4>
-              <h5>2026 - 2029</h5>
-            </div>
-
-            <div class="resume-item">
-              <h4>Cisco Networking Academy - Cyber Threat Management</h4>
-              <h5>2026</h5>
-            </div>
-
-            <div class="resume-item">
-              <h4>Cisco Networking Academy - Ethical Hacker</h4>
-              <h5>2026</h5>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /Resume Section -->
-
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <div><span>Get In</span> <span class="description-title">Touch</span></div>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="200">
-              <i class="icon bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Address</h3>
-                <p>Yogyakarta, Indonesia</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="300">
-              <i class="icon bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Me</h3>
-                <p>082137971051</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="400">
-              <i class="icon bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email</h3>
-                <p>samudrayoga4477@gmail.com</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="500">
-              <i class="icon bi bi-share flex-shrink-0"></i>
-              <div>
-                <h3>Social Profiles</h3>
-                <div class="social-links">
-                  <a href="https://www.facebook.com/profile.php?id=100093291794780&locale=id_ID"><i class="bi bi-facebook"></i></a>
-                  <a href="https://www.instagram.com/samudrayogaa"><i class="bi bi-instagram"></i></a>
-                  <a href="https://www.linkedin.com/in/yogasamudraheriyanto/"><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
-          <div class="row gy-4">
-
-            <div class="col-md-6">
-              <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-            </div>
-
-            <div class="col-md-6">
-              <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-            </div>
-
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" placeholder="Subject" required>
-            </div>
-
-            <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-
-              <button type="submit">Send Message</button>
-            </div>
-
-          </div>
-        </form>
-
-      </div>
-
-    </section><!-- /Contact Section -->
-
+    <section class="contact" id="kontak"><svg class="contact-symbol" aria-hidden="true"><use href="#i-star"/></svg><div class="eyebrow">Petualangan berikutnya</div><h2>Ide hebat dimulai<br>dari sebuah percakapan.</h2><p>Punya tantangan teknologi atau ide yang ingin diwujudkan?<br>Mari temukan langkah pertamanya bersama.</p><div class="contact-buttons"><a class="btn btn-gold" href="mailto:samudrayoga4477@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg>Mulai percakapan<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="copy-email" aria-label="Salin alamat email" title="Salin email"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><a class="btn btn-outline linkedin" href="https://linkedin.com/in/yogasamudraheriyanto" target="_blank" rel="noopener noreferrer">LinkedIn<svg aria-hidden="true"><use href="#i-external"/></svg></a></div><a class="contact-email" href="mailto:samudrayoga4477@gmail.com">samudrayoga4477@gmail.com</a></section>
+    <footer class="site-footer container"><a class="footer-brand" href="#beranda">SAMUDRA<span style="color:var(--gold)"> ✦</span></a><p>© 2026 Yoga Samudra Heriyanto · Terinspirasi petualangan, dibangun dengan rasa ingin tahu.</p><a class="footer-top" href="#beranda">Kembali ke atas<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></footer>
   </main>
 
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename">Contact me</h3>
-
-      <div class="social-links d-flex justify-content-center">
-        <a href="https://www.facebook.com/profile.php?id=100093291794780&locale=id_ID"><i class="bi bi-facebook"></i></a>
-        <a href="https://www.instagram.com/samudrayogaa"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.linkedin.com/in/yogasamudraheriyanto/"><i class="bi bi-linkedin"></i></a>
-        <a href="https://wa.me/6282137971051"><i class="bi bi-whatsapp"></i></a>
-      </div>
-      <div class="container">
-        
-      </div>
-    </div>
-  </footer>
-
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
+  <dialog class="dialog" id="profile-dialog" aria-labelledby="profile-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Tutup profil"><svg aria-hidden="true"><use href="#i-close"/></svg></button><div class="dialog-profile"><img src="assets/samudra-formal.jpeg" alt="Yoga Samudra Heriyanto" width="130" height="168" loading="lazy"><div><div class="eyebrow">Arsip penjelajah</div><h2 id="profile-title">Yoga Samudra Heriyanto</h2><p>IT Developer · Full-Stack · AI Engineering</p></div></div><p>Lulusan Ilmu Komputer dengan pengalaman sebagai IT Developer, Project Manager, Full-Stack Developer, dan AI Engineer. Fokus saya adalah merancang arsitektur sistem, mengembangkan ERP, dan membangun otomasi AI yang terhubung dengan data perusahaan.</p><dl><div><dt>Domisili</dt><dd>Jakarta Barat, DKI Jakarta</dd></div><div><dt>Pendidikan</dt><dd>S.Kom · UPN Veteran Yogyakarta</dd></div><div><dt>Email</dt><dd><a href="mailto:samudrayoga4477@gmail.com">samudrayoga4477@gmail.com</a></dd></div><div><dt>Bahasa pemrograman</dt><dd>Python, JavaScript, C++, Swift, SQL</dd></div></dl><h3>Di luar pengembangan</h3><p>Pengalaman organisasi saya meliputi Ketua Kelas IF-H International Classroom, Ketua Tim KKN, Koordinator Publikasi dan Dokumentasi Veteran Integrated Parade, serta Staf Medinfo HMJ Informatika UPNYK.</p><a class="btn btn-gold" href="assets/CV-Samudra-2026.pdf" download>Kenali lebih jauh lewat CV<svg aria-hidden="true"><use href="#i-download"/></svg></a></div></dialog>
+  <dialog class="dialog" id="project-dialog" aria-labelledby="project-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Tutup catatan karya"><svg aria-hidden="true"><use href="#i-close"/></svg></button><div class="eyebrow" id="project-category"></div><h2 id="project-title"></h2><p class="project-context">Raho Premier · Juni 2026</p><p id="project-description"></p><h3>Kontribusi saya</h3><ul class="project-points" id="project-points"></ul><div class="about-tags" id="project-tags"></div><div class="project-note">Catatan ini merangkum pengalaman kerja yang tercantum pada CV. Ilustrasi kartu merupakan visual konseptual.</div><a class="btn btn-gold" href="assets/CV-Samudra-2026.pdf" download>Lihat pengalaman lengkap<svg aria-hidden="true"><use href="#i-download"/></svg></a></div></dialog>
+  <div class="toast" role="status" aria-live="polite"></div>
 </body>
-
 </html>

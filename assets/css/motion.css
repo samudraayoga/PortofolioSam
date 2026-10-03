@@ -1,0 +1,31 @@
+/* Gentle motion: never hide page content while waiting for JavaScript. */
+.landscape{transition:transform 650ms ease-out,filter 350ms ease;}
+body,.paper,.hero,.contact,.talent-card,.skill-detail,.work-card{transition:background-color 350ms ease,color 350ms ease,border-color 350ms ease,box-shadow 250ms ease,transform 250ms ease;}
+.portrait-window .portrait-crossfade{position:absolute;inset:0;pointer-events:none;}
+.talent-card:before{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 250ms ease;}
+.talent-card[aria-selected=true]:before{transform:scaleX(1);}
+.work-art > .mini-window,.work-art > .mini-chat,.work-art > .constellation{transition:scale 300ms ease;}
+.journey-item{position:relative;}
+.journey-item:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--gold);opacity:.45;transform:scaleX(0);transform-origin:left;transition:transform 650ms ease;pointer-events:none;}
+.journey-item.motion-seen:after{transform:scaleX(1);}
+.dialog[open]{animation:dialog-arrive 240ms ease-out;}
+.dialog[open]::backdrop{animation:backdrop-arrive 240ms ease-out;}
+@keyframes dialog-arrive{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+@keyframes backdrop-arrive{from{opacity:0}to{opacity:1}}
+@keyframes ornament-glow{0%,100%{opacity:.55;text-shadow:0 0 6px #f2d99844}50%{opacity:1;text-shadow:0 0 16px #f2d99899}}
+@media(hover:hover) and (pointer:fine){
+ .work-card:hover{transform:translateY(-4px);}
+ .work-card:hover .work-art > .mini-window,.work-card:hover .work-art > .mini-chat,.work-card:hover .constellation{scale:1.035;}
+ .work-card:hover .work-link svg{transform:translateX(4px);}
+ .orbit:after{animation:ornament-glow 5s ease-in-out infinite;}
+}
+/* Keep touch interactions steady; decorative particles do not drift. */
+.sparkle{animation:none;}
+@media(hover:none),(pointer:coarse){.btn:hover,.talent-card:hover,.work-card:hover{transform:none;}.work-link:hover svg{transform:none;}}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto;}
+ *,*:before,*:after{animation:none!important;transition:none!important;}
+ .landscape{transform:none!important;}
+ .btn:hover,.talent-card:hover,.work-card:hover{transform:none;}
+ .work-art > .mini-window,.work-art > .mini-chat,.work-art > .constellation{scale:1!important;}
+}

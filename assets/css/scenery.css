@@ -1,0 +1,153 @@
+/* Fantasy scenery continues directly behind the sections below the hero. */
+.portfolio-page {
+  --scene-seam: #163847;
+  --scene-veil: rgba(10, 34, 46, .72);
+  --scene-panel: rgba(17, 47, 60, .78);
+  --scene-panel-active: rgba(35, 76, 83, .88);
+  --scene-border: rgba(222, 208, 166, .28);
+  background: var(--scene-seam);
+}
+
+/* A shared color at the join softens the change in landscape framing. */
+.portfolio-page .hero::after {
+  background: linear-gradient(0deg, var(--scene-seam), transparent 180px),
+    radial-gradient(ellipse at 75% 30%, #f5e7b010, transparent 60%);
+}
+
+.portfolio-page .paper {
+  --ink: #f4f2e8;
+  --muted: #ccdadb;
+  --gold: #e5cc94;
+  --line: var(--scene-border);
+  color: var(--ink);
+  background-color: var(--scene-seam);
+  background-image:
+    linear-gradient(180deg, var(--scene-seam), transparent 220px),
+    linear-gradient(var(--scene-veil), var(--scene-veil)),
+    url('../landscape.png');
+  background-position: center top, center, 58% center;
+  background-size: 100% 100%, 100% 100%, cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll, scroll, fixed;
+}
+
+.portfolio-page .paper .about .signature { color: #acd8c8; }
+.portfolio-page .paper .tag {
+  background: rgba(28, 67, 75, .7);
+  border-color: rgba(180, 210, 200, .3);
+  color: #d5e8dd;
+}
+
+.portfolio-page .paper :is(.talent-card, .work-card, .skill-detail, .education-ribbon) {
+  background: var(--scene-panel);
+  border-color: var(--scene-border);
+  box-shadow: 0 12px 35px #071b2826;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.portfolio-page .paper .talent-card::after { border-color: #e9d6a81a; }
+.portfolio-page .paper .talent-card[aria-selected=true] {
+  background: var(--scene-panel-active);
+  border-color: #ddc18c;
+  box-shadow: 0 8px 32px #091e302e, inset 0 0 24px #c9dfa508;
+}
+.portfolio-page .paper :is(.talent-card:hover, .work-card:hover) {
+  border-color: #d9c38c99;
+  box-shadow: 0 14px 36px #051b3545;
+}
+.portfolio-page .paper .talent-icon {
+  background: #55897a26;
+  border-color: #91c4af73;
+  color: #addcc7;
+}
+.portfolio-page .paper .talent-card:nth-child(2) .talent-icon {
+  background: #668ab42b;
+  border-color: #a8c4e473;
+  color: #bfd5f4;
+}
+.portfolio-page .paper .talent-card:nth-child(3) .talent-icon {
+  background: #d4b77520;
+  border-color: #e4c78473;
+  color: #ead29a;
+}
+.portfolio-page .paper .talent-number { color: #aebfbc; }
+.portfolio-page .paper :is(.talent-arrow, .skill-detail-label) { color: #e5cc94; }
+.portfolio-page .paper .skill-items span {
+  border-color: #b2cfc03d;
+  background: #50786730;
+  color: #e0eee3;
+}
+
+.portfolio-page .paper .work-category { color: #e5cc94; }
+.portfolio-page .paper .work-link {
+  border-color: var(--scene-border);
+  color: #c5e5d7;
+}
+.portfolio-page .paper .work-tech span {
+  border-color: #b2cfc03d;
+  background: #50786730;
+  color: #d6e9df;
+}
+.portfolio-page .paper .art-chat-proof { background: #294c57a6; }
+.portfolio-page .paper .art-chat-proof::after { border-color: #d6c99942; }
+
+.portfolio-page .paper .journey-date { color: #dbc89f; }
+.portfolio-page .paper .journey-item .journey-type { color: #dfc590; }
+.portfolio-page .paper .journey-item .journey-company { color: #b9ddcf; }
+.portfolio-page .paper .journey-node {
+  background: #325360bf;
+  border-color: #cdbb8580;
+  color: #e6ce99;
+}
+.portfolio-page .paper .journey-toggle {
+  background: #163d4b9c;
+  border-color: #cdbb8566;
+  color: #efdbad;
+}
+.portfolio-page .paper .journey-toggle:hover { background: #3c6068cc; }
+.portfolio-page .paper .education-ribbon > svg { color: #e5cc94; }
+.portfolio-page .paper .education-ribbon .education-year { color: #ccd9d2; }
+
+.portfolio-page .contact {
+  background: linear-gradient(var(--scene-veil), var(--scene-veil)),
+    url('../landscape.png') center 62% / cover no-repeat;
+  border-top: 1px solid var(--scene-border);
+}
+.portfolio-page .contact::before {
+  background: radial-gradient(ellipse at 50% 20%, #709f8920, transparent 70%);
+  opacity: 1;
+}
+.portfolio-page .site-footer {
+  --gold: #e5cc94;
+  color: #c4d3d3;
+}
+.portfolio-page .footer-brand { color: #e9e8d8; }
+
+.portfolio-page.night {
+  --scene-seam: #102638;
+  --scene-veil: rgba(5, 19, 37, .84);
+  --scene-panel: rgba(12, 31, 51, .82);
+  --scene-panel-active: rgba(25, 53, 70, .9);
+}
+.portfolio-page.night .contact {
+  background: linear-gradient(var(--scene-veil), var(--scene-veil)),
+    url('../landscape.png') center 62% / cover no-repeat;
+}
+
+/* Keep the landscape visible on touch devices without fixed backgrounds. */
+@media (max-width: 600px) {
+  .portfolio-page .hero::after {
+    background: linear-gradient(0deg, var(--scene-seam), transparent 140px);
+  }
+  .portfolio-page .paper {
+    background-attachment: scroll;
+    background-position: center top, center, 62% top;
+    background-size: 100% 100%, 100% 100%, auto 1100px;
+    background-repeat: no-repeat, no-repeat, repeat-y;
+  }
+  .portfolio-page .paper :is(.talent-card, .work-card, .skill-detail, .education-ribbon) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
