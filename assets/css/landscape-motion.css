@@ -1,0 +1,160 @@
+/* Living Landscape: ambient light and weather, always behind the interface. */
+.living-landscape {
+  --landscape-play-state: paused;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+  -webkit-mask-image: linear-gradient(90deg, #0002, #000 58%);
+  mask-image: linear-gradient(90deg, #0002, #000 58%);
+}
+
+.living-landscape[data-active="true"] { --landscape-play-state: running; }
+.living-landscape > * {
+  position: absolute;
+  pointer-events: none;
+  animation-play-state: var(--landscape-play-state) !important;
+}
+
+/* Gradients form soft cloud edges without a full-screen blur/filter pass. */
+.living-cloud {
+  width: 86%;
+  height: 24%;
+  top: 8%;
+  right: -18%;
+  opacity: .48;
+  background:
+    radial-gradient(ellipse at 24% 56%, #dbf0e947, transparent 31%),
+    radial-gradient(ellipse at 48% 47%, #e8f4e955, transparent 34%),
+    radial-gradient(ellipse at 68% 62%, #e6f1e842, transparent 31%);
+  animation: living-cloud-drift 48s ease-in-out -17s infinite alternate;
+}
+.living-cloud-far {
+  top: 21%;
+  right: 10%;
+  width: 64%;
+  height: 16%;
+  opacity: .29;
+  animation-duration: 67s;
+  animation-delay: -38s;
+  animation-direction: alternate-reverse;
+}
+
+.living-sunrays {
+  inset: -8% -14% 0;
+  transform-origin: 80% 0;
+  background: conic-gradient(from 160deg at 80% -6%,
+    transparent 0deg, #fff0b81a 7deg, transparent 13deg,
+    transparent 19deg, #f9ebbd24 23deg, transparent 29deg,
+    transparent 37deg, #f5e8ae12 41deg, transparent 47deg);
+  -webkit-mask-image: linear-gradient(#000 8%, #0008 45%, transparent 88%);
+  mask-image: linear-gradient(#000 8%, #0008 45%, transparent 88%);
+  opacity: .72;
+  animation: living-light-shift 28s ease-in-out -8s infinite alternate;
+  transition: opacity 1.5s ease;
+}
+
+.living-mist {
+  left: -18%;
+  top: 57%;
+  width: 136%;
+  height: 25%;
+  opacity: .33;
+  background:
+    radial-gradient(ellipse at 25% 62%, #b8d9d24a, transparent 43%),
+    radial-gradient(ellipse at 68% 47%, #c9e4d77a, transparent 45%),
+    radial-gradient(ellipse at 86% 61%, #d0e8dc42, transparent 29%);
+  animation: living-valley-mist 39s ease-in-out -19s infinite alternate;
+}
+.living-mist-near {
+  top: 75%;
+  left: -7%;
+  height: 18%;
+  opacity: .24;
+  animation-duration: 51s;
+  animation-delay: -7s;
+  animation-direction: alternate-reverse;
+}
+
+/* Each leaf appears briefly in a long cycle; there is never a particle storm. */
+.living-leaf {
+  width: 12px;
+  height: 6px;
+  top: 30%;
+  left: 95%;
+  border-radius: 85% 0 85% 0;
+  background: linear-gradient(150deg, #c5d2a7, #8fae7a 53%, #e1d9a2);
+  opacity: 0;
+  animation: living-leaf-flight 29s linear -3s infinite;
+}
+.living-leaf:nth-of-type(2) {
+  top: 41%;
+  left: 89%;
+  width: 9px;
+  height: 5px;
+  animation-duration: 37s;
+  animation-delay: -18s;
+}
+.living-leaf:nth-of-type(3) {
+  top: 17%;
+  left: 80%;
+  width: 8px;
+  height: 4px;
+  animation-duration: 43s;
+  animation-delay: -29s;
+}
+
+.night .living-sunrays { opacity: .12; }
+.night .living-cloud { opacity: .24; }
+.night .living-cloud-far { opacity: .15; }
+.night .living-mist { opacity: .2; }
+.night .living-leaf { background: linear-gradient(150deg, #c7d9c0, #6e9c9a); }
+
+@keyframes living-cloud-drift {
+  from { transform: translate3d(-5%, 0, 0) scale(1); }
+  to { transform: translate3d(7%, 3%, 0) scale(1.035); }
+}
+@keyframes living-light-shift {
+  from { transform: rotate(-4deg); opacity: .35; }
+  to { transform: rotate(3deg); opacity: .72; }
+}
+@keyframes living-valley-mist {
+  from { transform: translate3d(-4%, 3%, 0) scaleY(.88); }
+  to { transform: translate3d(5%, -4%, 0) scaleY(1.12); }
+}
+@keyframes living-leaf-flight {
+  0%, 8% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-30deg); }
+  12% { opacity: .65; }
+  24% { transform: translate3d(-8vw, 7vh, 0) rotate(80deg) scaleX(.65); }
+  39% { opacity: .5; transform: translate3d(-20vw, 12vh, 0) rotate(170deg) scaleX(1); }
+  52% { opacity: 0; transform: translate3d(-31vw, 20vh, 0) rotate(290deg) scaleX(.4); }
+  100% { opacity: 0; transform: translate3d(-31vw, 20vh, 0) rotate(290deg) scaleX(.4); }
+}
+
+/* Opacity remains a theme property; night never inherits the daylight pulse. */
+.night .living-sunrays { animation-name: living-moonlight-shift; }
+@keyframes living-moonlight-shift {
+  from { transform: rotate(-4deg); opacity: .06; }
+  to { transform: rotate(3deg); opacity: .14; }
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .living-cloud-far, .living-mist-near, .living-leaf { display: none; }
+  .living-landscape {
+    -webkit-mask-image: linear-gradient(#0003 12%, #000 60%, #0008);
+    mask-image: linear-gradient(#0003 12%, #000 60%, #0008);
+  }
+  .living-cloud { width: 135%; right: -30%; top: 32%; height: 14%; opacity: .35; }
+  .living-mist { top: 70%; height: 16%; opacity: .25; }
+  .living-sunrays { opacity: .4; }
+}
+
+.living-landscape[data-calm="true"] > * { animation: none !important; }
+.living-landscape[data-calm="true"] .living-leaf { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .living-landscape > * { animation: none !important; transition: none !important; }
+  .living-leaf { display: none; }
+}

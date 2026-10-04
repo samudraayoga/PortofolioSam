@@ -1,0 +1,117 @@
+/* A character archive: the portrait becomes the opening scene of the profile. */
+#profile-dialog.character-reveal {
+  --character-ivory: #f5ebcf;
+  --character-gold: #d9be83;
+  width: min(1030px, calc(100% - 48px));
+  max-width: 1030px;
+  max-height: none;
+  overflow: visible;
+  border: 1px solid #dfc99380;
+  background: transparent;
+  color: var(--character-ivory);
+  box-shadow: 0 35px 140px #020f20a6, 0 0 0 7px #d7bb8110;
+}
+#profile-dialog.character-reveal[open] { animation: none; transform: none; }
+#profile-dialog.character-reveal::backdrop { background: #041725d6; backdrop-filter: blur(12px); }
+#profile-dialog.character-reveal[open]::backdrop { animation: character-veil-in 480ms ease both; }
+#profile-dialog.character-reveal.character-closing::backdrop { animation: character-veil-out 340ms ease both; }
+#profile-dialog.character-reveal > .dialog-inner {
+  position: relative;
+  height: min(704px, 88dvh);
+  padding: 0;
+  overflow: hidden;
+  background: #102f3a;
+}
+#profile-dialog .character-layout { display: grid; grid-template-columns: 39% 61%; height: 100%; min-height: 0; }
+#profile-dialog .character-visual { position: relative; min-width: 0; overflow: hidden; isolation: isolate; background: #28494e; }
+#profile-dialog .character-visual > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
+  filter: saturate(.78);
+}
+#profile-dialog .character-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #102f3a 0, #143a44e8 9%, #183b4650 43%, #143a4420 76%), linear-gradient(90deg, transparent 76%, #102f3a5c);
+  pointer-events: none;
+}
+#profile-dialog .character-portrait-frame { position: absolute; z-index: 1; inset: 22px; border: 1px solid #fff0ca60; pointer-events: none; }
+#profile-dialog .character-portrait-frame::before,
+#profile-dialog .character-portrait-frame::after { content: ''; position: absolute; width: 24px; height: 24px; border: solid #f1ddb0; }
+#profile-dialog .character-portrait-frame::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+#profile-dialog .character-portrait-frame::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+#profile-dialog .character-visual-label { position: absolute; z-index: 2; left: 43px; right: 35px; bottom: 43px; color: #fff1cb; }
+#profile-dialog .character-visual-label > span { font-size: 8px; letter-spacing: 2.2px; text-transform: uppercase; }
+#profile-dialog .character-visual-label > strong { display: block; margin: 13px 0 10px; font: 400 clamp(38px, 4vw, 53px)/1 var(--serif); letter-spacing: 1px; }
+#profile-dialog .character-visual-label > p { max-width: 230px; margin: 0; color: #dce6dd; font-size: 11px; line-height: 1.8; }
+#profile-dialog .character-star { position: absolute; top: 39px; left: 39px; z-index: 2; width: 26px; height: 26px; color: #f8e6b6; filter: drop-shadow(0 0 9px #fff4c470); }
+#profile-dialog .character-copy {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 53px 43px 35px;
+  background: radial-gradient(ellipse at 95% 0%, #4772663b, transparent 54%), #102f3a;
+  scrollbar-width: thin;
+  scrollbar-color: #ad956270 transparent;
+}
+#profile-dialog .character-copy .eyebrow { margin-bottom: 17px; color: var(--character-gold); font: 500 9px var(--sans); text-transform: uppercase; letter-spacing: 2.4px; }
+#profile-dialog .character-copy h2 { max-width: 420px; margin: 0 0 14px; color: #fff2d5; font: 400 clamp(29px, 3.2vw, 40px)/1.15 var(--serif); letter-spacing: -.5px; }
+#profile-dialog .character-copy .character-role { margin: 0; color: #b7d0c8; font-size: 10px; letter-spacing: .6px; }
+#profile-dialog .character-rule { display: flex; align-items: center; gap: 11px; margin: 23px 0 21px; color: var(--character-gold); transform-origin: left center; }
+#profile-dialog .character-rule::before { content: ''; width: 7px; height: 7px; border: 1px solid currentColor; transform: rotate(45deg); }
+#profile-dialog .character-rule::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, #d9be8380, #d9be8312); }
+#profile-dialog .character-copy > p { margin: 0 0 20px; color: #c0d1cd; font-size: 12px; line-height: 1.9; }
+#profile-dialog .character-copy dl { gap: 18px 22px; margin: 23px 0 25px; font-size: 11px; line-height: 1.65; }
+#profile-dialog .character-copy dl > div { min-width: 0; padding-top: 11px; border-top: 1px solid #d9be832b; }
+#profile-dialog .character-copy dt { color: #d9be83; font-size: 8px; letter-spacing: 1.5px; }
+#profile-dialog .character-copy dd { margin-top: 7px; color: #e2e5d6; overflow-wrap: anywhere; }
+#profile-dialog .character-copy dd a { text-decoration-color: #d9be8370; text-underline-offset: 4px; }
+#profile-dialog .character-copy h3 { margin: 23px 0 10px; color: #eedbb3; font: 400 17px var(--serif); }
+#profile-dialog .character-copy .btn { margin-top: 5px; padding: 13px 18px; background: #ddc58f; color: #183d43; border-color: #ebd6a7; font-size: 10px; }
+#profile-dialog.character-reveal .dialog-close { top: 15px; right: 15px; z-index: 50; width: 34px; height: 34px; border-color: #dcc79770; color: #f7e5bf; background: #102f3acc; backdrop-filter: blur(6px); }
+#profile-dialog.character-reveal .dialog-close:focus-visible,
+#profile-dialog .character-copy a:focus-visible { outline: 2px solid #ffe5a7; outline-offset: 5px; }
+#profile-dialog .character-flight { position: fixed; z-index: 40; overflow: hidden; pointer-events: none; margin: 0; box-shadow: 0 0 30px #c8d8bd1a; }
+#profile-dialog .character-flight img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@keyframes character-veil-in { from { background-color: #04172500; backdrop-filter: blur(0); } to { background-color: #041725d6; backdrop-filter: blur(12px); } }
+@keyframes character-veil-out { from { background-color: #041725d6; backdrop-filter: blur(12px); } to { background-color: #04172500; backdrop-filter: blur(0); } }
+@media (max-width: 760px) {
+  #profile-dialog.character-reveal { width: calc(100% - 28px); }
+  #profile-dialog .character-layout { grid-template-columns: 36% 64%; }
+  #profile-dialog .character-copy { padding: 50px 26px 28px; }
+  #profile-dialog .character-visual-label { left: 28px; right: 22px; bottom: 34px; }
+  #profile-dialog .character-visual-label > span { font-size: 7px; letter-spacing: 1.4px; }
+  #profile-dialog .character-visual-label > strong { font-size: 34px; }
+  #profile-dialog .character-portrait-frame { inset: 14px; }
+  #profile-dialog .character-star { top: 28px; left: 28px; }
+}
+@media (max-width: 600px) {
+  #profile-dialog.character-reveal { width: calc(100% - 24px); }
+  #profile-dialog.character-reveal > .dialog-inner { height: min(820px, 91dvh); }
+  #profile-dialog .character-layout { display: block; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #ad956270 transparent; }
+  #profile-dialog .character-visual { height: 315px; }
+  #profile-dialog .character-visual > img { object-position: 50% 24%; }
+  #profile-dialog .character-visual::after { background: linear-gradient(0deg, #102f3a 0, #143a44bc 18%, transparent 64%); }
+  #profile-dialog .character-portrait-frame { inset: 16px 16px 20px; border-bottom: 0; }
+  #profile-dialog .character-visual-label { left: 28px; bottom: 25px; }
+  #profile-dialog .character-visual-label > strong { font-size: 40px; margin: 10px 0 8px; }
+  #profile-dialog .character-visual-label > p { display: none; }
+  #profile-dialog .character-copy { overflow: visible; padding: 16px 27px 32px; background: #102f3a; }
+  #profile-dialog .character-copy h2 { max-width: 310px; font-size: 30px; }
+  #profile-dialog .character-copy .eyebrow { margin-bottom: 12px; font-size: 8px; letter-spacing: 2px; }
+  #profile-dialog .character-copy dl { grid-template-columns: 1fr; gap: 15px; }
+  #profile-dialog .character-copy > p { font-size: 12px; }
+  #profile-dialog .character-copy .btn { gap: 13px; padding: 12px 14px; font-size: 9px; }
+  #profile-dialog.character-reveal .dialog-close { top: 12px; right: 12px; width: 36px; height: 36px; background: #102f3aee; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #profile-dialog.character-reveal[open]::backdrop,
+  #profile-dialog.character-reveal.character-closing::backdrop { animation: none; }
+}

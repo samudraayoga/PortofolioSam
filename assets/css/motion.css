@@ -4,10 +4,14 @@
 
 /* Celestial Gate: a short first-visit title sequence. */
 body.codex-intro-running{overflow:hidden}
-.celestial-gate{position:fixed;inset:0;z-index:1000;display:grid;place-content:center;justify-items:center;color:#fff8df;background:radial-gradient(circle at 50% 48%,#365f6c 0,#153647 38%,#071a2a 100%);overflow:hidden;transition:opacity 650ms ease,visibility 650ms ease}
+.celestial-gate{--gate-exit-duration:1100ms;--gate-zoom-scale:12;position:fixed;inset:0;z-index:1000;display:grid;place-content:center;justify-items:center;color:#fff8df;background:radial-gradient(circle at 50% 48%,#365f6c 0,#153647 38%,#071a2a 100%);overflow:hidden}
 .celestial-gate:before,.celestial-gate:after{content:'';position:absolute;inset:-25%;background:conic-gradient(from 0deg,transparent,#f4dc9c25,transparent 18%,transparent 48%,#a9d9d225,transparent 64%);animation:gate-sky 16s linear infinite}
 .celestial-gate:after{inset:0;background:radial-gradient(circle,#fff8cf 0 1px,transparent 2px) 0 0/97px 83px;opacity:.28;animation:star-drift 9s ease-in-out infinite}
-.celestial-gate.intro-leaving{opacity:0;visibility:hidden}
+.celestial-gate.intro-leaving{animation:gate-departure var(--gate-exit-duration) linear both}
+.celestial-gate.intro-leaving .gate-sigil{animation:gate-zoom var(--gate-exit-duration) cubic-bezier(.55,.05,.7,.4) both;will-change:transform}
+.celestial-gate.intro-leaving .gate-sigil span{animation:gate-copy-out 220ms ease-out both}
+.celestial-gate.intro-leaving :is(.gate-kicker,strong){animation:gate-copy-out 220ms ease-out both}
+.celestial-gate.intro-leaving>button{opacity:0;transition:opacity 180ms ease}
 .gate-sigil{position:relative;width:190px;height:190px;display:grid;place-items:center;margin-bottom:28px;filter:drop-shadow(0 0 20px #f3d99f55)}
 .gate-sigil i{position:absolute;inset:0;border:1px solid #f1d79788;border-radius:50%;animation:gate-ring 1.3s var(--motion-ease) both}
 .gate-sigil i:nth-child(2){inset:18px;border-style:dashed;animation-delay:130ms;animation-direction:reverse}
@@ -206,6 +210,9 @@ body.codex-intro-running{overflow:hidden}
 @keyframes gate-ring{from{opacity:0;scale:.62}to{opacity:1;scale:1}}
 @keyframes gate-star{from{opacity:0;scale:.2;rotate:-45deg}60%{opacity:1;scale:1.25;rotate:8deg}to{opacity:1;scale:1;rotate:0}}
 @keyframes gate-copy{from{opacity:0;transform:translateY(10px);letter-spacing:8px}to{opacity:1;transform:translateY(0)}}
+@keyframes gate-zoom{from{transform:scale(1)}to{transform:scale(var(--gate-zoom-scale))}}
+@keyframes gate-copy-out{to{opacity:0;transform:translateY(-8px)}}
+@keyframes gate-departure{0%,45%{opacity:1}100%{opacity:0}}
 @keyframes skill-current{0%,100%{transform:translateX(-130%)}50%{transform:translateX(130%)}}
 
 @media(max-width:800px){

@@ -9,10 +9,16 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="assets/typed.umd.js" defer></script>
-  <script src="assets/js/script.js" defer></script>
-  <link rel="stylesheet" href="assets/css/motion.css?v=20261004-3">
+  <script src="assets/js/character-reveal.js?v=20261004-1" defer></script>
+  <script src="assets/js/script.js?v=20261004-5" defer></script>
+  <link rel="stylesheet" href="assets/css/motion.css?v=20261004-5">
+  <link rel="stylesheet" href="assets/css/project-portal.css?v=20261004-1">
+  <script src="assets/js/project-portal.js?v=20261004-1"></script>
   <link rel="stylesheet" href="assets/css/scenery.css?v=20261003-2">
-  <script src="assets/js/motion.js?v=20261004-3" defer></script>
+  <link rel="stylesheet" href="assets/css/landscape-motion.css?v=20261004-1">
+  <link rel="stylesheet" href="assets/css/character-reveal.css?v=20261004-1">
+  <script src="assets/js/motion.js?v=20261004-5" defer></script>
+  <script src="assets/js/landscape-motion.js?v=20261004-1" defer></script>
 </head>
 <body class="portfolio-page">
   <a class="skip-link" href="#profil">Skip to content</a>
@@ -121,7 +127,7 @@
       <section id="karya" class="works-section section container">
         <div class="section-heading"><div><div class="eyebrow">Creation</div><h2>Shape through innovation.</h2></div><p>Explore the development of business systems, AI solutions, and iOS applications.</p></div>
         <div class="works-grid">
-          <article class="work-card work-card-erp">
+          <article id="project-erp" class="work-card work-card-erp">
             <div class="work-art art-erp-proof"><img src="assets/erp/inventory.png" alt="Raho Premier ERP inventory master; internal account and inventory data are blurred" width="1728" height="922" loading="lazy" decoding="async"></div>
             <div class="work-body">
               <div class="work-category">Fullstack Developer</div>
@@ -131,7 +137,7 @@
               <a href="erp.html" class="work-link">Explore the ERP project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
           </article>
-          <article class="work-card work-card-ai">
+          <article id="project-ai" class="work-card work-card-ai">
             <div class="work-art art-ai-documentation"><img src="assets/ai-agent/kpi-flow.svg" alt="Conceptual flow from the KPI dashboard through an ERP endpoint and the OpenClaw API with SOUL instructions to staff performance summaries" width="1200" height="720" loading="lazy" decoding="async"></div>
             <div class="work-body">
               <div class="work-category">AI Engineering · ERP Integration</div>
@@ -141,7 +147,7 @@
               <button data-project="ai" class="work-link">Explore the integration flow<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
             </div>
           </article>
-          <article class="work-card work-card-chat">
+          <article id="project-chat" class="work-card work-card-chat">
             <div class="work-art art-chat-proof"><img src="assets/chatbot/overview.png" alt="RAHO WhatsApp Chatbot AI documentation: Rule, RAG, and AI flows, plus Outbox and Worker" width="1708" height="962" loading="lazy" decoding="async"></div>
             <div class="work-body">
               <div class="work-category">Full-Stack · System Design</div>
@@ -151,7 +157,7 @@
               <a href="chatbot.html" class="work-link">Explore the chatbot project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
           </article>
-          <article class="work-card work-card-mlbb">
+          <article id="project-mlbb" class="work-card work-card-mlbb">
             <div class="work-art art-mlbb-proof">
               <img src="assets/mlbb/heroes.png" alt="Hero list and search in the MLBB Heroes Matchup iOS app" width="800" height="1694" loading="lazy" decoding="async">
               <img src="assets/mlbb/counter-picks.png" alt="Harley’s profile with traits, weaknesses, and recommended counter heroes with scores" width="778" height="1704" loading="lazy" decoding="async">

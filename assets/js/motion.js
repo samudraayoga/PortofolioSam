@@ -17,24 +17,49 @@
 
   const portfolioPage = document.body.classList.contains('portfolio-page');
   const heroElement = $('.hero');
+  const showGate = portfolioPage && firstVisit && !reduced.matches;
+  const gateExitDuration = 1100;
 
   // Celestial Gate appears once per browsing session, with a direct skip control.
-  if (portfolioPage && firstVisit && !reduced.matches) {
+  if (showGate) {
     const intro = document.createElement('div');
     intro.className = 'celestial-gate';
+    intro.style.setProperty('--gate-exit-duration', `${gateExitDuration}ms`);
     intro.setAttribute('aria-label', 'Opening Samudra’s portfolio');
     intro.innerHTML = '<div class="gate-sigil" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><p class="gate-kicker">A DEVELOPER’S JOURNEY</p><strong>SAMUDRA</strong><button type="button">Skip intro</button>';
     document.body.prepend(intro);
     document.body.classList.add('codex-intro-running');
     let introTimer;
-    const dismissIntro = () => {
+    let cleanupTimer;
+    const removeIntro = () => {
       clearTimeout(introTimer);
-      if (intro.classList.contains('intro-leaving')) return;
-      intro.classList.add('intro-leaving');
+      clearTimeout(cleanupTimer);
+      intro.remove();
       document.body.classList.remove('codex-intro-running');
-      setTimeout(() => intro.remove(), 700);
+      reduced.removeEventListener('change', skipIntro);
     };
-    $('button', intro).addEventListener('click', dismissIntro);
+    const skipIntro = () => {
+      if (!intro.classList.contains('intro-leaving')) startOpeningSequence(true);
+      removeIntro();
+    };
+    const dismissIntro = () => {
+      if (intro.classList.contains('intro-leaving')) return;
+      clearTimeout(introTimer);
+      // Let the outer ring pass the viewport edges on both phones and desktops.
+      const sigil = $('.gate-sigil', intro).getBoundingClientRect();
+      const centerX = sigil.left + sigil.width / 2;
+      const centerY = sigil.top + sigil.height / 2;
+      const radius = Math.hypot(Math.max(centerX, innerWidth - centerX), Math.max(centerY, innerHeight - centerY));
+      intro.style.setProperty('--gate-zoom-scale', String(Math.max(5, radius * 2.2 / sigil.width)));
+      intro.classList.add('intro-leaving');
+      startOpeningSequence();
+      cleanupTimer = setTimeout(removeIntro, gateExitDuration + 100);
+    };
+    intro.addEventListener('animationend', event => {
+      if (event.target === intro && event.animationName === 'gate-departure') removeIntro();
+    });
+    $('button', intro).addEventListener('click', skipIntro);
+    reduced.addEventListener('change', skipIntro);
     introTimer = setTimeout(dismissIntro, 1750);
   }
 
@@ -107,6 +132,7 @@
   function reveal(element, index = 0) {
     if (!element || element.classList.contains('motion-seen')) return;
     element.classList.add('motion-seen');
+    if (document.documentElement.classList.contains('portal-transitioning')) return;
     animate(element, [
       {opacity: 0, transform: 'translateY(22px)'},
       {opacity: 1, transform: 'translateY(0)'}
@@ -114,9 +140,10 @@
   }
 
   // Opening sequence: the first visit opens the codex; return visits stay brief.
-  if (!reduced.matches && scrollY < 80) {
+  function startOpeningSequence(skipped = false) {
+    if (reduced.matches || scrollY >= 80) return;
     const introFactor = firstVisit ? 1 : .55;
-    const introDelay = portfolioPage && firstVisit ? 1050 : 0;
+    const introDelay = showGate && !skipped ? gateExitDuration * .35 : 0;
     animate($('.landscape'), [
       {opacity: .45, transform: 'scale(1.075)'},
       {opacity: 1, transform: 'scale(1.025)'}
@@ -138,6 +165,7 @@
       {opacity: 1, transform: 'translateY(0)'}
     ], {duration: 600, delay: 90 + index * 75}));
   }
+  if (!showGate) startOpeningSequence();
 
   // Each chapter reveals once. Siblings receive a restrained stagger.
   if ('IntersectionObserver' in window && !reduced.matches) {
@@ -373,6 +401,7 @@
     });
   }
   $$('dialog').forEach(dialog => {
+    if ((dialog.id === 'profile-dialog' && window.SamudraCharacterReveal) || (dialog.id === 'project-dialog' && window.SamudraProjectPortal)) return;
     $('.dialog-close', dialog)?.addEventListener('click', event => {
       if (reduced.matches) return;
       event.preventDefault();
@@ -446,7 +475,7 @@
   // Project chapters close like a codex page before same-origin navigation.
   $$('.work-card a[href], .case-back[href], .case-brand[href], .case-footer a[href]').forEach(link => {
     link.addEventListener('click', event => {
-      if (reduced.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
+      if (link.dataset.projectPortal === 'true' || reduced.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
       const destination = new URL(link.href, location.href);
       if (destination.origin !== location.origin) return;
       event.preventDefault();
@@ -455,9 +484,13 @@
     });
   });
 
+  window.addEventListener('pageshow', () => document.documentElement.classList.remove('page-leaving'));
   finePointer.addEventListener('change', resetParallax);
   reduced.addEventListener('change', () => {
     resetParallax();
-    if (reduced.matches) document.getAnimations().forEach(animation => animation.finish());
+    if (reduced.matches) document.getAnimations().forEach(animation => {
+      if (Number.isFinite(animation.effect?.getComputedTiming().endTime)) animation.finish();
+      else animation.cancel();
+    });
   });
 })();

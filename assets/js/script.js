@@ -115,16 +115,26 @@
     }).catch(() => {});
   }));
 
+  function closeDialog(dialog) {
+    if (window.SamudraCharacterReveal?.close(dialog) || window.SamudraProjectPortal?.closeDialog(dialog)) return;
+    dialog.close();
+  }
   $$('dialog').forEach(dialog => {
-    $('.dialog-close', dialog).addEventListener('click', () => dialog.close());
+    $('.dialog-close', dialog).addEventListener('click', () => closeDialog(dialog));
     dialog.addEventListener('click', e => {
       const rect = dialog.getBoundingClientRect();
-      if (e.target === dialog && (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom)) dialog.close();
+      if (e.target === dialog && (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom)) closeDialog(dialog);
+    });
+    dialog.addEventListener('cancel', event => {
+      if (dialog.id === 'profile-dialog' || dialog.id === 'project-dialog') { event.preventDefault(); closeDialog(dialog); }
     });
     dialog.addEventListener('close', () => { document.body.style.overflow = ''; });
   });
-  function openDialog(dialog) { dialog.showModal(); document.body.style.overflow = 'hidden'; }
-  $$('[data-open-profile]').forEach(button => button.addEventListener('click', () => openDialog($('#profile-dialog'))));
+  function openDialog(dialog, trigger) {
+    if (window.SamudraCharacterReveal?.open(dialog, trigger) || window.SamudraProjectPortal?.openDialog(dialog, trigger)) return;
+    dialog.showModal(); document.body.style.overflow = 'hidden';
+  }
+  $$('[data-open-profile]').forEach(button => button.addEventListener('click', () => openDialog($('#profile-dialog'), button)));
 
   const projects = {
     ai: {
@@ -141,7 +151,7 @@
     $('#project-description').textContent = project.description;
     $('#project-points').replaceChildren(...project.points.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
     $('#project-tags').replaceChildren(...project.tags.map(text => { const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = text; return tag; }));
-    openDialog($('#project-dialog'));
+    openDialog($('#project-dialog'), button);
   }));
 
   let toastTimer;

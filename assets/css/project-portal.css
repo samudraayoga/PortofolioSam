@@ -1,0 +1,107 @@
+/* A project keeps its artwork and title as the reader enters its case study. */
+@view-transition { navigation: auto; }
+
+.work-card { scroll-margin-top: 100px; }
+html.portal-restoring { scroll-behavior: auto !important; }
+.portal-restoring .work-card { position: relative !important; top: auto !important; }
+html[data-portal-project="erp"] .work-card-erp .work-art > img, .erp-page .case-cover > img { view-transition-name: project-erp-art; }
+html[data-portal-project="erp"] .work-card-erp h3, .erp-page .case-hero h1 { view-transition-name: project-erp-title; }
+html[data-portal-project="chat"] .work-card-chat .work-art > img, .chatbot-page .case-cover > img { view-transition-name: project-chat-art; }
+html[data-portal-project="chat"] .work-card-chat h3, .chatbot-page .case-hero h1 { view-transition-name: project-chat-title; }
+html[data-portal-project="mlbb"] .work-card-mlbb .work-art > img:first-child, .mlbb-page .case-cover > img:first-child { view-transition-name: project-mlbb-art; }
+html[data-portal-project="mlbb"] .work-card-mlbb .work-art > img:nth-child(2), .mlbb-page .case-cover > img:nth-child(2) { view-transition-name: project-mlbb-secondary; }
+html[data-portal-project="mlbb"] .work-card-mlbb h3, .mlbb-page .case-hero h1 { view-transition-name: project-mlbb-title; }
+html[data-portal-project="ai"] .work-card-ai .work-art > img { view-transition-name: project-ai-art; }
+html[data-portal-project="ai"] .work-card-ai h3 { view-transition-name: project-ai-title; }
+body:has(#project-dialog[open]) .work-card-ai :is(.work-art > img,h3) { view-transition-name: none; }
+#project-dialog[open] .project-illustration img { view-transition-name: project-ai-art; }
+#project-dialog[open] #project-title { view-transition-name: project-ai-title; }
+.portal-dialog[open], .portal-dialog[open]::backdrop { animation: none; }
+
+::view-transition-group(*) {
+  animation-duration: 720ms;
+  animation-timing-function: cubic-bezier(.22,.8,.22,1);
+}
+::view-transition-old(root) { animation: portal-page-out 240ms ease both; }
+::view-transition-new(root) { animation: portal-page-in 520ms 130ms ease both; }
+::view-transition-group(project-erp-art),
+::view-transition-group(project-chat-art),
+::view-transition-group(project-mlbb-art),
+::view-transition-group(project-mlbb-secondary),
+::view-transition-group(project-ai-art) { z-index: 2; overflow: clip; }
+::view-transition-group(project-erp-title),
+::view-transition-group(project-chat-title),
+::view-transition-group(project-mlbb-title),
+::view-transition-group(project-ai-title) { z-index: 3; }
+/* Identical images travel as one surface, without two misaligned cross-fades. */
+::view-transition-old(project-erp-art),
+::view-transition-old(project-chat-art),
+::view-transition-old(project-mlbb-art),
+::view-transition-old(project-mlbb-secondary),
+::view-transition-old(project-ai-art) { animation: none; opacity: 0; }
+::view-transition-new(project-erp-art),
+::view-transition-new(project-chat-art),
+::view-transition-new(project-mlbb-art),
+::view-transition-new(project-mlbb-secondary),
+::view-transition-new(project-ai-art) { animation: none; opacity: 1; mix-blend-mode: normal; height: 100%; object-fit: fill; }
+::view-transition-old(project-erp-title),
+::view-transition-old(project-chat-title),
+::view-transition-old(project-mlbb-title),
+::view-transition-old(project-ai-title) { animation: portal-page-out 100ms ease both; }
+::view-transition-new(project-erp-title),
+::view-transition-new(project-chat-title),
+::view-transition-new(project-mlbb-title),
+::view-transition-new(project-ai-title) { animation: portal-page-in 180ms 90ms ease both; }
+
+.case-page .case-hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.02fr); gap: clamp(30px,4vw,64px); }
+.case-visual { min-width: 0; }
+.case-cover {
+  position: relative;
+  margin: 0 0 20px;
+  min-height: 240px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #d8c69565;
+  background: radial-gradient(ellipse at 65% 15%,#49797455,transparent 70%),#0c2634;
+  box-shadow: 0 22px 65px #020e2345,inset 0 0 40px #d4c79308;
+}
+.case-cover::after { content: ''; position: absolute; inset: 7px; border: 1px solid #d8c69525; pointer-events: none; }
+.case-cover img { display: block; width: 100%; height: auto; max-height: 300px; object-fit: contain; box-shadow: 0 10px 24px #0005; }
+.case-cover-phones { gap: 16px; background: radial-gradient(ellipse at 50% 30%,#76609544,transparent 75%),#101f35; }
+.case-cover-phones img { width: auto; max-width: 44%; max-height: 320px; border-radius: 12px; }
+.case-visual .case-summary { padding: 20px 24px; }
+.case-visual .case-summary dl { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.case-visual .case-summary dl > div + div { margin: 0; border: 0; padding: 0; }
+.case-visual .case-summary dd { font-size: 12px; }
+.case-visual .case-summary dt { font-size: 9px; }
+.case-visual .case-summary-mark { display: none; }
+
+/* This overlay is the short, local-file / older-browser fallback. */
+.project-portal-overlay { position: fixed; inset: 0; z-index: 1001; pointer-events: none; background: #0b2635; }
+.project-portal-flight { position: fixed; display: block; object-fit: contain; padding: 18px; background: #102e3b; border: 1px solid #e3cf9766; box-shadow: 0 25px 90px #06101f70; }
+.portal-arriving .case-cover { animation: portal-cover-arrive 640ms cubic-bezier(.22,.8,.22,1) both; }
+@keyframes portal-page-out { to { opacity: 0; } }
+@keyframes portal-page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes portal-cover-arrive { from { opacity: .3; transform: translateY(16px) scale(.965); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 800px) {
+  .case-page .case-hero-grid { grid-template-columns: 1fr; gap: 30px; }
+  .case-cover { min-height: 0; padding: 18px; }
+  .case-cover img { max-height: 280px; }
+  .case-cover-phones img { max-height: 265px; }
+  .case-visual .case-summary { padding: 20px; }
+  .case-visual .case-summary dl { gap: 12px; }
+  ::view-transition-group(*) { animation-duration: 520ms; }
+}
+@media (max-width: 380px) {
+  .case-visual .case-summary dl { grid-template-columns: 1fr; }
+  .case-visual .case-summary dl > div + div { border-top: 1px solid #e7d2a529; padding-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+  .project-portal-overlay { display: none; }
+}
