@@ -40,3 +40,12 @@ body.night .hero:before{background:linear-gradient(90deg,rgba(7,17,39,.94),rgba(
 .art-mlbb-proof img{width:auto;height:100%;max-width:42%;object-fit:contain;filter:drop-shadow(0 8px 12px #071b2859);}
 .work-card-mlbb .work-category{font-size:9px;letter-spacing:1px;}
 @media(max-width:600px){.works-grid{grid-template-columns:1fr;}}
+
+/* Conceptual documentation for the OpenClaw KPI integration. */
+.art-ai-documentation{padding:12px;background:#15313f;}
+.art-ai-documentation img{width:100%;height:100%;object-fit:contain;}
+.work-card-ai .work-category{font-size:9px;letter-spacing:1px;}
+.project-illustration{margin:22px 0;}
+.project-illustration img{display:block;width:100%;height:auto;border-radius:8px;}
+.project-illustration figcaption{font-size:11px;line-height:1.7;color:var(--muted);margin-top:9px;}
+.project-illustration figcaption a{display:inline-block;text-decoration:underline;text-underline-offset:3px;color:var(--ink);padding:6px 0;}

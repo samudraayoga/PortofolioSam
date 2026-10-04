@@ -59,3 +59,7 @@ The following application screenshots were supplied by the user on 3 October 202
 | `mlbb/counter-picks.png` | `mlbb2.png` | Harley profile, traits, weaknesses, and counter recommendations with scores |
 
 `Screenshot 2026-10-03 at 18.50.05.png` is the reference for the project title, category (iOS App, Design), scope (Front End), date (10 October 2025), and description. Its visible prose is adapted into Indonesian text; the cropped final sentence is not completed or inferred. This reference screenshot is not embedded as a duplicate information panel.
+
+## OpenClaw KPI integration diagram
+
+`ai-agent/kpi-flow.svg` is an original, editable vector diagram created from the user's project description on 4 October 2026. It shows dashboard KPI data → ERP endpoint → OpenClaw API, guided by SOUL → staff performance summary. It is conceptual documentation, not an application screenshot. The chart is schematic and contains no actual staff data or KPI values. No retrieval pipeline or RAG implementation is asserted by this diagram.

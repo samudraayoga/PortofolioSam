@@ -36,7 +36,7 @@ Keterangan aset tersedia di `assets/ASSET-NOTES.md`.
 
 ## Sumber konten
 
-Identitas, kontak, pendidikan, keahlian, dan pengalaman bersumber dari CV yang diberikan pengguna. Sorotan AI agent/RAG merupakan deskripsi tanggung jawab di Raho Premier, bukan nama proyek resmi atau tautan demo publik.
+Identitas, kontak, pendidikan, keahlian, dan pengalaman bersumber dari CV yang diberikan pengguna. Sorotan AI Agent untuk KPI ERP mengikuti penjelasan pengguna tentang endpoint ERP, integrasi API OpenClaw, dan arahan SOUL untuk merangkum kinerja staf. Diagram SVG merupakan ilustrasi konseptual, bukan screenshot aplikasi atau data KPI nyata.
 
 Studi kasus AI-Powered WhatsApp Chatbot menggunakan dokumentasi dan screenshot yang diberikan pengguna pada 2 Oktober 2026. Peran Fullstack Developer & System Designer, fitur, dan daftar teknologi mengikuti materi tersebut. Screenshot disalin tanpa perubahan; informasi yang sudah diburamkan pada gambar sumber tetap diburamkan. Halaman ini tidak mengklaim metrik hasil, menyediakan demo langsung, atau menautkan repository yang belum diberikan.
 

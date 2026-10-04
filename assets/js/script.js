@@ -128,10 +128,10 @@
 
   const projects = {
     ai: {
-      title: 'AI Agent & RAG', category: 'Catatan karya / 02 · AI Engineering',
-      description: 'Perancangan sistem AI agent yang terintegrasi dengan ERP dan basis data perusahaan.',
-      points: ['Merancang alur agent dan integrasi dengan basis data perusahaan.', 'Menyusun sistem multi-agent dan arsitektur Retrieval-Augmented Generation (RAG).', 'Menggunakan Openclaw untuk pengembangan arsitektur agent.'],
-      tags: ['Openclaw', 'RAG', 'Multi-Agent Systems', 'ERP Integration']
+      title: 'AI Agent untuk KPI ERP', category: 'Catatan karya / 02 · AI Engineering',
+      description: 'Pengembangan AI agent berbasis OpenClaw untuk merangkum performa kinerja staf berdasarkan data dashboard KPI. Endpoint pada ERP dihubungkan ke API OpenClaw, dengan SOUL sebagai arahan agen.',
+      points: ['Membuat endpoint pada ERP untuk menyediakan data KPI.', 'Menghubungkan endpoint ERP dengan API OpenClaw.', 'Memberikan arahan SOUL agar agen merangkum performa kinerja staf berdasarkan dashboard.'],
+      tags: ['OpenClaw', 'SOUL', 'KPI Summary', 'ERP Integration']
     }
   };
   $$('[data-project]').forEach(button => button.addEventListener('click', () => {

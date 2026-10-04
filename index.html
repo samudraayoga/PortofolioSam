@@ -49,7 +49,7 @@
         <header class="site-header">
           <a href="#beranda" class="brand" aria-label="Samudra, kembali ke beranda"><svg class="brand-mark" aria-hidden="true"><use href="#i-star"/></svg><span class="brand-name">SAMUDRA<small>A DEVELOPER'S JOURNEY</small></span></a>
           <nav class="desktop-nav" id="main-nav" aria-label="Navigasi utama">
-            <a class="active" href="#profil">Profil</a><a href="#keahlian">Keahlian</a><a href="#karya">Karya</a><a href="#perjalanan">Perjalanan</a>
+            <a class="active" href="#profil">Profil</a><a href="#keahlian">Skills</a><a href="#karya">Creations</a><a href="#perjalanan">Journey</a>
           </nav>
           <div class="header-actions">
             <button class="theme-toggle" aria-label="Aktifkan suasana malam" aria-pressed="false" title="Ganti suasana"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
@@ -59,10 +59,10 @@
         </header>
         <div class="hero-content">
           <div class="hero-copy">
-            <div class="eyebrow"><svg aria-hidden="true"><use href="#i-star"/></svg>Selamat datang, penjelajah</div>
-            <h1>Merangkai kode.<br>Menjelajah.</h1>
+            <div class="eyebrow"><svg aria-hidden="true"><use href="#i-star"/></svg>Welcome, traveller!</div>
+            <h1>Architect of code<br>and Intelligence</h1>
             <p class="hero-profession" aria-label="I'm a Software Engineer, a Fullstack Developer, an AI Engineer"><span aria-hidden="true">I'm <span class="typed" data-typed-items="a Software Engineer, a Fullstack Developer, an AI Engineer">a Software Engineer</span></span></p>
-            <p class="hero-intro">Saya <strong>Yoga Samudra Heriyanto</strong>, IT Developer yang mengubah kebutuhan bisnis menjadi aplikasi, sistem ERP, dan solusi berbasis AI.</p>
+            <p class="hero-intro">Hi, I am <strong>Samudra Yoga</strong>, a Fullstack Developer & AI Engineer building scalable web system, AI Agent, and an intelligent products.</p>
             <div class="hero-buttons"><a class="btn btn-gold" href="#karya"><svg aria-hidden="true"><use href="#i-compass"/></svg>Jelajahi karya<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-outline" href="assets/CV-Samudra-2026.pdf" download>Unduh CV<svg aria-hidden="true"><use href="#i-download"/></svg></a></div>
             <p class="hero-footnote"><span class="status-dot" aria-hidden="true"></span>Berawal dari rasa ingin tahu. Bergerak lewat karya.</p>
           </div>
@@ -118,7 +118,16 @@
               <a href="erp.html" class="work-link">Jelajahi proyek ERP<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
           </article>
-          <article class="work-card"><div class="work-art art-ai" aria-hidden="true"><span class="art-corner">QUEST</span><svg class="constellation" viewBox="0 0 300 190"><g stroke="#99c7d4" stroke-opacity=".6"><path d="m150 90-90-45 10 103 80-58 90 44-16-105-74 61-80 58 170-14M60 45l164-16M150 90l-2 82"/><circle cx="150" cy="90" r="37" stroke-dasharray="3 7"/><circle cx="150" cy="90" r="53" opacity=".4"/></g><g fill="#c2e6e6" stroke="#d9eeee"><circle cx="60" cy="45" r="5"/><circle cx="70" cy="148" r="5"/><circle cx="240" cy="134" r="5"/><circle cx="224" cy="29" r="5"/><circle cx="148" cy="172" r="3"/></g><path d="m150 66 7 17 17 7-17 7-7 17-7-17-17-7 17-7Z" fill="#d7ebde" stroke="#f4e2b4"/></svg><span class="art-label">KNOWLEDGE, CONNECTED</span></div><div class="work-body"><div class="work-category">AI Engineering · RAG</div><h3>AI Agent & RAG</h3><p>Menghubungkan sistem multi-agent dengan ERP dan basis data perusahaan.</p><button data-project="ai" class="work-link">Buka catatan karya<svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div></article>
+          <article class="work-card work-card-ai">
+            <div class="work-art art-ai-documentation"><img src="assets/ai-agent/kpi-flow.svg" alt="Diagram konseptual alur dashboard KPI, endpoint ERP, API OpenClaw dengan arahan SOUL, dan ringkasan kinerja staf" width="1200" height="720" loading="lazy" decoding="async"></div>
+            <div class="work-body">
+              <div class="work-category">AI Engineering · ERP Integration</div>
+              <h3>AI Agent untuk KPI ERP</h3>
+              <p>Agen berbasis OpenClaw yang merangkum kinerja staf dari data dashboard KPI melalui endpoint ERP.</p>
+              <div class="work-tech" aria-label="Teknologi utama"><span>OpenClaw</span><span>SOUL</span><span>API Integration</span></div>
+              <button data-project="ai" class="work-link">Lihat alur integrasi<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+          </article>
           <article class="work-card work-card-chat">
             <div class="work-art art-chat-proof"><img src="assets/chatbot/overview.png" alt="Dokumentasi RAHO WhatsApp Chatbot AI: alur Rule, RAG, AI, serta Outbox dan Worker" width="1708" height="962" loading="lazy" decoding="async"></div>
             <div class="work-body">
@@ -162,7 +171,14 @@
   </main>
 
   <dialog class="dialog" id="profile-dialog" aria-labelledby="profile-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Tutup profil"><svg aria-hidden="true"><use href="#i-close"/></svg></button><div class="dialog-profile"><img src="assets/samudra-formal.jpeg" alt="Yoga Samudra Heriyanto" width="130" height="168" loading="lazy"><div><div class="eyebrow">Arsip penjelajah</div><h2 id="profile-title">Yoga Samudra Heriyanto</h2><p>IT Developer · Full-Stack · AI Engineering</p></div></div><p>Lulusan Ilmu Komputer dengan pengalaman sebagai IT Developer, Project Manager, Full-Stack Developer, dan AI Engineer. Fokus saya adalah merancang arsitektur sistem, mengembangkan ERP, dan membangun otomasi AI yang terhubung dengan data perusahaan.</p><dl><div><dt>Domisili</dt><dd>Jakarta Barat, DKI Jakarta</dd></div><div><dt>Pendidikan</dt><dd>S.Kom · UPN Veteran Yogyakarta</dd></div><div><dt>Email</dt><dd><a href="mailto:samudrayoga4477@gmail.com">samudrayoga4477@gmail.com</a></dd></div><div><dt>Bahasa pemrograman</dt><dd>Python, JavaScript, C++, Swift, SQL</dd></div></dl><h3>Di luar pengembangan</h3><p>Pengalaman organisasi saya meliputi Ketua Kelas IF-H International Classroom, Ketua Tim KKN, Koordinator Publikasi dan Dokumentasi Veteran Integrated Parade, serta Staf Medinfo HMJ Informatika UPNYK.</p><a class="btn btn-gold" href="assets/CV-Samudra-2026.pdf" download>Kenali lebih jauh lewat CV<svg aria-hidden="true"><use href="#i-download"/></svg></a></div></dialog>
-  <dialog class="dialog" id="project-dialog" aria-labelledby="project-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Tutup catatan karya"><svg aria-hidden="true"><use href="#i-close"/></svg></button><div class="eyebrow" id="project-category"></div><h2 id="project-title"></h2><p class="project-context">Raho Premier · Juni 2026</p><p id="project-description"></p><h3>Kontribusi saya</h3><ul class="project-points" id="project-points"></ul><div class="about-tags" id="project-tags"></div><div class="project-note">Catatan ini merangkum pengalaman kerja yang tercantum pada CV. Ilustrasi kartu merupakan visual konseptual.</div><a class="btn btn-gold" href="assets/CV-Samudra-2026.pdf" download>Lihat pengalaman lengkap<svg aria-hidden="true"><use href="#i-download"/></svg></a></div></dialog>
+  <dialog class="dialog" id="project-dialog" aria-labelledby="project-title"><div class="dialog-inner"><button class="dialog-close" aria-label="Tutup catatan karya"><svg aria-hidden="true"><use href="#i-close"/></svg></button><div class="eyebrow" id="project-category"></div><h2 id="project-title"></h2><p class="project-context">Raho Premier · Juni 2026</p><p id="project-description"></p>
+    <figure class="project-illustration">
+      <a href="assets/ai-agent/kpi-flow.svg" target="_blank" rel="noopener noreferrer" aria-label="Buka diagram integrasi KPI ERP dan OpenClaw ukuran penuh (tab baru)"><img src="assets/ai-agent/kpi-flow.svg" alt="Dashboard KPI → endpoint ERP → API OpenClaw dengan arahan SOUL → ringkasan kinerja staf" width="1200" height="720"></a>
+      <figcaption>Diagram konseptual, bukan screenshot aplikasi. <a href="assets/ai-agent/kpi-flow.svg" download="samudra-openclaw-kpi-flow.svg">Unduh diagram SVG</a></figcaption>
+    </figure>
+    <h3>Alur integrasi</h3>
+    <ol class="project-points"><li>Dashboard ERP menjadi sumber data performa KPI staf.</li><li>Endpoint di ERP menyediakan data untuk integrasi dengan API OpenClaw.</li><li>SOUL memberi arahan kepada agen untuk merangkum kinerja staf berdasarkan data KPI.</li><li>Agen menghasilkan ringkasan kinerja yang lebih mudah dibaca.</li></ol>
+    <h3>Kontribusi saya</h3><ul class="project-points" id="project-points"></ul><div class="about-tags" id="project-tags"></div><div class="project-note">Ilustrasi disusun dari alur proyek yang dijelaskan, tanpa data staf nyata, angka KPI, atau tampilan aplikasi internal.</div><a class="btn btn-gold" href="assets/CV-Samudra-2026.pdf" download>Lihat pengalaman lengkap<svg aria-hidden="true"><use href="#i-download"/></svg></a></div></dialog>
   <div class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

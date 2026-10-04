@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AI Agent untuk ringkasan KPI ERP</title>
+  <desc id="desc">Diagram konseptual: data dashboard KPI diakses melalui endpoint ERP yang terhubung ke API OpenClaw. Arahan SOUL membimbing agen untuk menghasilkan ringkasan kinerja staf. Bukan screenshot aplikasi atau data staf nyata.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#203e51"/><stop offset="1" stop-color="#0b2632"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#719b94" stop-opacity=".23"/><stop offset="1" stop-color="#719b94" stop-opacity="0"/></radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 8 5 1 9" fill="none" stroke="#e5cc94" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="1200" height="720" rx="20" fill="url(#bg)"/>
+  <ellipse cx="860" cy="310" rx="520" ry="390" fill="url(#glow)"/>
+  <rect x="18" y="18" width="1164" height="684" rx="12" fill="none" stroke="#e5cc94" stroke-opacity=".25"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="m58 49 5 12 12 5-12 5-5 12-5-12-12-5 12-5Z" fill="#e5cc94"/>
+    <text x="91" y="72" font-size="17" letter-spacing="3" fill="#e5cc94">CATATAN SISTEM / AI ENGINEERING</text>
+    <text x="48" y="126" font-size="39" font-family="Georgia, serif" fill="#faf4e7">Dari dashboard menjadi ringkasan kinerja.</text>
+    <text x="48" y="164" font-size="20" fill="#bed4d7">Integrasi ERP dan OpenClaw untuk merangkum KPI staf.</text>
+    <g fill="#14333f" stroke="#99bcb7" stroke-opacity=".45">
+      <rect x="48" y="207" width="320" height="265" rx="14"/>
+      <rect x="440" y="207" width="320" height="265" rx="14"/>
+      <rect x="832" y="207" width="320" height="265" rx="14"/>
+    </g>
+    <g fill="#e5cc94" font-size="14" letter-spacing="2">
+      <text x="72" y="242">01 / SUMBER DATA</text><text x="464" y="242">02 / INTEGRASI</text><text x="856" y="242">03 / AGEN</text>
+    </g>
+    <g fill="#f5f0e3" font-size="26" font-weight="bold">
+      <text x="72" y="282">Dashboard KPI</text><text x="464" y="282">Endpoint ERP</text><text x="856" y="282">API OpenClaw</text>
+    </g>
+    <g fill="#c3d6d9" font-size="18">
+      <text x="72" y="314">Data performa kinerja staf</text>
+      <text x="464" y="314">Menyediakan data KPI</text><text x="464" y="341">untuk integrasi agen.</text>
+      <text x="856" y="314">Mengolah data menjadi</text><text x="856" y="341">ringkasan kinerja.</text>
+    </g>
+    <g fill="#83b9ac"><rect x="74" y="394" width="32" height="43" rx="4"/><rect x="126" y="371" width="32" height="66" rx="4"/><rect x="178" y="386" width="32" height="51" rx="4"/><rect x="230" y="356" width="32" height="81" rx="4"/><rect x="282" y="375" width="32" height="62" rx="4"/></g>
+    <path d="M72 438H340" stroke="#accbc3" stroke-opacity=".4"/>
+    <rect x="464" y="371" width="272" height="66" rx="9" fill="#244753"/>
+    <text x="487" y="398" font-size="17" fill="#e5cc94">KONEKSI API</text><text x="487" y="423" font-size="16" fill="#c3d6d9">ERP ↔ OpenClaw</text>
+    <rect x="856" y="371" width="272" height="66" rx="9" fill="#344c4b" stroke="#e5cc94" stroke-opacity=".55"/>
+    <text x="876" y="398" font-size="17" fill="#efdcad">SOUL / ARAHAN AGEN</text><text x="876" y="423" font-size="16" fill="#dde7d9">Fokus: merangkum KPI staf</text>
+    <g fill="none" stroke="#e5cc94" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M379 337H426"/><path d="M771 337H818"/>
+      <path d="M992 484V510Q992 524 978 524H614Q600 524 600 538V548"/>
+    </g>
+    <rect x="48" y="562" width="1104" height="93" rx="13" fill="#25484c" stroke="#e5cc94" stroke-opacity=".55"/>
+    <text x="72" y="596" font-size="14" letter-spacing="2" fill="#e5cc94">04 / HASIL</text>
+    <text x="72" y="631" font-size="26" font-weight="bold" fill="#f5f0e3">Ringkasan kinerja staf</text>
+    <path d="M420 583V634" stroke="#e5cc94" stroke-opacity=".3"/>
+    <text x="446" y="601" font-size="19" fill="#d1e2df">Data pada dashboard dirangkum oleh agen</text>
+    <text x="446" y="630" font-size="19" fill="#d1e2df">menjadi penjelasan KPI yang lebih mudah dibaca.</text>
+    <text x="48" y="685" font-size="15" fill="#b4caca">DIAGRAM KONSEPTUAL · Bukan screenshot aplikasi · Grafik skematis, tanpa data staf nyata</text>
+  </g>
+</svg>
