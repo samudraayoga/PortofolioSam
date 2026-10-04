@@ -1,31 +1,109 @@
-/* Gentle motion: never hide page content while waiting for JavaScript. */
-.landscape{transition:transform 650ms ease-out,filter 350ms ease;}
-body,.paper,.hero,.contact,.talent-card,.skill-detail,.work-card{transition:background-color 350ms ease,color 350ms ease,border-color 350ms ease,box-shadow 250ms ease,transform 250ms ease;}
-.portrait-window .portrait-crossfade{position:absolute;inset:0;pointer-events:none;}
-.talent-card:before{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 250ms ease;}
-.talent-card[aria-selected=true]:before{transform:scaleX(1);}
-.work-art > .mini-window,.work-art > .mini-chat,.work-art > .constellation{transition:scale 300ms ease;}
-.journey-item{position:relative;}
-.journey-item:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--gold);opacity:.45;transform:scaleX(0);transform-origin:left;transition:transform 650ms ease;pointer-events:none;}
-.journey-item.motion-seen:after{transform:scaleX(1);}
-.dialog[open]{animation:dialog-arrive 240ms ease-out;}
-.dialog[open]::backdrop{animation:backdrop-arrive 240ms ease-out;}
-@keyframes dialog-arrive{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
-@keyframes backdrop-arrive{from{opacity:0}to{opacity:1}}
-@keyframes ornament-glow{0%,100%{opacity:.55;text-shadow:0 0 6px #f2d99844}50%{opacity:1;text-shadow:0 0 16px #f2d99899}}
+/* Motion language: guiding light, wind and constellations. */
+:root{--motion-gold:#f0d99f;--motion-ease:cubic-bezier(.2,.75,.2,1)}
+.landscape{transition:transform 900ms ease-out,filter 600ms ease,opacity 600ms ease;will-change:transform}
+.portrait-window .portrait-crossfade{position:absolute;inset:0;pointer-events:none;z-index:2}
+.sparkle{animation:star-drift 12s ease-in-out infinite;will-change:transform,opacity}
+.sparkle:nth-child(2){animation-delay:-3s}.sparkle:nth-child(3){animation-delay:-7s}.sparkle:nth-child(4){animation-delay:-5s}.sparkle:nth-child(5){animation-delay:-9s}
+.orbit:after{animation:ornament-glow 6s ease-in-out infinite}
+.portrait-card:before{animation:portrait-aura 7s ease-in-out infinite}
+
+/* The same gold trace marks chapters, selections and progress. */
+.section-heading,.case-section-heading,.case-story-title{position:relative}
+.section-heading:after,.case-section-heading:after,.case-story-title:after{content:'';position:absolute;left:0;bottom:-15px;width:72px;height:1px;background:linear-gradient(90deg,transparent,var(--motion-gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform 850ms var(--motion-ease);box-shadow:0 0 10px #f0d99f88}
+.section-heading:has(.motion-seen):after,.case-section-heading:has(.motion-seen):after,.case-story-title.motion-seen:after{transform:scaleX(1)}
+
+/* Navigation star glides between chapters. */
+.desktop-nav{position:relative}
+.desktop-nav a.active:after{display:none}
+.nav-guide{position:absolute;left:0;bottom:-17px;width:12px;height:12px;color:var(--light-gold);opacity:0;transform:translateX(calc(var(--guide-x,0px) - 6px));transition:transform 420ms var(--motion-ease),opacity 200ms ease;pointer-events:none}
+.nav-guide:before{content:'✦';position:absolute;inset:0;font-size:11px;filter:drop-shadow(0 0 7px #fff1b5)}
+
+/* Skills read as linked constellation nodes. */
+.talent-grid{position:relative;isolation:isolate}
+.talent-grid:before{content:'';position:absolute;left:16.5%;right:16.5%;top:51px;height:1px;background:linear-gradient(90deg,transparent,#e5cc9466 12%,#e5cc9466 88%,transparent);z-index:-1;box-shadow:0 0 8px #e5cc9440}
+.talent-card:before{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;background:linear-gradient(90deg,transparent,var(--motion-gold),transparent);transform:scaleX(0);transition:transform 330ms var(--motion-ease);box-shadow:0 0 12px #f0d99f88}
+.work-card:before,.case-features article:before{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--pointer-x,-100px) var(--pointer-y,-100px),#f6e3a519,transparent 65%);opacity:0;transition:opacity 260ms ease;pointer-events:none}
+.talent-card[aria-selected=true]:before{transform:scaleX(1)}
+.talent-card[aria-selected=true] .talent-icon{animation:node-awaken 600ms var(--motion-ease)}
+
+/* Project cards behave like selectable archive panels. */
+.work-card,.talent-card,.case-features article{position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform 320ms var(--motion-ease),box-shadow 320ms ease,border-color 320ms ease}
+.work-art img{transition:transform 650ms var(--motion-ease),filter 400ms ease}
+.work-link svg,.case-text-link span,.case-back span{transition:transform 240ms var(--motion-ease)}
+
+/* One travelling line reveals the journey. */
+.journey-list{position:relative;--journey-progress:0}
+.journey-list:before,.journey-list:after{content:'';position:absolute;left:222px;top:38px;bottom:38px;width:1px;pointer-events:none}
+.journey-list:before{background:#d9c79133}
+.journey-list:after{background:linear-gradient(#f3dfaa,#9ed7c1);transform:scaleY(var(--journey-progress));transform-origin:top;box-shadow:0 0 10px #e9d49899}
+.journey-node{transition:background-color 350ms ease,box-shadow 350ms ease,transform 350ms var(--motion-ease)}
+.journey-item.motion-seen .journey-node{box-shadow:0 0 0 5px #e9d49816,0 0 18px #e9d49855;transform:rotate(45deg) scale(1.04)}
+.journey-toggle svg{transition:transform 280ms var(--motion-ease)}
+.journey-toggle[aria-expanded=true] svg{transform:rotate(45deg)}
+
+/* Dialogs feel connected to their triggers. */
+.dialog[open]{animation:dialog-arrive 360ms var(--motion-ease)}
+.dialog[open]::backdrop{animation:backdrop-arrive 320ms ease-out}
+.dialog-close{transition:transform 220ms ease,background-color 220ms ease}
+.project-illustration{position:relative;overflow:hidden}
+.project-illustration:after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,#fff2b744 45%,#fff9ddaa 50%,#fff2b744 55%,transparent 75%);transform:translateX(-140%);pointer-events:none;mix-blend-mode:screen}
+.project-illustration.flow-playing:after{animation:flow-scan 1.7s .25s var(--motion-ease) both}
+.flow-replay{border:0;background:transparent;color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;padding:0;margin-left:12px}
+
+/* Case studies open as chapters; gallery geometry stays stable. */
+.case-hero{position:relative;overflow:hidden}
+.case-hero:after{content:'';position:absolute;width:46vw;height:46vw;max-width:650px;max-height:650px;right:-18vw;top:-22vw;border:1px solid #f0d99f20;border-radius:50%;box-shadow:0 0 80px #e7d19b0d;animation:case-orbit 24s linear infinite;pointer-events:none}
+.case-summary-mark,.case-closing-star{animation:ornament-glow 5.5s ease-in-out infinite}
+.case-image-stage,.mlbb-screen-stage{position:relative;overflow:hidden}
+.case-image-stage:after,.mlbb-screen-stage:after{content:'';position:absolute;inset:0;border:1px solid #e8d7a840;box-shadow:inset 0 0 34px #061e2d33;pointer-events:none}
+.case-image-stage img,.mlbb-screen-stage img{transition:transform 600ms var(--motion-ease),opacity 250ms ease}
+.gallery-exit{opacity:0!important;transform:translateX(var(--gallery-exit,-16px)) scale(.992)!important}
+.gallery-enter{animation:gallery-enter 430ms var(--motion-ease)}
+.case-gallery-controls button{position:relative;transition:color 240ms ease,background-color 240ms ease,transform 240ms var(--motion-ease)}
+.case-gallery-controls button[aria-pressed=true]:after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:1px;background:var(--motion-gold);box-shadow:0 0 9px #f0d99f99;animation:trace-in 420ms var(--motion-ease)}
+.theme-wash{position:fixed;z-index:9999;right:18px;top:28px;width:36px;height:36px;border-radius:50%;background:#f9eac2;pointer-events:none;mix-blend-mode:soft-light}
+
 @media(hover:hover) and (pointer:fine){
- .work-card:hover{transform:translateY(-4px);}
- .work-card:hover .work-art > .mini-window,.work-card:hover .work-art > .mini-chat,.work-card:hover .constellation{scale:1.035;}
- .work-card:hover .work-link svg{transform:translateX(4px);}
- .orbit:after{animation:ornament-glow 5s ease-in-out infinite;}
+  .work-card:hover,.talent-card:hover{transform:translateY(-6px)}
+  .work-card:hover:before,.case-features article:hover:before{opacity:1}
+  .work-card:hover .work-art img{transform:scale(1.035);filter:saturate(1.04)}
+  .work-card:hover .work-link svg,.case-text-link:hover span{transform:translateX(5px)}
+  .dialog-close:hover{transform:rotate(90deg);background:#e5cc9420}
+  .mlbb-screen:hover .mlbb-screen-stage img{transform:scale(1.018)}
 }
-/* Keep touch interactions steady; decorative particles do not drift. */
-.sparkle{animation:none;}
-@media(hover:none),(pointer:coarse){.btn:hover,.talent-card:hover,.work-card:hover{transform:none;}.work-link:hover svg{transform:none;}}
+
+@keyframes star-drift{0%,100%{transform:translate3d(0,0,0);opacity:.45}50%{transform:translate3d(10px,-18px,0);opacity:.9}}
+@keyframes ornament-glow{0%,100%{opacity:.55;filter:drop-shadow(0 0 3px #f2d99855)}50%{opacity:1;filter:drop-shadow(0 0 12px #f2d998bb)}}
+@keyframes portrait-aura{0%,100%{box-shadow:0 0 0 #f0d99c00}50%{box-shadow:0 0 25px #f0d99c22}}
+@keyframes node-awaken{0%{transform:scale(.9);box-shadow:0 0 0 #f0d99f00}55%{transform:scale(1.08);box-shadow:0 0 22px #f0d99f66}100%{transform:scale(1)}}
+@keyframes dialog-arrive{from{opacity:0;transform:scale(.965) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes backdrop-arrive{from{opacity:0}to{opacity:1}}
+@keyframes flow-scan{0%{transform:translateX(-140%)}100%{transform:translateX(140%)}}
+@keyframes case-orbit{to{transform:rotate(360deg)}}
+@keyframes gallery-enter{from{opacity:0;transform:translateX(var(--gallery-enter,16px)) scale(.992)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes trace-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes mobile-link-arrive{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+
+@media(max-width:800px){
+  .talent-grid:before,.journey-list:before,.journey-list:after{display:none}
+  .case-hero:after{width:85vw;height:85vw;right:-55vw;top:-25vw}
+}
+@media(min-width:801px) and (max-width:1100px){.journey-list:before,.journey-list:after{left:187px}}
+@media(max-width:600px){
+  .desktop-nav.open a{animation:mobile-link-arrive 360ms var(--motion-ease) both}
+  .desktop-nav.open a:nth-child(2){animation-delay:45ms}
+  .desktop-nav.open a:nth-child(3){animation-delay:90ms}
+  .desktop-nav.open a:nth-child(4){animation-delay:135ms}
+  .nav-guide{display:none}
+}
+@media(hover:none),(pointer:coarse){
+  .work-card:hover,.talent-card:hover,.btn:hover{transform:none}
+  .work-card:before,.case-features article:before{display:none}
+}
 @media(prefers-reduced-motion:reduce){
- html{scroll-behavior:auto;}
- *,*:before,*:after{animation:none!important;transition:none!important;}
- .landscape{transform:none!important;}
- .btn:hover,.talent-card:hover,.work-card:hover{transform:none;}
- .work-art > .mini-window,.work-art > .mini-chat,.work-art > .constellation{scale:1!important;}
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .landscape{transform:none!important}
+  .journey-list:after{transform:scaleY(1)}
+  .project-illustration:after,.theme-wash{display:none}
 }

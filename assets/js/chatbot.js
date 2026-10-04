@@ -8,17 +8,40 @@
   if (!controls || !image || !title || !caption || !fullSize) return;
   const imageBase = controls.dataset.galleryBase || 'assets/chatbot';
   const buttons = [...controls.querySelectorAll('[data-image]')];
+  let activeIndex = 0;
+  let request = 0;
   function selectImage(button) {
     const data = button.dataset;
     const src = `${imageBase}/${data.image}.png`;
-    image.alt = data.alt;
-    image.width = Number(data.width);
-    image.height = Number(data.height);
-    image.src = src;
-    title.textContent = data.title;
-    caption.textContent = data.caption;
-    fullSize.href = src;
-    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    const nextIndex = buttons.indexOf(button);
+    if (nextIndex === activeIndex && image.src.endsWith(src)) return;
+    const direction = nextIndex >= activeIndex ? 1 : -1;
+    const currentRequest = ++request;
+    const preload = new Image();
+    preload.onload = () => {
+      if (currentRequest !== request) return;
+      image.style.setProperty('--gallery-exit', `${direction * -16}px`);
+      image.classList.add('gallery-exit');
+      const change = () => {
+        if (currentRequest !== request) return;
+        image.alt = data.alt;
+        image.width = Number(data.width);
+        image.height = Number(data.height);
+        image.src = src;
+        image.style.setProperty('--gallery-enter', `${direction * 16}px`);
+        image.classList.remove('gallery-exit', 'gallery-enter');
+        void image.offsetWidth;
+        image.classList.add('gallery-enter');
+        title.textContent = data.title;
+        caption.textContent = data.caption;
+        fullSize.href = src;
+        activeIndex = nextIndex;
+        buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      };
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) change();
+      else setTimeout(change, 160);
+    };
+    preload.src = src;
   }
   buttons.forEach((button, index) => {
     button.addEventListener('click', () => selectImage(button));
