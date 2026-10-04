@@ -1,16 +1,24 @@
 /* Motion language: guiding light, wind and constellations. */
 :root{--motion-gold:#f0d99f;--motion-ease:cubic-bezier(.2,.75,.2,1)}
+.page-leaving body{animation:codex-page-out 240ms ease-in both;pointer-events:none}
 .landscape{transition:transform 900ms ease-out,filter 600ms ease,opacity 600ms ease;will-change:transform}
 .portrait-window .portrait-crossfade{position:absolute;inset:0;pointer-events:none;z-index:2}
+.brand{position:relative;overflow:hidden}
+.brand:after{content:'';position:absolute;top:-30%;bottom:-30%;width:34px;left:-55px;background:linear-gradient(90deg,transparent,#fff7d999,transparent);transform:skewX(-18deg);animation:brand-glint 7s 1.6s ease-in-out infinite;pointer-events:none}
 .sparkle{animation:star-drift 12s ease-in-out infinite;will-change:transform,opacity}
 .sparkle:nth-child(2){animation-delay:-3s}.sparkle:nth-child(3){animation-delay:-7s}.sparkle:nth-child(4){animation-delay:-5s}.sparkle:nth-child(5){animation-delay:-9s}
 .orbit:after{animation:ornament-glow 6s ease-in-out infinite}
 .portrait-card:before{animation:portrait-aura 7s ease-in-out infinite}
+.portrait-card,.vision{transition:translate 650ms ease-out}
+.portrait-window img{transition:transform 700ms var(--motion-ease),filter 400ms ease,opacity 260ms ease}
+.profile-trigger:after{content:'';position:absolute;inset:-1px;background:linear-gradient(90deg,transparent,#f5dfa744,transparent);transform:translateX(-130%);pointer-events:none}
 
 /* The same gold trace marks chapters, selections and progress. */
 .section-heading,.case-section-heading,.case-story-title{position:relative}
 .section-heading:after,.case-section-heading:after,.case-story-title:after{content:'';position:absolute;left:0;bottom:-15px;width:72px;height:1px;background:linear-gradient(90deg,transparent,var(--motion-gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform 850ms var(--motion-ease);box-shadow:0 0 10px #f0d99f88}
 .section-heading:has(.motion-seen):after,.case-section-heading:has(.motion-seen):after,.case-story-title.motion-seen:after{transform:scaleX(1)}
+.about-tags .tag.motion-seen{animation:codex-stamp 420ms var(--motion-ease) both}
+.signature.motion-seen{animation:signature-write 900ms 180ms var(--motion-ease) both}
 
 /* Navigation star glides between chapters. */
 .desktop-nav{position:relative}
@@ -25,11 +33,18 @@
 .work-card:before,.case-features article:before{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--pointer-x,-100px) var(--pointer-y,-100px),#f6e3a519,transparent 65%);opacity:0;transition:opacity 260ms ease;pointer-events:none}
 .talent-card[aria-selected=true]:before{transform:scaleX(1)}
 .talent-card[aria-selected=true] .talent-icon{animation:node-awaken 600ms var(--motion-ease)}
+.talent-card[aria-selected=true] .talent-arrow{filter:drop-shadow(0 0 8px #f0d99faa)}
 
 /* Project cards behave like selectable archive panels. */
 .work-card,.talent-card,.case-features article{position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform 320ms var(--motion-ease),box-shadow 320ms ease,border-color 320ms ease}
+.work-card{--project-accent:#f0d99f;--tilt-x:0deg;--tilt-y:0deg}
+.work-card-erp{--project-accent:#9ed7c1}.work-card-ai{--project-accent:#a9bdf3}.work-card-chat{--project-accent:#a8d8b4}.work-card-mlbb{--project-accent:#dab5ef}
+.work-card:after{content:'';position:absolute;inset:8px;background:linear-gradient(var(--project-accent),var(--project-accent)) left top/22px 1px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) left top/1px 22px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) right top/22px 1px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) right top/1px 22px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) left bottom/22px 1px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) left bottom/1px 22px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) right bottom/22px 1px no-repeat,linear-gradient(var(--project-accent),var(--project-accent)) right bottom/1px 22px no-repeat;opacity:0;transform:scale(.985);transition:opacity 320ms ease,transform 450ms var(--motion-ease);pointer-events:none;z-index:3}
+.work-card.motion-seen:after{animation:archive-frame 720ms 180ms var(--motion-ease) both}
 .work-art img{transition:transform 650ms var(--motion-ease),filter 400ms ease}
 .work-link svg,.case-text-link span,.case-back span{transition:transform 240ms var(--motion-ease)}
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn:after{content:'';position:absolute;inset:-2px;background:linear-gradient(105deg,transparent 28%,#fff9dc88 48%,transparent 68%);transform:translateX(-140%);transition:transform 650ms var(--motion-ease);pointer-events:none}
 
 /* One travelling line reveals the journey. */
 .journey-list{position:relative;--journey-progress:0}
@@ -46,30 +61,54 @@
 .dialog[open]::backdrop{animation:backdrop-arrive 320ms ease-out}
 .dialog-close{transition:transform 220ms ease,background-color 220ms ease}
 .project-illustration{position:relative;overflow:hidden}
+.project-illustration>a{position:relative;display:block;overflow:hidden}
 .project-illustration:after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,#fff2b744 45%,#fff9ddaa 50%,#fff2b744 55%,transparent 75%);transform:translateX(-140%);pointer-events:none;mix-blend-mode:screen}
 .project-illustration.flow-playing:after{animation:flow-scan 1.7s .25s var(--motion-ease) both}
+.flow-pulse{position:absolute;left:var(--pulse-x);top:var(--pulse-y);width:12px;height:12px;border-radius:50%;background:#fff3be;box-shadow:0 0 0 0 #f5df9d99,0 0 16px #fff0ad;opacity:0;transform:translate(-50%,-50%) scale(.3);pointer-events:none;z-index:2}
+.project-illustration.flow-playing .flow-pulse{animation:data-pulse 700ms var(--pulse-delay) var(--motion-ease) both}
 .flow-replay{border:0;background:transparent;color:inherit;text-decoration:underline;text-underline-offset:3px;font:inherit;padding:0;margin-left:12px}
 
 /* Case studies open as chapters; gallery geometry stays stable. */
+.case-page{--chapter-accent:#9ed7c1}
+.erp-page{--chapter-accent:#9ed7c1}.mlbb-page{--chapter-accent:#d9b7ef}
 .case-hero{position:relative;overflow:hidden}
 .case-hero:after{content:'';position:absolute;width:46vw;height:46vw;max-width:650px;max-height:650px;right:-18vw;top:-22vw;border:1px solid #f0d99f20;border-radius:50%;box-shadow:0 0 80px #e7d19b0d;animation:case-orbit 24s linear infinite;pointer-events:none}
 .case-summary-mark,.case-closing-star{animation:ornament-glow 5.5s ease-in-out infinite}
 .case-image-stage,.mlbb-screen-stage{position:relative;overflow:hidden}
-.case-image-stage:after,.mlbb-screen-stage:after{content:'';position:absolute;inset:0;border:1px solid #e8d7a840;box-shadow:inset 0 0 34px #061e2d33;pointer-events:none}
+.case-image-stage:after,.mlbb-screen-stage:after{content:'';position:absolute;inset:8px;background:linear-gradient(var(--chapter-accent),var(--chapter-accent)) left top/28px 1px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) left top/1px 28px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) right top/28px 1px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) right top/1px 28px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) left bottom/28px 1px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) left bottom/1px 28px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) right bottom/28px 1px no-repeat,linear-gradient(var(--chapter-accent),var(--chapter-accent)) right bottom/1px 28px no-repeat;box-shadow:inset 0 0 34px #061e2d22;opacity:.68;pointer-events:none;z-index:2}
 .case-image-stage img,.mlbb-screen-stage img{transition:transform 600ms var(--motion-ease),opacity 250ms ease}
+.case-gallery.motion-seen .case-image-stage:after,.mlbb-screen.motion-seen .mlbb-screen-stage:after{animation:case-frame-draw 800ms 180ms var(--motion-ease) both}
+.erp-page .case-image-stage:before{content:'';position:absolute;left:6%;right:6%;height:1px;top:12%;z-index:3;background:linear-gradient(90deg,transparent,#9ed7c199,transparent);box-shadow:0 0 12px #9ed7c177;opacity:0;pointer-events:none}
+.erp-page .case-gallery.motion-seen .case-image-stage:before{animation:erp-scan 2.8s 650ms var(--motion-ease) both}
+.case-page:not(.erp-page):not(.mlbb-page) .case-image-stage:before{content:'•••';position:absolute;right:26px;top:24px;z-index:3;color:#a8d8b4;letter-spacing:5px;font-size:13px;text-shadow:0 0 10px #a8d8b4;opacity:0;pointer-events:none}
+.case-page:not(.erp-page):not(.mlbb-page) .case-gallery.motion-seen .case-image-stage:before{animation:message-status 1.6s 650ms ease-in-out both}
+.mlbb-screen:nth-child(2) .mlbb-screen-stage:before{content:'+36';position:absolute;right:10%;top:17%;z-index:3;padding:7px 13px;border:1px solid #d9b7ef88;border-radius:999px;background:#243a4ee6;color:#ebd4f7;font:700 13px var(--sans);box-shadow:0 0 22px #c89ce655;opacity:0;pointer-events:none}
+.mlbb-screen:nth-child(2).motion-seen .mlbb-screen-stage:before{animation:score-awaken 750ms 650ms var(--motion-ease) both}
 .gallery-exit{opacity:0!important;transform:translateX(var(--gallery-exit,-16px)) scale(.992)!important}
 .gallery-enter{animation:gallery-enter 430ms var(--motion-ease)}
 .case-gallery-controls button{position:relative;transition:color 240ms ease,background-color 240ms ease,transform 240ms var(--motion-ease)}
 .case-gallery-controls button[aria-pressed=true]:after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:1px;background:var(--motion-gold);box-shadow:0 0 9px #f0d99f99;animation:trace-in 420ms var(--motion-ease)}
+.case-feature-number{transition:color 260ms ease,text-shadow 260ms ease}
+.case-features article:hover .case-feature-number{color:var(--chapter-accent);text-shadow:0 0 12px color-mix(in srgb,var(--chapter-accent) 65%,transparent)}
 .theme-wash{position:fixed;z-index:9999;right:18px;top:28px;width:36px;height:36px;border-radius:50%;background:#f9eac2;pointer-events:none;mix-blend-mode:soft-light}
 
+/* The final chapter gathers distant stars toward its central symbol. */
+.contact>:not(.contact-star){position:relative;z-index:1}
+.contact-star{position:absolute;left:50%;top:27%;width:4px;height:4px;border-radius:50%;background:#fff0ad;box-shadow:0 0 12px #f5dda2;opacity:0;transform:translate(var(--star-x),var(--star-y));pointer-events:none;z-index:0}
+.contact.contact-awake .contact-star{animation:stars-converge 1.15s var(--star-delay) var(--motion-ease) both}
+.contact.contact-awake .contact-symbol{animation:final-star 1.2s 650ms var(--motion-ease) both}
+
 @media(hover:hover) and (pointer:fine){
-  .work-card:hover,.talent-card:hover{transform:translateY(-6px)}
+  .work-card:hover{transform:perspective(1000px) translateY(-6px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y))}
+  .talent-card:hover{transform:translateY(-6px)}
   .work-card:hover:before,.case-features article:hover:before{opacity:1}
+  .work-card:hover:after{opacity:.88;transform:scale(1)}
   .work-card:hover .work-art img{transform:scale(1.035);filter:saturate(1.04)}
   .work-card:hover .work-link svg,.case-text-link:hover span{transform:translateX(5px)}
   .dialog-close:hover{transform:rotate(90deg);background:#e5cc9420}
   .mlbb-screen:hover .mlbb-screen-stage img{transform:scale(1.018)}
+  .portrait-card:hover .portrait-window>img:not(.portrait-crossfade){transform:scale(1.018);filter:saturate(1.03)}
+  .profile-trigger:hover:after,.btn:hover:after{transform:translateX(140%)}
 }
 
 @keyframes star-drift{0%,100%{transform:translate3d(0,0,0);opacity:.45}50%{transform:translate3d(10px,-18px,0);opacity:.9}}
@@ -83,6 +122,19 @@
 @keyframes gallery-enter{from{opacity:0;transform:translateX(var(--gallery-enter,16px)) scale(.992)}to{opacity:1;transform:translateX(0) scale(1)}}
 @keyframes trace-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes mobile-link-arrive{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+@keyframes brand-glint{0%,72%,100%{transform:translateX(0) skewX(-18deg);opacity:0}78%{opacity:.75}90%{transform:translateX(260px) skewX(-18deg);opacity:0}}
+@keyframes codex-stamp{0%{opacity:0;transform:scale(1.08)}65%{opacity:1;transform:scale(.97)}100%{opacity:1;transform:scale(1)}}
+@keyframes signature-write{from{opacity:0;clip-path:inset(0 100% 0 0);transform:translateX(-6px)}to{opacity:1;clip-path:inset(0 0 0 0);transform:translateX(0)}}
+@keyframes archive-frame{from{opacity:0;transform:scale(.97)}to{opacity:.55;transform:scale(1)}}
+@keyframes data-pulse{0%{opacity:0;transform:translate(-50%,-50%) scale(.3);box-shadow:0 0 0 0 #f5df9daa}45%{opacity:1;transform:translate(-50%,-50%) scale(1);box-shadow:0 0 0 12px #f5df9d00,0 0 18px #fff0ad}100%{opacity:.35;transform:translate(-50%,-50%) scale(.55)}}
+@keyframes stars-converge{0%{opacity:0;transform:translate(var(--star-x),var(--star-y)) scale(.5)}35%{opacity:.9}100%{opacity:0;transform:translate(0,0) scale(1.5)}}
+@keyframes final-star{0%{filter:drop-shadow(0 0 0 #f4dda100);transform:scale(.86)}55%{filter:drop-shadow(0 0 22px #f4dda1cc);transform:scale(1.16)}100%{filter:drop-shadow(0 0 8px #f4dda177);transform:scale(1)}}
+@keyframes codex-page-out{to{opacity:0;filter:blur(4px);transform:scale(.995)}}
+@keyframes codex-page-in{from{opacity:0;filter:blur(5px);transform:scale(1.008)}to{opacity:1;filter:blur(0);transform:scale(1)}}
+@keyframes case-frame-draw{from{opacity:0;transform:scale(.96)}to{opacity:.68;transform:scale(1)}}
+@keyframes erp-scan{0%{opacity:0;transform:translateY(0)}15%{opacity:1}85%{opacity:.8}100%{opacity:0;transform:translateY(430px)}}
+@keyframes message-status{0%{opacity:0;transform:translateY(8px)}35%,72%{opacity:1;transform:translateY(0)}100%{opacity:.35}}
+@keyframes score-awaken{0%{opacity:0;transform:translateY(12px) scale(.75)}62%{opacity:1;transform:translateY(-3px) scale(1.08)}100%{opacity:.9;transform:translateY(0) scale(1)}}
 
 @media(max-width:800px){
   .talent-grid:before,.journey-list:before,.journey-list:after{display:none}
@@ -106,4 +158,5 @@
   .landscape{transform:none!important}
   .journey-list:after{transform:scaleY(1)}
   .project-illustration:after,.theme-wash{display:none}
+  .contact-star,.flow-pulse{display:none}
 }

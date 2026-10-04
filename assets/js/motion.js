@@ -5,8 +5,15 @@
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
   const ease = 'cubic-bezier(.2,.75,.2,1)';
+  let firstVisit = true;
+
+  try {
+    firstVisit = sessionStorage.getItem('samudra-codex-opened') !== 'true';
+    sessionStorage.setItem('samudra-codex-opened', 'true');
+  } catch (_) { /* The full intro remains available when storage is blocked. */ }
 
   document.documentElement.classList.add('motion-ready');
+  document.documentElement.classList.toggle('return-visit', !firstVisit);
   function animate(element, frames, options = {}) {
     if (!element || reduced.matches) return null;
     return element.animate(frames, {duration: 520, easing: ease, fill: 'both', ...options});
@@ -20,24 +27,25 @@
     ], {duration: 620, delay: Math.min(index * 70, 280)});
   }
 
-  // Opening sequence: landscape, portrait frame, then the story and actions.
+  // Opening sequence: the first visit opens the codex; return visits stay brief.
   if (!reduced.matches && scrollY < 80) {
+    const introFactor = firstVisit ? 1 : .55;
     animate($('.landscape'), [
       {opacity: .45, transform: 'scale(1.075)'},
       {opacity: 1, transform: 'scale(1.025)'}
-    ], {duration: 1200, easing: 'cubic-bezier(.16,.72,.2,1)'});
+    ], {duration: 1200 * introFactor, easing: 'cubic-bezier(.16,.72,.2,1)'});
     $$('.orbit').forEach((element, index) => animate(element, [
       {opacity: 0, scale: .86},
       {opacity: 1, scale: 1}
-    ], {duration: 850, delay: 180 + index * 100}));
+    ], {duration: 850 * introFactor, delay: firstVisit ? 180 + index * 100 : index * 45}));
     animate($('.portrait-card'), [
       {opacity: 0, transform: 'translateY(28px) scale(.94)'},
       {opacity: 1, transform: 'translateY(0) scale(1)'}
-    ], {duration: 780, delay: 300});
+    ], {duration: 780 * introFactor, delay: firstVisit ? 300 : 80});
     $$('.hero-copy > *').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 600, delay: 260 + Math.min(index * 80, 400)}));
+    ], {duration: 600 * introFactor, delay: (firstVisit ? 260 : 70) + Math.min(index * (firstVisit ? 80 : 35), firstVisit ? 400 : 175)}));
     $$('.case-hero :is(.case-eyebrow,.case-product,h1,.case-lead,.case-hero-actions,.case-summary,.case-hero-foot)').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
@@ -49,8 +57,9 @@
     const groups = [
       '.about > *', '.section-heading > *', '.talent-grid > *', '.works-grid > *',
       '.journey-list > *', '.case-section-heading > *', '.case-story > *',
-      '.case-features > *', '.case-stack > *', '.mlbb-gallery > *',
-      '.case-closing > .case-container > *'
+      '.case-gallery', '.case-features > *', '.case-stack > *', '.mlbb-gallery > *',
+      '.case-closing > .case-container > *', '.about-tags .tag', '.signature',
+      '.contact > :not(.contact-star)'
     ];
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -66,11 +75,15 @@
   // Desktop parallax stays intentionally shallow so the copy remains stable.
   const hero = $('.hero');
   const landscape = $('.landscape');
+  const portraitCard = $('.portrait-card');
+  const vision = $('.vision');
   let parallaxFrame = 0;
   function resetParallax() {
     cancelAnimationFrame(parallaxFrame);
     parallaxFrame = 0;
     if (landscape) landscape.style.transform = '';
+    if (portraitCard) portraitCard.style.translate = '';
+    if (vision) vision.style.translate = '';
   }
   hero?.addEventListener('pointermove', event => {
     if (reduced.matches || !finePointer.matches || !landscape) return;
@@ -79,6 +92,8 @@
     const y = (event.clientY - bounds.top) / bounds.height * 10 - 5;
     if (!parallaxFrame) parallaxFrame = requestAnimationFrame(() => {
       landscape.style.transform = `translate(${x}px, ${y}px) scale(1.035)`;
+      if (portraitCard) portraitCard.style.translate = `${x * -.32}px ${y * -.28}px`;
+      if (vision) vision.style.translate = `${x * -.75}px ${y * -.65}px`;
       parallaxFrame = 0;
     });
   });
@@ -124,8 +139,39 @@
       const bounds = card.getBoundingClientRect();
       card.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`);
       card.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`);
+      if (card.matches('.work-card')) {
+        card.style.setProperty('--tilt-x', `${((event.clientY - bounds.top) / bounds.height - .5) * -2.2}deg`);
+        card.style.setProperty('--tilt-y', `${((event.clientX - bounds.left) / bounds.width - .5) * 2.2}deg`);
+      }
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--tilt-x');
+      card.style.removeProperty('--tilt-y');
     });
   });
+
+  // The final chapter gathers a few stars back toward the contact symbol.
+  const contact = $('.contact');
+  if (contact) {
+    [[-42,-26],[38,-32],[-48,12],[44,18],[-24,38],[27,42]].forEach(([x, y], index) => {
+      const star = document.createElement('span');
+      star.className = 'contact-star';
+      star.setAttribute('aria-hidden', 'true');
+      star.style.setProperty('--star-x', `${x}vw`);
+      star.style.setProperty('--star-y', `${y}vh`);
+      star.style.setProperty('--star-delay', `${index * 80}ms`);
+      contact.append(star);
+    });
+    if ('IntersectionObserver' in window) {
+      const contactObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          contact.classList.add('contact-awake');
+          contactObserver.disconnect();
+        }
+      }, {threshold: .35});
+      contactObserver.observe(contact);
+    }
+  }
 
   // Timeline light fills according to reading progress.
   const journey = $('.journey-list');
@@ -220,6 +266,18 @@
   // Replays the conceptual ERP to OpenClaw flow.
   const flowButton = $('[data-replay-flow]');
   const flowFigure = $('.project-illustration');
+  const flowCanvas = flowFigure?.querySelector('a');
+  if (flowCanvas) {
+    [[18,47],[50,47],[82,47],[50,82]].forEach(([x, y], index) => {
+      const pulse = document.createElement('span');
+      pulse.className = 'flow-pulse';
+      pulse.setAttribute('aria-hidden', 'true');
+      pulse.style.setProperty('--pulse-x', `${x}%`);
+      pulse.style.setProperty('--pulse-y', `${y}%`);
+      pulse.style.setProperty('--pulse-delay', `${420 + index * 310}ms`);
+      flowCanvas.append(pulse);
+    });
+  }
   function playFlow() {
     if (!flowFigure || reduced.matches) return;
     flowFigure.classList.remove('flow-playing');
@@ -251,6 +309,18 @@
       {opacity: 0, transform: 'scale(1.7)'}
     ], {duration: 650});
     effect?.finished.finally(() => wash.remove());
+  });
+
+  // Project chapters close like a codex page before same-origin navigation.
+  $$('.work-card a[href], .case-back[href], .case-brand[href], .case-footer a[href]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (reduced.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
+      const destination = new URL(link.href, location.href);
+      if (destination.origin !== location.origin) return;
+      event.preventDefault();
+      document.documentElement.classList.add('page-leaving');
+      setTimeout(() => { location.href = destination.href; }, 220);
+    });
   });
 
   finePointer.addEventListener('change', resetParallax);
