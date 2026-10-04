@@ -124,7 +124,7 @@
     dialog.addEventListener('close', () => { document.body.style.overflow = ''; });
   });
   function openDialog(dialog) { dialog.showModal(); document.body.style.overflow = 'hidden'; }
-  $('[data-open-profile]').addEventListener('click', () => openDialog($('#profile-dialog')));
+  $$('[data-open-profile]').forEach(button => button.addEventListener('click', () => openDialog($('#profile-dialog'))));
 
   const projects = {
     ai: {

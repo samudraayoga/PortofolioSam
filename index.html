@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <script src="assets/typed.umd.js" defer></script>
   <script src="assets/js/script.js" defer></script>
-  <link rel="stylesheet" href="assets/css/motion.css?v=20261004-2">
+  <link rel="stylesheet" href="assets/css/motion.css?v=20261004-3">
   <link rel="stylesheet" href="assets/css/scenery.css?v=20261003-2">
-  <script src="assets/js/motion.js?v=20261004-2" defer></script>
+  <script src="assets/js/motion.js?v=20261004-3" defer></script>
 </head>
 <body class="portfolio-page">
   <a class="skip-link" href="#profil">Skip to content</a>
@@ -92,7 +92,20 @@
       <section id="profil" class="section container">
         <div class="about">
           <div><div class="section-kicker"><span class="diamond"></span>Story of the explorer</div><h2>Curiosity is my compass.</h2></div>
-          <div class="about-right"><p>From understanding computer networks to designing AI systems, I am passionate about discovering how technology can address real-world needs.</p><p>I am a graduate of Computer Science at UPN Veteran Yogyakarta with experience in fullstack development, ERP project management, and the integration of multi-agent and RAG systems. For me, good solutions emerge from a clear understanding of the problem at hand.</p><div class="about-tags"><span class="tag">System thinking</span><span class="tag">Full-stack development</span><span class="tag">AI & automation</span></div><div class="signature">Samudra Yoga.</div></div>
+          <div class="about-right character-archive">
+            <div class="archive-tabs" role="tablist" aria-label="Character archive">
+              <button id="archive-profile-tab" role="tab" aria-selected="true" aria-controls="archive-profile" tabindex="0">Profile</button>
+              <button id="archive-background-tab" role="tab" aria-selected="false" aria-controls="archive-background" tabindex="-1">Background</button>
+              <button id="archive-experience-tab" role="tab" aria-selected="false" aria-controls="archive-experience" tabindex="-1">Experience</button>
+              <button id="archive-beyond-tab" role="tab" aria-selected="false" aria-controls="archive-beyond" tabindex="-1">Beyond development</button>
+            </div>
+            <div class="archive-panels">
+              <section id="archive-profile" class="archive-panel" role="tabpanel" aria-labelledby="archive-profile-tab"><p>From understanding computer networks to designing AI systems, I am passionate about discovering how technology can address real-world needs.</p><div class="about-tags"><span class="tag">System thinking</span><span class="tag">Full-stack development</span><span class="tag">AI &amp; automation</span></div><div class="signature">Samudra Yoga.</div></section>
+              <section id="archive-background" class="archive-panel" role="tabpanel" aria-labelledby="archive-background-tab" hidden><p>I am a graduate of Computer Science at UPN Veteran Yogyakarta with experience in fullstack development, ERP project management, and the integration of multi-agent and RAG systems. For me, good solutions emerge from a clear understanding of the problem at hand.</p><dl class="archive-facts"><div><dt>Education</dt><dd>Computer Science · UPNYK</dd></div><div><dt>Focus</dt><dd>Full-Stack &amp; AI Engineering</dd></div></dl></section>
+              <section id="archive-experience" class="archive-panel" role="tabpanel" aria-labelledby="archive-experience-tab" hidden><p>My journey connects system development, AI architecture, network infrastructure, laboratory operations, and teaching.</p><a class="archive-link" href="#perjalanan">Open the adventure map <span aria-hidden="true">↓</span></a></section>
+              <section id="archive-beyond" class="archive-panel" role="tabpanel" aria-labelledby="archive-beyond-tab" hidden><p>Beyond development, I have served as a class representative, KKN team leader, publication and documentation coordinator, and a member of the Media and Information team.</p><button type="button" class="archive-link archive-profile-link" data-open-profile>Open full character profile <span aria-hidden="true">↗</span></button></section>
+            </div>
+          </div>
         </div>
         <div id="keahlian" class="skills-section">
           <div class="section-heading"><div><div class="eyebrow">Skills Constellation</div><h2>Preparation for every challenge.</h2></div><p>Connected skills to bring an idea to a solution. Choose to explore.</p></div>

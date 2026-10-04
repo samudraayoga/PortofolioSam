@@ -1,6 +1,39 @@
 /* Motion language: guiding light, wind and constellations. */
 :root{--motion-gold:#f0d99f;--motion-ease:cubic-bezier(.2,.75,.2,1)}
 .page-leaving body{animation:codex-page-out 240ms ease-in both;pointer-events:none}
+
+/* Celestial Gate: a short first-visit title sequence. */
+body.codex-intro-running{overflow:hidden}
+.celestial-gate{position:fixed;inset:0;z-index:1000;display:grid;place-content:center;justify-items:center;color:#fff8df;background:radial-gradient(circle at 50% 48%,#365f6c 0,#153647 38%,#071a2a 100%);overflow:hidden;transition:opacity 650ms ease,visibility 650ms ease}
+.celestial-gate:before,.celestial-gate:after{content:'';position:absolute;inset:-25%;background:conic-gradient(from 0deg,transparent,#f4dc9c25,transparent 18%,transparent 48%,#a9d9d225,transparent 64%);animation:gate-sky 16s linear infinite}
+.celestial-gate:after{inset:0;background:radial-gradient(circle,#fff8cf 0 1px,transparent 2px) 0 0/97px 83px;opacity:.28;animation:star-drift 9s ease-in-out infinite}
+.celestial-gate.intro-leaving{opacity:0;visibility:hidden}
+.gate-sigil{position:relative;width:190px;height:190px;display:grid;place-items:center;margin-bottom:28px;filter:drop-shadow(0 0 20px #f3d99f55)}
+.gate-sigil i{position:absolute;inset:0;border:1px solid #f1d79788;border-radius:50%;animation:gate-ring 1.3s var(--motion-ease) both}
+.gate-sigil i:nth-child(2){inset:18px;border-style:dashed;animation-delay:130ms;animation-direction:reverse}
+.gate-sigil i:nth-child(3){inset:42px;border-radius:0;transform:rotate(45deg);animation-delay:240ms}
+.gate-sigil span{font-size:42px;color:#f5dda2;animation:gate-star 1.2s 320ms var(--motion-ease) both}
+.gate-kicker{position:relative;z-index:1;margin:0 0 9px;font-size:9px;letter-spacing:5px;color:#cfdfdc;animation:gate-copy 650ms 420ms both}
+.celestial-gate>strong{position:relative;z-index:1;font:500 31px var(--serif);letter-spacing:8px;animation:gate-copy 650ms 520ms both}
+.celestial-gate>button{position:absolute;right:28px;bottom:24px;z-index:2;border:0;background:transparent;color:#d3dfdc;font-size:10px;letter-spacing:1px;padding:10px}
+
+/* Repeated scenic crops create a lightweight layered landscape. */
+.scene-depth{position:absolute;inset:-16px;pointer-events:none;background-image:url('../landscape.png');background-repeat:no-repeat;background-size:cover;transition:translate 1.2s ease-out;will-change:translate}
+.scene-sky{z-index:-2;background-position:50% 20%;opacity:.22;filter:blur(1px) saturate(1.12);-webkit-mask-image:linear-gradient(#000 0 36%,transparent 68%);mask-image:linear-gradient(#000 0 36%,transparent 68%)}
+.scene-foreground{z-index:-1;background-position:50% 72%;opacity:.2;filter:saturate(1.08) contrast(1.04);-webkit-mask-image:linear-gradient(transparent 55%,#000 83%);mask-image:linear-gradient(transparent 55%,#000 83%)}
+
+/* Persistent chapter compass. */
+.chapter-nav{position:fixed;z-index:20;right:24px;top:50%;display:grid;gap:14px;transform:translateY(-50%)}
+.chapter-nav a{position:relative;width:13px;height:13px;border:1px solid #ead69a88;transform:rotate(45deg);background:#153b4baa;box-shadow:0 0 0 0 #edd99a00;transition:transform 280ms var(--motion-ease),background 280ms ease,box-shadow 280ms ease}
+.chapter-nav a:after{content:'';position:absolute;inset:3px;background:#f1d99b;opacity:0;transition:opacity 260ms ease}
+.chapter-nav a.active{background:#426b6c;box-shadow:0 0 0 5px #ead69a18,0 0 14px #edd99a55;transform:rotate(45deg) scale(1.14)}
+.chapter-nav a.active:after{opacity:1}
+.chapter-nav span{position:absolute;right:24px;top:-3px;color:#f8edce;background:#153847dd;border:1px solid #ddc99138;padding:5px 8px;font-size:8px;letter-spacing:1px;text-transform:uppercase;opacity:0;transform:rotate(-45deg) translateX(6px);transform-origin:right center;pointer-events:none;transition:opacity 220ms ease,transform 220ms ease}
+.chapter-nav a:hover span,.chapter-nav a:focus-visible span{opacity:1;transform:rotate(-45deg) translateX(0)}
+
+.sound-toggle{border:1px solid #f0e1b73d;background:#153e4a24;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#f8e7bd;transition:background 240ms ease,box-shadow 240ms ease,color 240ms ease}
+.sound-toggle[aria-pressed=true]{background:#668b7d52;color:#fff1b7;box-shadow:0 0 18px #d7c58444}
+.sound-toggle span{font-size:14px;line-height:1}
 .landscape{transition:transform 900ms ease-out,filter 600ms ease,opacity 600ms ease;will-change:transform}
 .portrait-window .portrait-crossfade{position:absolute;inset:0;pointer-events:none;z-index:2}
 .brand{position:relative;overflow:hidden}
@@ -20,6 +53,19 @@
 .about-tags .tag.motion-seen{animation:codex-stamp 420ms var(--motion-ease) both}
 .signature.motion-seen{animation:signature-write 900ms 180ms var(--motion-ease) both}
 
+/* Character Archive replaces the static biography column. */
+.character-archive{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;min-height:310px;padding:24px;border:1px solid #d8c88b55;background:linear-gradient(135deg,#153847d9,#1d4a55b8);box-shadow:inset 0 0 40px #071d2a36,0 20px 55px #061a2825;position:relative;overflow:hidden}
+.character-archive:after{content:'✦';position:absolute;right:18px;top:13px;color:#e9d39775;font-size:16px;animation:ornament-glow 6s ease-in-out infinite}
+.archive-tabs{display:flex;flex-direction:column;border-right:1px solid #d8c88b38;padding-right:18px}
+.archive-tabs button{border:0;border-bottom:1px solid #d8c88b24;background:transparent;color:#b9cdca;text-align:left;padding:13px 7px;font-size:10px;letter-spacing:.6px;transition:color 220ms ease,padding-left 280ms var(--motion-ease),background 220ms ease}
+.archive-tabs button[aria-selected=true]{color:#ffeab8;padding-left:17px;background:linear-gradient(90deg,#ead29516,transparent)}
+.archive-tabs button[aria-selected=true]:before{content:'✦';margin-left:-12px;margin-right:6px;color:#efd798}
+.archive-panels{align-self:center;min-width:0}
+.archive-panel{margin:0}.archive-panel p{font-size:13px!important;line-height:1.95!important;margin:0 0 18px!important}
+.archive-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 0}
+.archive-facts div{border-top:1px solid #d9ca9b3d;padding-top:10px}.archive-facts dt{font-size:8px;text-transform:uppercase;letter-spacing:1.3px;color:#e5cd96}.archive-facts dd{margin:5px 0 0;font-size:11px;color:#d6e3df}
+.archive-link{display:inline-flex;align-items:center;gap:14px;border:0;border-bottom:1px solid #d9c58c66;background:transparent;color:#f2dda8;padding:8px 0;font-size:10px;font-weight:600}
+
 /* Navigation star glides between chapters. */
 .desktop-nav{position:relative}
 .desktop-nav a.active:after{display:none}
@@ -28,7 +74,12 @@
 
 /* Skills read as linked constellation nodes. */
 .talent-grid{position:relative;isolation:isolate}
-.talent-grid:before{content:'';position:absolute;left:16.5%;right:16.5%;top:51px;height:1px;background:linear-gradient(90deg,transparent,#e5cc9466 12%,#e5cc9466 88%,transparent);z-index:-1;box-shadow:0 0 8px #e5cc9440}
+.talent-grid{padding:72px 34px 26px;gap:52px!important;background:radial-gradient(circle at 50% 42%,#9acbbb14,transparent 34%)}
+.talent-grid:before{content:'';position:absolute;left:16.5%;right:16.5%;top:123px;height:1px;background:linear-gradient(90deg,transparent,#e5cc9466 12%,#e5cc9466 88%,transparent);z-index:-1;box-shadow:0 0 8px #e5cc9440}
+.talent-grid:after{content:'';position:absolute;left:50%;top:37px;width:270px;height:270px;border:1px solid #e5cc942a;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 55px #9bcfbe0d;z-index:-2}
+.talent-card:nth-child(2){transform:translateY(-54px)}
+.talent-card:nth-child(2):hover{transform:translateY(-60px)}
+.skill-detail{position:relative;overflow:hidden}.skill-detail:before{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent,#f1dda412,transparent);animation:skill-current 5s ease-in-out infinite;pointer-events:none}
 .talent-card:before{content:'';position:absolute;bottom:0;left:20px;right:20px;height:2px;background:linear-gradient(90deg,transparent,var(--motion-gold),transparent);transform:scaleX(0);transition:transform 330ms var(--motion-ease);box-shadow:0 0 12px #f0d99f88}
 .work-card:before,.case-features article:before{content:'';position:absolute;inset:0;background:radial-gradient(220px circle at var(--pointer-x,-100px) var(--pointer-y,-100px),#f6e3a519,transparent 65%);opacity:0;transition:opacity 260ms ease;pointer-events:none}
 .talent-card[aria-selected=true]:before{transform:scaleX(1)}
@@ -45,6 +96,19 @@
 .work-link svg,.case-text-link span,.case-back span{transition:transform 240ms var(--motion-ease)}
 .btn{position:relative;overflow:hidden;isolation:isolate}
 .btn:after{content:'';position:absolute;inset:-2px;background:linear-gradient(105deg,transparent 28%,#fff9dc88 48%,transparent 68%);transform:translateX(-140%);transition:transform 650ms var(--motion-ease);pointer-events:none}
+.portfolio-page .works-section{padding-top:80px;padding-bottom:120px}
+.portfolio-page .works-grid{display:grid;grid-template-columns:1fr;gap:16vh}
+.portfolio-page .works-grid .work-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);min-height:min(690px,78vh);position:sticky;top:88px;border-color:#ddca9663;background:linear-gradient(135deg,#102e3bd9,#183f4bc7);backdrop-filter:blur(14px);box-shadow:0 28px 85px #04172570}
+.portfolio-page .work-card:nth-child(even){grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr)}
+.portfolio-page .work-card:nth-child(even) .work-art{grid-column:2}.portfolio-page .work-card:nth-child(even) .work-body{grid-column:1;grid-row:1}
+.portfolio-page .work-art{height:auto;min-height:100%;padding:clamp(22px,4vw,54px)}
+.portfolio-page .work-body{justify-content:center;padding:clamp(34px,5vw,76px)}
+.portfolio-page .work-body h3{font-size:clamp(30px,3vw,48px);font-weight:400;margin-bottom:18px}
+.portfolio-page .work-body p{font-size:13px;max-width:490px;line-height:2;min-height:0}
+.portfolio-page .work-category{font-size:9px;letter-spacing:2px}.portfolio-page .work-tech span{font-size:10px;padding:6px 10px}
+.portfolio-page .work-link{font-size:11px;padding-top:18px}
+.work-chapter-number{position:absolute;right:28px;top:21px;z-index:4;color:var(--project-accent);font:400 13px var(--serif);letter-spacing:3px;text-shadow:0 0 12px currentColor}
+.work-chapter-number:before{content:'DOMAIN / ';font:8px var(--sans);letter-spacing:1.5px;color:#d6dfd9aa}
 
 /* One travelling line reveals the journey. */
 .journey-list{position:relative;--journey-progress:0}
@@ -97,6 +161,9 @@
 .contact-star{position:absolute;left:50%;top:27%;width:4px;height:4px;border-radius:50%;background:#fff0ad;box-shadow:0 0 12px #f5dda2;opacity:0;transform:translate(var(--star-x),var(--star-y));pointer-events:none;z-index:0}
 .contact.contact-awake .contact-star{animation:stars-converge 1.15s var(--star-delay) var(--motion-ease) both}
 .contact.contact-awake .contact-symbol{animation:final-star 1.2s 650ms var(--motion-ease) both}
+.portfolio-page .contact{padding-top:110px;padding-bottom:105px;background:linear-gradient(#071a2bd9,#0b2538e8),url('../landscape.png') center 62%/cover no-repeat}
+.portfolio-page .contact:before{background:radial-gradient(circle at 50% 28%,#879dd02b,transparent 52%),radial-gradient(circle,#fff5c8 0 1px,transparent 1.7px) 0 0/103px 89px;opacity:.7}
+.portfolio-page .contact h2{font-size:clamp(38px,4vw,60px)}
 
 @media(hover:hover) and (pointer:fine){
   .work-card:hover{transform:perspective(1000px) translateY(-6px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y))}
@@ -135,10 +202,29 @@
 @keyframes erp-scan{0%{opacity:0;transform:translateY(0)}15%{opacity:1}85%{opacity:.8}100%{opacity:0;transform:translateY(430px)}}
 @keyframes message-status{0%{opacity:0;transform:translateY(8px)}35%,72%{opacity:1;transform:translateY(0)}100%{opacity:.35}}
 @keyframes score-awaken{0%{opacity:0;transform:translateY(12px) scale(.75)}62%{opacity:1;transform:translateY(-3px) scale(1.08)}100%{opacity:.9;transform:translateY(0) scale(1)}}
+@keyframes gate-sky{to{transform:rotate(360deg)}}
+@keyframes gate-ring{from{opacity:0;scale:.62}to{opacity:1;scale:1}}
+@keyframes gate-star{from{opacity:0;scale:.2;rotate:-45deg}60%{opacity:1;scale:1.25;rotate:8deg}to{opacity:1;scale:1;rotate:0}}
+@keyframes gate-copy{from{opacity:0;transform:translateY(10px);letter-spacing:8px}to{opacity:1;transform:translateY(0)}}
+@keyframes skill-current{0%,100%{transform:translateX(-130%)}50%{transform:translateX(130%)}}
 
 @media(max-width:800px){
   .talent-grid:before,.journey-list:before,.journey-list:after{display:none}
   .case-hero:after{width:85vw;height:85vw;right:-55vw;top:-25vw}
+  .chapter-nav{display:none}
+  .character-archive{grid-template-columns:1fr;gap:16px;padding:19px;min-height:0}
+  .archive-tabs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid #d8c88b38;padding:0 0 7px;scrollbar-width:none}
+  .archive-tabs::-webkit-scrollbar{display:none}.archive-tabs button{flex:0 0 auto;white-space:nowrap;padding:10px 12px}
+  .archive-tabs button[aria-selected=true]{padding-left:20px}
+  .archive-facts{grid-template-columns:1fr}
+  .talent-grid{padding:18px 0 0;gap:13px!important;background:none}
+  .talent-grid:after{display:none}.talent-card:nth-child(2),.talent-card:nth-child(2):hover{transform:none}
+  .portfolio-page .works-grid{gap:32px}
+  .portfolio-page .works-grid .work-card,.portfolio-page .work-card:nth-child(even){display:grid;grid-template-columns:1fr;min-height:0;position:relative;top:auto}
+  .portfolio-page .work-card:nth-child(even) .work-art,.portfolio-page .work-card:nth-child(even) .work-body{grid-column:auto;grid-row:auto}
+  .portfolio-page .work-art{height:300px;min-height:0;padding:20px}
+  .portfolio-page .work-body{padding:27px 24px 25px}
+  .portfolio-page .work-body h3{font-size:26px}.portfolio-page .work-body p{font-size:12px}
 }
 @media(min-width:801px) and (max-width:1100px){.journey-list:before,.journey-list:after{left:187px}}
 @media(max-width:600px){
@@ -147,6 +233,11 @@
   .desktop-nav.open a:nth-child(3){animation-delay:90ms}
   .desktop-nav.open a:nth-child(4){animation-delay:135ms}
   .nav-guide{display:none}
+  .sound-toggle{width:31px;height:31px;border-color:#f0e1b72f}.sound-toggle span{font-size:12px}
+  .gate-sigil{width:145px;height:145px}.celestial-gate>strong{font-size:25px;letter-spacing:6px}.gate-kicker{font-size:7px;letter-spacing:3.5px}
+  .scene-depth{display:none}
+  .portfolio-page .work-art{height:235px}.work-chapter-number{right:19px;top:14px}
+  .portfolio-page .contact{padding-top:80px;padding-bottom:76px}
 }
 @media(hover:none),(pointer:coarse){
   .work-card:hover,.talent-card:hover,.btn:hover{transform:none}
@@ -159,4 +250,5 @@
   .journey-list:after{transform:scaleY(1)}
   .project-illustration:after,.theme-wash{display:none}
   .contact-star,.flow-pulse{display:none}
+  .celestial-gate{display:none}.scene-depth{display:none}
 }

@@ -14,6 +14,92 @@
 
   document.documentElement.classList.add('motion-ready');
   document.documentElement.classList.toggle('return-visit', !firstVisit);
+
+  const portfolioPage = document.body.classList.contains('portfolio-page');
+  const heroElement = $('.hero');
+
+  // Celestial Gate appears once per browsing session, with a direct skip control.
+  if (portfolioPage && firstVisit && !reduced.matches) {
+    const intro = document.createElement('div');
+    intro.className = 'celestial-gate';
+    intro.setAttribute('aria-label', 'Opening Samudra’s portfolio');
+    intro.innerHTML = '<div class="gate-sigil" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><p class="gate-kicker">A DEVELOPER’S JOURNEY</p><strong>SAMUDRA</strong><button type="button">Skip intro</button>';
+    document.body.prepend(intro);
+    document.body.classList.add('codex-intro-running');
+    let introTimer;
+    const dismissIntro = () => {
+      clearTimeout(introTimer);
+      if (intro.classList.contains('intro-leaving')) return;
+      intro.classList.add('intro-leaving');
+      document.body.classList.remove('codex-intro-running');
+      setTimeout(() => intro.remove(), 700);
+    };
+    $('button', intro).addEventListener('click', dismissIntro);
+    introTimer = setTimeout(dismissIntro, 1750);
+  }
+
+  // Duplicate scenic crops provide independent sky and foreground movement.
+  if (portfolioPage && heroElement) {
+    ['scene-sky', 'scene-foreground'].forEach(className => {
+      const layer = document.createElement('div');
+      layer.className = `scene-depth ${className}`;
+      layer.setAttribute('aria-hidden', 'true');
+      heroElement.prepend(layer);
+    });
+  }
+
+  // Chapter navigator mirrors the structure of an official character microsite.
+  if (portfolioPage) {
+    const chapterNav = document.createElement('nav');
+    chapterNav.className = 'chapter-nav';
+    chapterNav.setAttribute('aria-label', 'Journey chapters');
+    chapterNav.innerHTML = '<a href="#profil" data-chapter="profil"><span>Character</span></a><a href="#keahlian" data-chapter="keahlian"><span>Constellation</span></a><a href="#karya" data-chapter="karya"><span>Creations</span></a><a href="#perjalanan" data-chapter="perjalanan"><span>Journey</span></a><a href="#kontak" data-chapter="kontak"><span>Contact</span></a>';
+    document.body.append(chapterNav);
+    const chapterLinks = $$('a', chapterNav);
+    const chapterObserver = new IntersectionObserver(entries => {
+      entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio).slice(0, 1).forEach(entry => {
+        chapterLinks.forEach(link => link.classList.toggle('active', link.dataset.chapter === entry.target.id));
+      });
+    }, {threshold: [.2, .45, .7], rootMargin: '-20% 0px -35%'});
+    chapterLinks.forEach(link => {
+      const section = document.getElementById(link.dataset.chapter);
+      if (section) chapterObserver.observe(section);
+    });
+  }
+
+  // Optional synthesized ambience; it never starts without a user gesture.
+  const headerActions = $('.header-actions');
+  if (portfolioPage && headerActions) {
+    const soundButton = document.createElement('button');
+    soundButton.type = 'button';
+    soundButton.className = 'sound-toggle';
+    soundButton.setAttribute('aria-label', 'Enable ambient sound');
+    soundButton.setAttribute('aria-pressed', 'false');
+    soundButton.innerHTML = '<span aria-hidden="true">♪</span>';
+    headerActions.prepend(soundButton);
+    let audioContext, ambienceGain;
+    soundButton.addEventListener('click', () => {
+      const enabled = soundButton.getAttribute('aria-pressed') !== 'true';
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        ambienceGain = audioContext.createGain();
+        ambienceGain.gain.value = 0;
+        const oscillator = audioContext.createOscillator();
+        const filter = audioContext.createBiquadFilter();
+        oscillator.type = 'sine';
+        oscillator.frequency.value = 86;
+        filter.type = 'lowpass';
+        filter.frequency.value = 240;
+        oscillator.connect(filter).connect(ambienceGain).connect(audioContext.destination);
+        oscillator.start();
+      }
+      audioContext.resume();
+      ambienceGain.gain.cancelScheduledValues(audioContext.currentTime);
+      ambienceGain.gain.linearRampToValueAtTime(enabled ? .018 : 0, audioContext.currentTime + .45);
+      soundButton.setAttribute('aria-pressed', String(enabled));
+      soundButton.setAttribute('aria-label', enabled ? 'Disable ambient sound' : 'Enable ambient sound');
+    });
+  }
   function animate(element, frames, options = {}) {
     if (!element || reduced.matches) return null;
     return element.animate(frames, {duration: 520, easing: ease, fill: 'both', ...options});
@@ -30,22 +116,23 @@
   // Opening sequence: the first visit opens the codex; return visits stay brief.
   if (!reduced.matches && scrollY < 80) {
     const introFactor = firstVisit ? 1 : .55;
+    const introDelay = portfolioPage && firstVisit ? 1050 : 0;
     animate($('.landscape'), [
       {opacity: .45, transform: 'scale(1.075)'},
       {opacity: 1, transform: 'scale(1.025)'}
-    ], {duration: 1200 * introFactor, easing: 'cubic-bezier(.16,.72,.2,1)'});
+    ], {duration: 1200 * introFactor, delay: introDelay, easing: 'cubic-bezier(.16,.72,.2,1)'});
     $$('.orbit').forEach((element, index) => animate(element, [
       {opacity: 0, scale: .86},
       {opacity: 1, scale: 1}
-    ], {duration: 850 * introFactor, delay: firstVisit ? 180 + index * 100 : index * 45}));
+    ], {duration: 850 * introFactor, delay: introDelay + (firstVisit ? 180 + index * 100 : index * 45)}));
     animate($('.portrait-card'), [
       {opacity: 0, transform: 'translateY(28px) scale(.94)'},
       {opacity: 1, transform: 'translateY(0) scale(1)'}
-    ], {duration: 780 * introFactor, delay: firstVisit ? 300 : 80});
+    ], {duration: 780 * introFactor, delay: introDelay + (firstVisit ? 300 : 80)});
     $$('.hero-copy > *').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 600 * introFactor, delay: (firstVisit ? 260 : 70) + Math.min(index * (firstVisit ? 80 : 35), firstVisit ? 400 : 175)}));
+    ], {duration: 600 * introFactor, delay: introDelay + (firstVisit ? 260 : 70) + Math.min(index * (firstVisit ? 80 : 35), firstVisit ? 400 : 175)}));
     $$('.case-hero :is(.case-eyebrow,.case-product,h1,.case-lead,.case-hero-actions,.case-summary,.case-hero-foot)').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
@@ -75,6 +162,8 @@
   // Desktop parallax stays intentionally shallow so the copy remains stable.
   const hero = $('.hero');
   const landscape = $('.landscape');
+  const sceneSky = $('.scene-sky');
+  const sceneForeground = $('.scene-foreground');
   const portraitCard = $('.portrait-card');
   const vision = $('.vision');
   let parallaxFrame = 0;
@@ -82,6 +171,8 @@
     cancelAnimationFrame(parallaxFrame);
     parallaxFrame = 0;
     if (landscape) landscape.style.transform = '';
+    if (sceneSky) sceneSky.style.translate = '';
+    if (sceneForeground) sceneForeground.style.translate = '';
     if (portraitCard) portraitCard.style.translate = '';
     if (vision) vision.style.translate = '';
   }
@@ -92,6 +183,8 @@
     const y = (event.clientY - bounds.top) / bounds.height * 10 - 5;
     if (!parallaxFrame) parallaxFrame = requestAnimationFrame(() => {
       landscape.style.transform = `translate(${x}px, ${y}px) scale(1.035)`;
+      if (sceneSky) sceneSky.style.translate = `${x * .2}px ${y * .15}px`;
+      if (sceneForeground) sceneForeground.style.translate = `${x * 1.15}px ${y * .75}px`;
       if (portraitCard) portraitCard.style.translate = `${x * -.32}px ${y * -.28}px`;
       if (vision) vision.style.translate = `${x * -.75}px ${y * -.65}px`;
       parallaxFrame = 0;
@@ -131,6 +224,45 @@
       {opacity: 1, transform: 'translateX(0)'}
     ], {duration: 320});
   }).observe(skillPanel, {childList: true});
+
+  // Character Archive keeps long-form profile material inside one focused panel.
+  const archiveTabs = $$('.archive-tabs [role="tab"]');
+  function selectArchive(tab, focus = false) {
+    archiveTabs.forEach(item => {
+      const active = item === tab;
+      item.setAttribute('aria-selected', String(active));
+      item.tabIndex = active ? 0 : -1;
+      const panel = document.getElementById(item.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !active;
+    });
+    const panel = document.getElementById(tab.getAttribute('aria-controls'));
+    animate(panel, [
+      {opacity: 0, transform: 'translateX(18px)'},
+      {opacity: 1, transform: 'translateX(0)'}
+    ], {duration: 360});
+    if (focus) tab.focus();
+  }
+  archiveTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectArchive(tab));
+    tab.addEventListener('keydown', event => {
+      let next;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % archiveTabs.length;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + archiveTabs.length) % archiveTabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = archiveTabs.length - 1;
+      if (next !== undefined) { event.preventDefault(); selectArchive(archiveTabs[next], true); }
+    });
+  });
+
+  // Each creation becomes a numbered domain chapter instead of a small grid tile.
+  $$('.work-card').forEach((card, index) => {
+    card.style.setProperty('--chapter-index', index + 1);
+    const number = document.createElement('span');
+    number.className = 'work-chapter-number';
+    number.setAttribute('aria-hidden', 'true');
+    number.textContent = String(index + 1).padStart(2, '0');
+    card.append(number);
+  });
 
   // Pointer light follows interactive archive panels.
   $$('.work-card, .talent-card, .case-features article').forEach(card => {
@@ -221,7 +353,7 @@
     const y = Math.max(0, Math.min(100, (rect.top + rect.height / 2) / innerHeight * 100));
     dialog.style.transformOrigin = `${x}% ${y}%`;
   }
-  $('[data-open-profile]')?.addEventListener('click', event => setDialogOrigin(event.currentTarget, $('#profile-dialog')), {capture: true});
+  $$('[data-open-profile]').forEach(trigger => trigger.addEventListener('click', event => setDialogOrigin(event.currentTarget, $('#profile-dialog')), {capture: true}));
   $$('[data-project]').forEach(trigger => trigger.addEventListener('click', () => setDialogOrigin(trigger, $('#project-dialog')), {capture: true}));
 
   // Native dialogs get an exit motion before they close.
