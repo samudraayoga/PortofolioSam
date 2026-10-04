@@ -27,7 +27,7 @@
   function setNight(night) {
     document.body.classList.toggle('night', night);
     themeButton.setAttribute('aria-pressed', String(night));
-    themeButton.setAttribute('aria-label', night ? 'Aktifkan suasana siang' : 'Aktifkan suasana malam');
+    themeButton.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode');
     $('use', themeButton).setAttribute('href', night ? '#i-sun' : '#i-moon');
   }
   try { setNight(localStorage.getItem('samudra-night') === 'true'); } catch (_) { /* Storage may be unavailable in local file mode. */ }
@@ -42,14 +42,14 @@
   function closeMenu() {
     nav.classList.remove('open');
     menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.setAttribute('aria-label', 'Buka menu navigasi');
+    menuButton.setAttribute('aria-label', 'Open navigation menu');
     $('use', menuButton).setAttribute('href', '#i-menu');
   }
   menuButton.addEventListener('click', () => {
     const open = !nav.classList.contains('open');
     nav.classList.toggle('open', open);
     menuButton.setAttribute('aria-expanded', String(open));
-    menuButton.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+    menuButton.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
     $('use', menuButton).setAttribute('href', open ? '#i-close' : '#i-menu');
   });
   $$('a', nav).forEach(link => link.addEventListener('click', closeMenu));
@@ -65,7 +65,7 @@
   $$('[data-portrait]').forEach(button => button.addEventListener('click', () => {
     const casual = button.dataset.portrait === 'casual';
     portrait.src = casual ? 'assets/samudra-casual.jpeg' : 'assets/samudra-formal.jpeg';
-    portrait.alt = casual ? 'Yoga Samudra Heriyanto dalam suasana santai dengan kemeja cokelat' : 'Potret formal Yoga Samudra Heriyanto mengenakan jas abu-abu';
+    portrait.alt = casual ? 'Yoga Samudra Heriyanto in a casual setting, wearing a brown shirt' : 'Formal portrait of Yoga Samudra Heriyanto wearing a grey suit';
     portrait.classList.toggle('casual', casual);
     $$('[data-portrait]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
   }));
@@ -128,9 +128,9 @@
 
   const projects = {
     ai: {
-      title: 'AI Agent untuk KPI ERP', category: 'Catatan karya / 02 · AI Engineering',
-      description: 'Pengembangan AI agent berbasis OpenClaw untuk merangkum performa kinerja staf berdasarkan data dashboard KPI. Endpoint pada ERP dihubungkan ke API OpenClaw, dengan SOUL sebagai arahan agen.',
-      points: ['Membuat endpoint pada ERP untuk menyediakan data KPI.', 'Menghubungkan endpoint ERP dengan API OpenClaw.', 'Memberikan arahan SOUL agar agen merangkum performa kinerja staf berdasarkan dashboard.'],
+      title: 'AI Agent for ERP KPIs', category: 'Case notes / 02 · AI Engineering',
+      description: 'I developed an AI agent using OpenClaw to summarize staff performance based on KPI dashboard data. An ERP endpoint connects to the OpenClaw API, with SOUL providing the agent’s instructions.',
+      points: ['Built an ERP endpoint to provide KPI data.', 'Connected the ERP endpoint to the OpenClaw API.', 'Defined SOUL instructions for the agent to summarize staff performance based on the dashboard.'],
       tags: ['OpenClaw', 'SOUL', 'KPI Summary', 'ERP Integration']
     }
   };
@@ -154,7 +154,7 @@
         const input = document.createElement('textarea'); input.value = email; input.style.cssText = 'position:fixed;left:-9999px;top:0;'; document.body.append(input); input.select();
         const copied = document.execCommand('copy'); input.remove(); if (!copied) throw new Error('Copy unavailable');
       }
-      toast('Alamat email berhasil disalin.');
+      toast('Email address copied.');
     } catch (_) { toast('Email: ' + email); }
   });
 
