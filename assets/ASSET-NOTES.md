@@ -32,9 +32,9 @@ The following screenshots were supplied by the user on 2 October 2026 for the ch
 
 The 21.05.25 and 21.06.19 screenshots are content references for the project title, role, description, technology list, and capabilities; they are not embedded as duplicate portfolio screenshots.
 
-## Anemo emblem
+## Hydro emblem
 
-`anemo.webp` is copied without edits from the user-supplied `/Users/mac/Downloads/Anemo.webp`. It replaces the decorative wind icon beside the portrait. Original transparency is preserved; size and orientation are set in CSS.
+`element-hydro.svg` is copied without edits from the user-supplied `/Users/mac/Downloads/Element_Hydro.svg`. It replaces the decorative elemental icon beside the portrait. Original vector quality is preserved; size and orientation are set in CSS.
 
 ## ERP project documentation
 
