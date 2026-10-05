@@ -19,9 +19,9 @@
     systems: [[61, 65], [69, 72], [78, 77], [88, 69], [85, 56], [75, 61]]
   };
   const mobileLayouts = {
-    fullstack: [[18, 28], [40, 29], [63, 28], [82, 30], [29, 36], [69, 37]],
-    ai: [[18, 55], [39, 56], [61, 55], [82, 57], [50, 63]],
-    systems: [[17, 81], [38, 83], [61, 81], [82, 83], [29, 90], [70, 90]]
+    fullstack: [[25, 28], [40, 29], [62, 28], [75, 30], [31, 36], [68, 37]],
+    ai: [[25, 55], [40, 56], [60, 55], [75, 57], [50, 63]],
+    systems: [[25, 81], [40, 83], [60, 81], [75, 83], [31, 90], [68, 90]]
   };
   const anchors = {
     desktop: {fullstack: [42.4, 10.2], ai: [56.2, 16.5], systems: [69.2, 49.3]},
@@ -34,6 +34,7 @@
   stage.innerHTML = `
     <div class="celestial-nebula" aria-hidden="true"></div>
     <div class="celestial-dust" aria-hidden="true"></div>
+    <div class="constellation-zoom-layer">
     <img class="monoceros-reference" src="assets/monoceros-caeli.webp" alt="" aria-hidden="true" decoding="async">
     <svg class="celestial-map" viewBox="0 0 1000 600" aria-hidden="true">
       <defs>
@@ -77,6 +78,7 @@
         <circle cx="844" cy="421" r="2.5"/><circle cx="293" cy="457" r="2.5"/>
       </g>
     </svg>
+    <div class="constellation-focus-vignette" aria-hidden="true"></div>
     <div class="constellation-nodes">
       <button class="constellation-node node-fullstack" type="button" data-constellation-skill="fullstack" aria-label="Buka Full-Stack Development" aria-pressed="true">
         <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>I</small>Full-Stack</span>
@@ -89,11 +91,13 @@
       </button>
     </div>
     <div class="constellation-satellites" aria-hidden="true"></div>
+    </div>
     <div class="constellation-screen-copy">
       <p>Celestial Archive <span>/ Skill Map</span></p>
       <h3>Monoceros Caeli</h3>
       <span>Constellation of code and intelligence.</span>
     </div>
+    <button class="constellation-reset" type="button" hidden><span aria-hidden="true">⌁</span> View Full Constellation</button>
     <div class="constellation-current" aria-live="polite"><small>Awakened Talent</small><span>Full-Stack Development</span></div>`;
   grid.before(stage);
 
@@ -110,6 +114,7 @@
   const rays = stage.querySelector('.skill-rays');
   const satellites = stage.querySelector('.constellation-satellites');
   const current = stage.querySelector('.constellation-current span');
+  const resetButton = stage.querySelector('.constellation-reset');
   const nodeButtons = [...stage.querySelectorAll('[data-constellation-skill]')];
   const mobileQuery = matchMedia('(max-width: 700px)');
   let activeSkill = 'fullstack';
@@ -164,11 +169,30 @@
   }
 
   nodeButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', event => {
+      event.stopPropagation();
       const target = tabs.find(tab => tab.dataset.skill === button.dataset.constellationSkill);
       target?.click();
-      if (target) target.focus({preventScroll: true});
+      stage.classList.add('talent-focused');
+      resetButton.hidden = false;
+      stage.classList.remove('focus-flare');
+      requestAnimationFrame(() => stage.classList.add('focus-flare'));
+      setTimeout(() => stage.classList.remove('focus-flare'), 760);
     });
+  });
+
+  function resetFocus() {
+    stage.classList.remove('talent-focused', 'focus-flare');
+    resetButton.hidden = true;
+  }
+
+  resetButton.addEventListener('click', resetFocus);
+  stage.addEventListener('click', event => {
+    if (!stage.classList.contains('talent-focused') || event.target.closest('button')) return;
+    resetFocus();
+  });
+  addEventListener('keydown', event => {
+    if (event.key === 'Escape' && stage.classList.contains('talent-focused')) resetFocus();
   });
 
   new MutationObserver(updateSatellites).observe(panel, {childList: true});
