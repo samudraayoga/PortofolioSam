@@ -1,5 +1,24 @@
 /* Living Teyvat Interface — cinematic layer for the portfolio. */
 :root { --light-x: 50vw; --light-y: 50vh; --world-progress: 0; --world-pan: 0px; }
+.hero-profession > span:first-child { display: inline-flex; align-items: baseline; white-space: nowrap; }
+.hero-profession .typed {
+  position: relative;
+  display: inline-block;
+  height: 1.4em;
+  margin-left: .22em;
+  vertical-align: bottom;
+  white-space: nowrap;
+  transition: width 620ms cubic-bezier(.16,.8,.2,1);
+}
+.role-morph-word { position: absolute; left: 0; top: 0; display: inline-block; white-space: nowrap; will-change: transform,opacity,filter; }
+.role-morph-enter { opacity: 0; filter: blur(7px); transform: translateY(13px) scale(.985); }
+.role-morph-enter.role-morph-enter-active { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); transition: opacity 580ms ease,filter 620ms ease,transform 620ms cubic-bezier(.16,.8,.2,1); }
+.role-morph-exit { opacity: 0; filter: blur(5px); transform: translateY(-11px) scale(.985); letter-spacing: .025em; transition: opacity 390ms ease,filter 430ms ease,transform 430ms cubic-bezier(.4,0,.7,.2),letter-spacing 430ms ease; }
+.hero-profession .typed::after { content: ''; position: absolute; left: 0; right: 0; bottom: -.12em; height: 1px; background: linear-gradient(90deg,transparent,#91dcf3,#f1d99f,transparent); opacity: 0; transform: scaleX(.2); box-shadow: 0 0 8px rgba(127,218,246,.55); }
+.hero-profession .typed:has(.role-morph-enter)::after { animation: role-hydro-trace .7s ease-out both; }
+.role-morph-dots { display: inline-flex; align-items: center; gap: 6px; margin-left: 12px; transform: translateY(-.16em); }
+.role-morph-dots i { width: 5px; height: 5px; border: 1px solid rgba(236,218,165,.6); transform: rotate(45deg); transition: background .35s ease,box-shadow .35s ease,scale .35s ease; }
+.role-morph-dots i.active { background: #f0d99f; box-shadow: 0 0 9px #f0d99f; scale: 1.25; }
 .portfolio-page::after {
   content: '';
   position: fixed;
@@ -148,6 +167,7 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .paper::after { content: ''; position: fixed; z-index: 80; inset: 0; pointer-events: none; background: radial-gradient(340px circle at var(--light-x) var(--light-y),rgba(126,211,232,.045),transparent 72%); }
 
 @keyframes hydro-vision-ring { 0%{opacity:0;transform:rotate(-45deg) scale(.45)} 58%{opacity:1;transform:rotate(25deg) scale(1.25)} 100%{opacity:.35;transform:rotate(45deg) scale(1)} }
+@keyframes role-hydro-trace { 0%{opacity:0;transform:scaleX(.2)} 45%{opacity:1} 100%{opacity:0;transform:scaleX(1)} }
 @keyframes hydro-orbit { to{transform:rotate(360deg)} }
 @keyframes hydro-vision-drop { 0%{opacity:0;transform:rotate(var(--drop-angle)) translateX(8px) scale(.2)} 35%{opacity:1} 100%{opacity:0;transform:rotate(var(--drop-angle)) translateX(var(--drop-distance)) scale(1)} }
 @keyframes hydro-cursor-fall { to{opacity:0;transform:translate(var(--drop-x),var(--drop-y)) scale(.2)} }
@@ -180,9 +200,11 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
   .ley-line-mote { display:none; }
   .world-atmosphere { opacity:.55; }
   .character-stage.cinematic-active .portrait-card { animation-duration:7s; }
+  .role-morph-dots { gap:5px;margin-left:9px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .world-atmosphere,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.wish-finale,.constellation-energy-channel { display:none!important; }
   .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
   .portfolio-page::after,.paper::after { display:none; }
+  .hero-profession .typed { transition:none; }
 }

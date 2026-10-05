@@ -5,23 +5,61 @@
 
   const typedElement = $('.typed');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  let professionTyping;
+  let professionTimer = 0;
+  let professionIndex = 0;
   function updateProfessionAnimation() {
     if (!typedElement) return;
-    professionTyping?.destroy();
-    professionTyping = null;
+    clearTimeout(professionTimer);
     const roles = typedElement.dataset.typedItems.split(',').map(role => role.trim());
-    typedElement.textContent = roles[0];
-    if (!reducedMotion.matches && typeof Typed !== 'undefined') {
-      typedElement.textContent = '';
-      professionTyping = new Typed(typedElement, {
-        strings: roles, typeSpeed: 70, backSpeed: 35,
-        backDelay: 1800, loop: true, showCursor: true, cursorChar: '|'
-      });
-    }
+    professionIndex = 0;
+    typedElement.replaceChildren();
+    typedElement.closest('.hero-profession')?.querySelector('.role-morph-dots')?.remove();
+
+    const first = document.createElement('span');
+    first.className = 'role-morph-word';
+    first.textContent = roles[0];
+    typedElement.append(first);
+    requestAnimationFrame(() => typedElement.style.width = `${first.getBoundingClientRect().width}px`);
+    if (reducedMotion.matches) return;
+
+    const dots = document.createElement('span');
+    dots.className = 'role-morph-dots';
+    dots.setAttribute('aria-hidden', 'true');
+    dots.replaceChildren(...roles.map((_, index) => {
+      const dot = document.createElement('i');
+      dot.classList.toggle('active', index === 0);
+      return dot;
+    }));
+    typedElement.closest('.hero-profession')?.append(dots);
+
+    const changeRole = () => {
+      if (document.hidden) { professionTimer = setTimeout(changeRole, 1200); return; }
+      const current = $('.role-morph-word', typedElement);
+      professionIndex = (professionIndex + 1) % roles.length;
+      const next = document.createElement('span');
+      next.className = 'role-morph-word role-morph-enter';
+      next.textContent = roles[professionIndex];
+      typedElement.append(next);
+      const nextWidth = next.getBoundingClientRect().width;
+      typedElement.style.width = `${nextWidth}px`;
+      current?.classList.add('role-morph-exit');
+      requestAnimationFrame(() => next.classList.add('role-morph-enter-active'));
+      [...dots.children].forEach((dot, index) => dot.classList.toggle('active', index === professionIndex));
+      setTimeout(() => {
+        current?.remove();
+        next.classList.remove('role-morph-enter', 'role-morph-enter-active');
+      }, 680);
+      professionTimer = setTimeout(changeRole, 3200);
+    };
+    professionTimer = setTimeout(changeRole, 2700);
   }
   updateProfessionAnimation();
   reducedMotion.addEventListener('change', updateProfessionAnimation);
+  addEventListener('resize', () => {
+    if (!typedElement) return;
+    const word = $('.role-morph-word', typedElement);
+    if (word) typedElement.style.width = `${word.getBoundingClientRect().width}px`;
+  }, {passive: true});
 
   const themeButton = $('.theme-toggle');
   function setNight(night, animated = false) {
