@@ -17,7 +17,7 @@ Pertahankan struktur folder repo: HTML di root, stylesheet di `assets/css`, Java
 - Panel profil sinematik: foto berkembang ke panel karakter, diikuti ornamen dan biodata. Foto mengikuti pilihan formal atau santai.
 - Transisi gambar dan judul dari kartu proyek ke studi kasus, termasuk saat kembali. Browser pendukung memakai View Transitions; file lokal dan browser lain memakai transisi sederhana.
 - Animasi menyesuaikan layar ponsel dan preferensi reduced motion.
-- Celestial Archive menampilkan konstelasi leviathan langit orisinal, tiga bintang talent utama, serta jalur satelit yang berubah ketika pengguna memilih Full-Stack, AI, atau Systems.
+- Celestial Archive menampilkan Monoceros Caeli dari referensi pengguna, tiga bintang talent utama, serta jalur satelit yang berubah ketika pengguna memilih Full-Stack, AI, atau Systems.
 - Pergantian siang–malam mengubah posisi matahari dan bulan, warna landscape, horizon, dan bintang dengan transisi menyebar dari tombol tema.
 - Hembusan angin menghubungkan pergantian bab, membawa garis dan partikel cahaya sebelum menyalakan judul tujuan.
 - Tab keahlian, detail sorotan pekerjaan, dan perluasan linimasa pengalaman.

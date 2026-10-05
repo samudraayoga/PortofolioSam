@@ -14,9 +14,9 @@
     systems: 'Systems & Networks'
   };
   const desktopLayouts = {
-    fullstack: [[17, 65], [27, 73], [38, 76], [48, 70], [43, 57], [22, 54]],
-    ai: [[39, 69], [51, 76], [64, 69], [67, 53], [56, 44]],
-    systems: [[57, 55], [68, 63], [79, 71], [89, 61], [82, 45], [70, 40]]
+    fullstack: [[15, 54], [19, 36], [25, 44], [32, 52], [39, 60], [25, 63]],
+    ai: [[45, 35], [52, 44], [60, 38], [63, 28], [69, 35]],
+    systems: [[61, 65], [69, 72], [78, 77], [88, 69], [85, 56], [75, 61]]
   };
   const mobileLayouts = {
     fullstack: [[18, 28], [40, 29], [63, 28], [82, 30], [29, 36], [69, 37]],
@@ -24,7 +24,7 @@
     systems: [[17, 81], [38, 83], [61, 81], [82, 83], [29, 90], [70, 90]]
   };
   const anchors = {
-    desktop: {fullstack: [31.8, 46], ai: [54, 39.6], systems: [80.5, 50]},
+    desktop: {fullstack: [42.4, 10.2], ai: [56.2, 16.5], systems: [69.2, 49.3]},
     mobile: {fullstack: [50, 20], ai: [50, 47], systems: [50, 74]}
   };
 
@@ -34,6 +34,7 @@
   stage.innerHTML = `
     <div class="celestial-nebula" aria-hidden="true"></div>
     <div class="celestial-dust" aria-hidden="true"></div>
+    <img class="monoceros-reference" src="assets/monoceros-caeli.webp" alt="" aria-hidden="true" decoding="async">
     <svg class="celestial-map" viewBox="0 0 1000 600" aria-hidden="true">
       <defs>
         <linearGradient id="weaver-line" x1="0" y1="0" x2="1" y2="1">
@@ -90,7 +91,7 @@
     <div class="constellation-satellites" aria-hidden="true"></div>
     <div class="constellation-screen-copy">
       <p>Celestial Archive <span>/ Skill Map</span></p>
-      <h3>System Weaver</h3>
+      <h3>Monoceros Caeli</h3>
       <span>Constellation of code and intelligence.</span>
     </div>
     <div class="constellation-current" aria-live="polite"><small>Awakened Talent</small><span>Full-Stack Development</span></div>`;
