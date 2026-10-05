@@ -1,0 +1,188 @@
+/* Living Teyvat Interface — cinematic layer for the portfolio. */
+:root { --light-x: 50vw; --light-y: 50vh; --world-progress: 0; --world-pan: 0px; }
+.portfolio-page::after {
+  content: '';
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--light-x) var(--light-y), rgba(143, 225, 255, .055), transparent 72%);
+  mix-blend-mode: screen;
+}
+
+/* 1. Hydro Vision awakening. */
+.vision { isolation: isolate; }
+.vision::before {
+  content: '';
+  position: absolute;
+  inset: -13px;
+  border: 1px solid rgba(112, 220, 255, .72);
+  border-radius: 50%;
+  opacity: 0;
+  transform: rotate(-45deg) scale(.55);
+}
+.motion-ready .vision::before { animation: hydro-vision-ring 1.2s 1.1s cubic-bezier(.18,.8,.2,1) both; }
+.hydro-awakening { position: absolute; inset: -24px; transform: rotate(-45deg); pointer-events: none; }
+.hydro-awakening i { position: absolute; inset: 5px; border: 1px solid rgba(111, 216, 255, .32); border-radius: 50%; animation: hydro-orbit 8s linear infinite; }
+.hydro-awakening i:nth-child(2) { inset: 12px; border-style: dashed; animation-direction: reverse; animation-duration: 11s; }
+.hydro-awakening i:nth-child(3) { inset: -3px; border-color: rgba(113, 211, 255, .13); animation-duration: 15s; }
+.hydro-awakening b { position: absolute; left: 50%; top: 50%; width: 4px; height: 7px; border-radius: 60% 40% 60% 40%; background: #a8eaff; opacity: 0; box-shadow: 0 0 8px #55cfff; }
+.hydro-awakening b:nth-of-type(1) { --drop-angle: -58deg; --drop-distance: 45px; animation-delay: 1.35s; }
+.hydro-awakening b:nth-of-type(2) { --drop-angle: 26deg; --drop-distance: 51px; animation-delay: 1.52s; }
+.hydro-awakening b:nth-of-type(3) { --drop-angle: 142deg; --drop-distance: 43px; animation-delay: 1.7s; }
+.motion-ready .hydro-awakening b { animation: hydro-vision-drop 1.25s var(--drop-delay, 1.3s) ease-out both; }
+.vision:hover .hydro-awakening { filter: brightness(1.3); }
+.vision:hover .hydro-awakening i { border-color: rgba(170, 240, 255, .62); }
+.vision img { transition: filter .45s ease, scale .65s cubic-bezier(.16,.8,.2,1); }
+.vision:hover img { scale: 1.09; filter: drop-shadow(0 0 11px #77dcff); }
+
+/* 2. Elemental cursor and droplets. */
+.elemental-cursor { position: fixed; z-index: 999; left: -13px; top: -13px; width: 26px; height: 26px; border: 1px solid rgba(135, 226, 255, .46); border-radius: 50%; pointer-events: none; transition: width .2s ease, height .2s ease, margin .2s ease, border-color .2s ease; mix-blend-mode: screen; }
+.elemental-cursor::before,.elemental-cursor::after { content: ''; position: absolute; inset: 6px; border: 1px solid rgba(255, 238, 177, .5); transform: rotate(45deg); }
+.elemental-cursor::after { inset: 10px; border-radius: 50%; background: #dffaff; box-shadow: 0 0 10px #7fdfff; }
+.hydro-cursor-drop { position: fixed; z-index: 998; width: 4px; height: 4px; border-radius: 50%; pointer-events: none; background: #bcefff; box-shadow: 0 0 8px #68d7ff; animation: hydro-cursor-fall .7s ease-out both; }
+body:has(a:hover,button:hover) .elemental-cursor { width: 36px; height: 36px; margin: -5px; border-color: rgba(255, 235, 165, .7); }
+
+/* 3. Scroll-driven world camera. */
+.world-atmosphere { position: fixed; z-index: 8; inset: 0; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.1s ease; }
+.world-atmosphere > i { position: absolute; inset: -12%; transition: background 1.3s ease, opacity 1s ease; }
+.world-glow { background: radial-gradient(circle at 70% calc(25% + var(--world-pan)), rgba(124, 215, 255, .13), transparent 34%); transform: translateY(calc(var(--world-progress) * -26px)); }
+.world-haze { background: linear-gradient(180deg, transparent 34%, rgba(90, 176, 199, .05) 58%, transparent 83%); transform: translateY(calc(var(--world-progress) * 34px)); }
+.world-stars { opacity: 0; background: radial-gradient(circle,#eafaff 0 1px,transparent 1.6px) 0 0/117px 103px; }
+body[data-world-chapter="keahlian"] .world-atmosphere,
+body[data-world-chapter="perjalanan"] .world-atmosphere,
+body[data-world-chapter="kontak"] .world-atmosphere { opacity: 1; }
+body[data-world-chapter="keahlian"] .world-stars,
+body[data-world-chapter="kontak"] .world-stars { opacity: .24; animation: cinematic-star-drift 20s linear infinite; }
+body[data-world-chapter="karya"] .world-glow { background: radial-gradient(circle at 50% 42%, rgba(240, 217, 159, .08), transparent 38%); }
+body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circle at 50% 30%, rgba(139, 160, 255, .16), transparent 42%); }
+
+/* 4. Energy travels through the constellation before a talent opens. */
+.constellation-energy-channel { position: absolute; z-index: 8; inset: 0; pointer-events: none; overflow: hidden; opacity: 0; }
+.constellation-energy-channel i { position: absolute; left: 32%; bottom: 4%; width: 3px; height: 3px; border-radius: 50%; background: #fff3b8; box-shadow: 0 0 10px 3px #7cddff; offset-path: path('M 0 0 C 110 -90 175 -235 205 -350 C 255 -390 355 -375 480 -315'); opacity: 0; }
+.constellation-energy-channel i:nth-child(2) { animation-delay: .12s!important; }
+.constellation-energy-channel i:nth-child(3) { animation-delay: .24s!important; }
+.constellation-energy-channel b { position: absolute; left: var(--focus-x, 50%); top: var(--focus-y, 30%); width: 12px; height: 12px; border: 1px solid #fff1ad; border-radius: 50%; transform: translate(-50%,-50%) scale(.2); opacity: 0; }
+.energy-awakening .constellation-energy-channel { opacity: 1; }
+.energy-awakening .constellation-energy-channel i { animation: constellation-energy-travel 1s cubic-bezier(.2,.7,.2,1) both; }
+.energy-awakening .constellation-energy-channel b { animation: constellation-energy-bloom .75s .62s ease-out both; }
+.energy-awakening .skill-ray { filter: drop-shadow(0 0 8px #fff1ad); }
+.celestial-constellation[data-active-skill="fullstack"] .constellation-energy-channel { --focus-x:42.4%;--focus-y:10.2%; }
+.celestial-constellation[data-active-skill="ai"] .constellation-energy-channel { --focus-x:56.2%;--focus-y:16.5%; }
+.celestial-constellation[data-active-skill="systems"] .constellation-energy-channel { --focus-x:69.2%;--focus-y:49.3%; }
+
+/* 5–6. Project domain entrance and interactive data preview. */
+.work-card { --art-x: 50%; --art-y: 50%; }
+.work-art { perspective: 950px; }
+.domain-gate { position: absolute; z-index: 5; inset: 13%; pointer-events: none; opacity: 0; transform: scale(.72) rotate(45deg); border: 1px solid color-mix(in srgb,var(--project-accent) 70%,transparent); box-shadow: 0 0 45px color-mix(in srgb,var(--project-accent) 24%,transparent); }
+.domain-gate::before,.domain-gate::after,.domain-gate i { content: ''; position: absolute; inset: 9%; border: 1px solid color-mix(in srgb,var(--project-accent) 35%,transparent); }
+.domain-gate::after { inset: 22%; border-radius: 50%; }
+.domain-gate i:nth-child(1) { inset: -5%; border-radius: 50%; border-style: dashed; }
+.domain-gate i:nth-child(2) { left: 50%; top: -22%; bottom: -22%; width: 1px; border: 0; background: linear-gradient(transparent,var(--project-accent),transparent); }
+.domain-gate i:nth-child(3) { top: 50%; left: -22%; right: -22%; height: 1px; border: 0; background: linear-gradient(90deg,transparent,var(--project-accent),transparent); }
+.work-card.cinematic-seen .domain-gate { animation: domain-open 1.15s var(--domain-delay) cubic-bezier(.16,.8,.2,1) both; }
+.work-card.cinematic-seen .work-art > img { animation: domain-art-arrive .95s calc(var(--domain-delay) + 180ms) cubic-bezier(.16,.8,.2,1) both; }
+.project-data-flow { position: absolute; z-index: 4; inset: 0; pointer-events: none; }
+.project-data-flow i { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--project-accent); box-shadow: 0 0 12px var(--project-accent); opacity: 0; }
+.project-data-flow i:nth-child(1) { left: 18%; top: 27%; }
+.project-data-flow i:nth-child(2) { left: 72%; top: 22%; animation-delay: .18s!important; }
+.project-data-flow i:nth-child(3) { left: 82%; top: 73%; animation-delay: .35s!important; }
+.project-data-flow i:nth-child(4) { left: 31%; top: 79%; animation-delay: .52s!important; }
+.work-card.cinematic-active .project-data-flow i { animation: project-data-pulse 2.6s ease-in-out infinite; }
+.work-tech span { transition: color .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease; }
+.work-tech span:hover { color: #fff3c7; border-color: var(--project-accent); background: color-mix(in srgb,var(--project-accent) 14%,transparent); box-shadow: 0 0 16px color-mix(in srgb,var(--project-accent) 25%,transparent); }
+.work-card[data-tech-focus] .work-art img { filter: saturate(1.25) brightness(1.04); transform: scale(1.045); }
+
+/* 7. Ley Line journey. */
+.ley-line-mote { position: absolute; z-index: 3; left: 218px; top: 38px; width: 9px; height: 9px; border-radius: 50%; background: #fff2b1; box-shadow: 0 0 0 6px rgba(237,218,156,.1),0 0 18px #9ed7c1; pointer-events: none; transform: translateY(calc((100% - 76px) * var(--journey-progress))); transition: transform .14s linear; }
+.journey-item.cinematic-active .journey-node { animation: ley-node-awaken 1.6s ease-in-out infinite alternate; }
+.journey-item.cinematic-active .journey-body::after { content: ''; display: block; width: 58px; height: 1px; margin-top: 15px; background: linear-gradient(90deg,#f1d99a,transparent); animation: ley-trace 1s ease-out both; }
+
+/* 8. Distinct chapter signatures. */
+[data-cinematic-chapter] { position: relative; }
+.chapter-signature { position: absolute; z-index: 9; top: 18px; right: 0; width: 210px; height: 42px; pointer-events: none; opacity: 0; transform: translateX(24px); }
+.chapter-signature span { position: absolute; right: 0; top: 0; color: rgba(88,117,126,.55); font: 600 7px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.chapter-signature i { position: absolute; right: 0; top: 18px; width: 100%; height: 1px; background: linear-gradient(90deg,transparent,#cbb878); transform: scaleX(0); transform-origin: right; }
+.chapter-signature i:nth-child(3) { width: 12px; height: 12px; top: 12px; border: 1px solid #cbb878; background: transparent; transform: rotate(45deg) scale(0); }
+.chapter-signature i:nth-child(4) { width: 5px; height: 5px; top: 16px; right: 4px; border-radius: 50%; background: #f0d99f; }
+.cinematic-seen > .chapter-signature { animation: chapter-signature-in .65s ease-out both; }
+.cinematic-seen > .chapter-signature i:first-of-type { animation: chapter-signature-line .85s .25s ease-out forwards; }
+.cinematic-seen > .chapter-signature i:nth-of-type(2) { animation: chapter-signature-diamond .6s .7s ease-out forwards; }
+.cinematic-seen > .chapter-signature i:nth-of-type(3) { animation: chapter-signature-dot .45s .9s ease-out both; }
+.signature-stars i:first-of-type { background: linear-gradient(90deg,transparent,#8fcfec); box-shadow: 0 0 7px #8fcfec; }
+.signature-domain i:first-of-type { background: linear-gradient(90deg,transparent,#d4bc78); }
+.signature-leyline i:first-of-type { background: linear-gradient(90deg,transparent,#9ed7c1); }
+.signature-wish i:first-of-type { background: linear-gradient(90deg,transparent,#aeb9f3); }
+
+/* 9. Reactive constellation chapter navigator. */
+.chapter-nav { --chapter-progress: 0; }
+.chapter-nav-line { position: absolute; z-index: -1; left: 6px; top: 5px; bottom: 5px; width: 1px; background: linear-gradient(#f0d99f calc(var(--chapter-progress) * 100%),rgba(234,214,154,.18) 0); box-shadow: 0 0 7px rgba(240,217,159,.35); }
+.chapter-nav-traveller { position: absolute; left: 3px; top: calc(var(--chapter-progress) * (100% - 7px)); width: 7px; height: 7px; border-radius: 50%; background: #fff0b2; box-shadow: 0 0 11px 3px #f0d99f; transition: top .25s ease-out; }
+.chapter-nav a.active { animation: chapter-nav-pulse 1.8s ease-in-out infinite alternate; }
+
+/* 10. Hydro page transition. */
+.hydro-page-ripple { position: fixed; z-index: 9999; width: 24px; height: 24px; margin: -12px; border-radius: 50%; pointer-events: none; border: 2px solid rgba(184,238,255,.75); box-shadow: 0 0 45px rgba(83,204,255,.45), inset 0 0 18px rgba(173,236,255,.3); animation: hydro-page-wave .7s cubic-bezier(.18,.7,.2,1) both; }
+
+/* 11. Character idle motion. */
+.character-stage.cinematic-active .portrait-card { animation: character-breathe 5.8s ease-in-out infinite; }
+.character-stage.cinematic-active .portrait-window img { animation: character-image-idle 7.5s ease-in-out infinite alternate; }
+.character-stage.cinematic-active .vision { animation: vision-idle 4.8s ease-in-out infinite alternate; }
+.character-stage.cinematic-active .portrait-card::after { content: ''; position: absolute; z-index: 3; inset: 10px; pointer-events: none; background: linear-gradient(105deg,transparent 38%,rgba(163,227,255,.13) 49%,transparent 59%); transform: translateX(-130%); animation: character-light-pass 6.5s 1.8s ease-in-out infinite; }
+
+/* 12. Wish finale. */
+.wish-finale { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.wish-finale i:not(.wish-comet) { position: absolute; left: 50%; top: 28%; width: 5px; height: 5px; background: #e9f8ff; border-radius: 50%; box-shadow: 0 0 12px #b6dfff; opacity: 0; }
+.wish-finale i:nth-child(2) { --wish-x:-170px; --wish-y:70px; }
+.wish-finale i:nth-child(3) { --wish-x:145px; --wish-y:92px; animation-delay:.12s!important; }
+.wish-finale i:nth-child(4) { --wish-x:40px; --wish-y:-62px; animation-delay:.24s!important; }
+.wish-comet { position: absolute; left: -20%; top: 18%; width: 120px; height: 2px; background: linear-gradient(90deg,transparent,#d9f5ff,#fff0ac); box-shadow: 0 0 12px #8bdcff; opacity: 0; transform: rotate(-18deg); }
+.wish-finale strong { position: absolute; left: 50%; top: 25%; color: #fff0ae; font-size: 28px; opacity: 0; transform: translate(-50%,-50%) scale(.3); }
+.contact.cinematic-active .wish-comet { animation: wish-comet-cross 1.55s .25s ease-out both; }
+.contact.cinematic-active .wish-finale i:not(.wish-comet) { animation: wish-stars-gather 1.15s .7s cubic-bezier(.18,.8,.2,1) both; }
+.contact.cinematic-active .wish-finale strong { animation: wish-star-bloom 1.1s 1.35s ease-out both; }
+.contact.wish-acquired::after { content: 'MESSAGE CONSTELLATION ACQUIRED'; position: absolute; z-index: 5; left: 50%; bottom: 23px; color: #fff0b1; font: 600 8px/1 var(--sans); letter-spacing: .22em; transform: translateX(-50%); animation: acquired-message 1.7s ease-out both; }
+
+/* 13. Global reactive light. */
+.work-card,.character-archive,.talent-card,.journey-item,.contact { --local-light: radial-gradient(320px circle at var(--light-x) var(--light-y),rgba(153,226,255,.07),transparent 70%); }
+.paper { position: relative; }
+.paper::after { content: ''; position: fixed; z-index: 80; inset: 0; pointer-events: none; background: radial-gradient(340px circle at var(--light-x) var(--light-y),rgba(126,211,232,.045),transparent 72%); }
+
+@keyframes hydro-vision-ring { 0%{opacity:0;transform:rotate(-45deg) scale(.45)} 58%{opacity:1;transform:rotate(25deg) scale(1.25)} 100%{opacity:.35;transform:rotate(45deg) scale(1)} }
+@keyframes hydro-orbit { to{transform:rotate(360deg)} }
+@keyframes hydro-vision-drop { 0%{opacity:0;transform:rotate(var(--drop-angle)) translateX(8px) scale(.2)} 35%{opacity:1} 100%{opacity:0;transform:rotate(var(--drop-angle)) translateX(var(--drop-distance)) scale(1)} }
+@keyframes hydro-cursor-fall { to{opacity:0;transform:translate(var(--drop-x),var(--drop-y)) scale(.2)} }
+@keyframes cinematic-star-drift { to{transform:translate3d(-28px,20px,0)} }
+@keyframes constellation-energy-travel { 0%{opacity:0;offset-distance:0} 15%,78%{opacity:1} 100%{opacity:0;offset-distance:100%} }
+@keyframes constellation-energy-bloom { 0%{opacity:0;transform:translate(-50%,-50%) scale(.2)} 45%{opacity:1} 100%{opacity:0;transform:translate(-50%,-50%) scale(8)} }
+@keyframes domain-open { 0%{opacity:0;transform:scale(.55) rotate(45deg)} 56%{opacity:.8} 100%{opacity:.2;transform:scale(1.05) rotate(135deg)} }
+@keyframes domain-art-arrive { from{opacity:.18;clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);transform:scale(1.08)} to{opacity:1;clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:none} }
+@keyframes project-data-pulse { 0%,100%{opacity:.08;transform:scale(.6)} 50%{opacity:.78;transform:scale(1.25)} }
+@keyframes ley-node-awaken { to{box-shadow:0 0 0 8px rgba(240,217,159,.12),0 0 25px #9ed7c1;filter:brightness(1.22)} }
+@keyframes ley-trace { from{transform:scaleX(0);transform-origin:left} to{transform:scaleX(1);transform-origin:left} }
+@keyframes chapter-signature-in { to{opacity:1;transform:none} }
+@keyframes chapter-signature-line { to{transform:scaleX(1)} }
+@keyframes chapter-signature-diamond { to{transform:rotate(45deg) scale(1)} }
+@keyframes chapter-signature-dot { from{opacity:0;transform:scale(.2)} to{opacity:1;transform:scale(1)} }
+@keyframes chapter-nav-pulse { to{filter:brightness(1.35);box-shadow:0 0 0 7px rgba(234,214,154,.12),0 0 18px #edd99a} }
+@keyframes hydro-page-wave { to{opacity:0;transform:scale(85);border-width:0} }
+@keyframes character-breathe { 0%,100%{translate:0 0} 50%{translate:0 -3px} }
+@keyframes character-image-idle { from{transform:scale(1.003) translateY(0)} to{transform:scale(1.018) translateY(-2px)} }
+@keyframes vision-idle { to{translate:0 -4px;filter:brightness(1.15)} }
+@keyframes character-light-pass { 0%,65%{transform:translateX(-130%)} 90%,100%{transform:translateX(130%)} }
+@keyframes wish-comet-cross { 0%{opacity:0;transform:translateX(0) rotate(-18deg)} 18%{opacity:1} 100%{opacity:0;transform:translateX(120vw) rotate(-18deg)} }
+@keyframes wish-stars-gather { 0%{opacity:0;transform:translate(var(--wish-x),var(--wish-y)) scale(.3)} 70%{opacity:1} 100%{opacity:0;transform:translate(0,0) scale(1.5)} }
+@keyframes wish-star-bloom { 0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(-30deg)} 55%{opacity:1;transform:translate(-50%,-50%) scale(1.65) rotate(8deg)} 100%{opacity:.72;transform:translate(-50%,-50%) scale(1) rotate(0)} }
+@keyframes acquired-message { 0%{opacity:0;transform:translate(-50%,8px)} 20%,75%{opacity:1;transform:translate(-50%,0)} 100%{opacity:0;transform:translate(-50%,-6px)} }
+
+@media (max-width:800px) {
+  .elemental-cursor,.hydro-cursor-drop,.chapter-signature,.chapter-nav-line,.chapter-nav-traveller { display:none!important; }
+  .domain-gate { inset:18%; }
+  .ley-line-mote { display:none; }
+  .world-atmosphere { opacity:.55; }
+  .character-stage.cinematic-active .portrait-card { animation-duration:7s; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .world-atmosphere,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.wish-finale,.constellation-energy-channel { display:none!important; }
+  .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
+  .portfolio-page::after,.paper::after { display:none; }
+}

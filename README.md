@@ -18,6 +18,7 @@ Pertahankan struktur folder repo: HTML di root, stylesheet di `assets/css`, Java
 - Transisi gambar dan judul dari kartu proyek ke studi kasus, termasuk saat kembali. Browser pendukung memakai View Transitions; file lokal dan browser lain memakai transisi sederhana.
 - Animasi menyesuaikan layar ponsel dan preferensi reduced motion.
 - Celestial Archive menampilkan Monoceros Caeli dari referensi pengguna, tiga bintang talent utama, kamera pan-and-zoom, serta jalur satelit yang berubah ketika pengguna memilih Full-Stack, AI, atau Systems.
+- Living Teyvat Interface menambahkan Hydro Vision awakening, elemental cursor, world camera, domain entrance, Ley Line Journey, chapter signatures, reactive navigation, dan Wish finale.
 - Pergantian siang–malam mengubah posisi matahari dan bulan, warna landscape, horizon, dan bintang dengan transisi menyebar dari tombol tema.
 - Hembusan angin menghubungkan pergantian bab, membawa garis dan partikel cahaya sebelum menyalakan judul tujuan.
 - Tab keahlian, detail sorotan pekerjaan, dan perluasan linimasa pengalaman.
