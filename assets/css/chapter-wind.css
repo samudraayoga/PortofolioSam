@@ -1,0 +1,103 @@
+/* A guiding breeze carries light from one portfolio chapter to the next. */
+.chapter-wind-pass {
+  --wind-top: 45vh;
+  position: fixed;
+  z-index: 18;
+  left: -76vw;
+  top: var(--wind-top);
+  width: min(76vw, 980px);
+  height: 96px;
+  pointer-events: none;
+  contain: layout paint;
+  filter: drop-shadow(0 0 7px #dff8e266);
+  animation: chapter-wind-cross 1.22s cubic-bezier(.18,.68,.2,1) both;
+}
+.chapter-wind-pass svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.chapter-wind-pass path {
+  fill: none;
+  stroke: url(#chapter-wind-light);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-dasharray: 16 10 70 14;
+  opacity: 0;
+  animation: chapter-wind-trace 900ms var(--wind-delay,0ms) ease-out both;
+}
+.chapter-wind-pass path:nth-of-type(2) { --wind-delay: 70ms; stroke-width: .75; }
+.chapter-wind-pass path:nth-of-type(3) { --wind-delay: 130ms; stroke-width: .55; }
+.chapter-wind-pass i {
+  position: absolute;
+  left: var(--mote-x);
+  top: var(--mote-y);
+  width: var(--mote-size,5px);
+  height: calc(var(--mote-size,5px) * .55);
+  border-radius: 90% 0 90% 0;
+  background: #d8edc5;
+  box-shadow: 0 0 9px #fff0b7;
+  opacity: 0;
+  transform: rotate(var(--mote-rotate,25deg));
+  animation: chapter-wind-mote 760ms var(--mote-delay,120ms) ease-in-out both;
+}
+.chapter-arrival-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  margin-left: 8px;
+  color: #f7dfa2;
+  font-size: 10px;
+  opacity: 0;
+  transform: rotate(-35deg) scale(.25);
+  filter: drop-shadow(0 0 0 #f7dfa200);
+}
+.wind-arrived .chapter-arrival-mark { animation: chapter-mark-arrive 780ms cubic-bezier(.18,.78,.18,1) both; }
+.wind-arrived h2 { animation: chapter-title-breathe 1.05s cubic-bezier(.18,.72,.2,1) both; }
+.wind-arrived :is(.section-kicker .diamond,.contact-symbol) { animation: chapter-ornament-awake 1.2s ease-out both; }
+.night .chapter-wind-pass { filter: drop-shadow(0 0 9px #b9d9ff80); }
+.night .chapter-wind-pass i { background: #cfe9ef; box-shadow: 0 0 10px #b9d9ff; }
+
+@keyframes chapter-wind-cross {
+  0% { opacity: 0; transform: translate3d(0,10px,0) scaleX(.94); }
+  12% { opacity: 1; }
+  76% { opacity: .92; }
+  100% { opacity: 0; transform: translate3d(calc(100vw + 76vw),-8px,0) scaleX(1.04); }
+}
+@keyframes chapter-wind-trace {
+  0% { opacity: 0; stroke-dashoffset: 90; }
+  28% { opacity: .85; }
+  100% { opacity: .12; stroke-dashoffset: 0; }
+}
+@keyframes chapter-wind-mote {
+  0% { opacity: 0; translate: 25px -7px; rotate: -20deg; }
+  35% { opacity: .9; }
+  100% { opacity: 0; translate: -62px 19px; rotate: 240deg; }
+}
+@keyframes chapter-mark-arrive {
+  0% { opacity: 0; transform: rotate(-35deg) scale(.25); filter: drop-shadow(0 0 0 #f7dfa200); }
+  58% { opacity: 1; transform: rotate(8deg) scale(1.45); filter: drop-shadow(0 0 12px #fff0b7); }
+  100% { opacity: .82; transform: rotate(0) scale(1); filter: drop-shadow(0 0 5px #f7dfa277); }
+}
+@keyframes chapter-title-breathe {
+  0% { opacity: .72; transform: translateY(8px); text-shadow: 0 0 0 #f5dda200; }
+  52% { opacity: 1; text-shadow: 0 0 18px #f5dda244; }
+  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 0 #f5dda200; }
+}
+@keyframes chapter-ornament-awake {
+  0% { filter: drop-shadow(0 0 0 #f5dda200); transform: scale(.8) rotate(-18deg); }
+  55% { filter: drop-shadow(0 0 14px #fff0b7); transform: scale(1.24) rotate(5deg); }
+  100% { filter: drop-shadow(0 0 4px #f5dda277); transform: scale(1) rotate(0); }
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+  .chapter-wind-pass { width: 92vw; left: -92vw; height: 70px; filter: drop-shadow(0 0 5px #dff8e255); }
+  .chapter-wind-pass path:nth-of-type(3),
+  .chapter-wind-pass i:nth-of-type(n+4) { display: none; }
+  @keyframes chapter-wind-cross {
+    0% { opacity: 0; transform: translate3d(0,6px,0); }
+    15%,75% { opacity: .85; }
+    100% { opacity: 0; transform: translate3d(192vw,-5px,0); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-wind-pass, .chapter-arrival-mark { display: none !important; }
+  .wind-arrived :is(h2,.section-kicker .diamond,.contact-symbol) { animation: none !important; }
+}
