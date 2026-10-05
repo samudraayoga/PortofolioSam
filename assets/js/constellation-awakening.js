@@ -1,83 +1,192 @@
 (() => {
   'use strict';
+
   const section = document.querySelector('.skills-section');
-  const panel = document.querySelector('#skill-items');
-  if (!section || !panel) return;
+  const grid = section?.querySelector('.talent-grid');
+  const panel = section?.querySelector('#skill-items');
+  const tabs = [...(section?.querySelectorAll('[data-skill]') || [])];
+  if (!section || !grid || !panel || tabs.length < 3) return;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(ns, 'svg');
-  svg.classList.add('skill-constellation');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.innerHTML = '<defs><linearGradient id="constellation-light" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f3dda1"/><stop offset=".55" stop-color="#9ed7c1"/><stop offset="1" stop-color="#f8e9b9"/></linearGradient></defs>';
-  section.prepend(svg);
+  const names = {
+    fullstack: 'Full-Stack Development',
+    ai: 'AI & Automation',
+    systems: 'Systems & Networks'
+  };
+  const desktopLayouts = {
+    fullstack: [[17, 65], [27, 73], [38, 76], [48, 70], [43, 57], [22, 54]],
+    ai: [[39, 69], [51, 76], [64, 69], [67, 53], [56, 44]],
+    systems: [[57, 55], [68, 63], [79, 71], [89, 61], [82, 45], [70, 40]]
+  };
+  const mobileLayouts = {
+    fullstack: [[18, 28], [40, 29], [63, 28], [82, 30], [29, 36], [69, 37]],
+    ai: [[18, 55], [39, 56], [61, 55], [82, 57], [50, 63]],
+    systems: [[17, 81], [38, 83], [61, 81], [82, 83], [29, 90], [70, 90]]
+  };
+  const anchors = {
+    desktop: {fullstack: [31.8, 46], ai: [54, 39.6], systems: [80.5, 50]},
+    mobile: {fullstack: [50, 20], ai: [50, 47], systems: [50, 74]}
+  };
 
-  let frame = 0;
-  let visible = true;
-  function point(element, bounds, anchor = 'center') {
-    const rect = element.getBoundingClientRect();
-    return {
-      x: rect.left - bounds.left + rect.width / 2,
-      y: rect.top - bounds.top + (anchor === 'bottom' ? rect.height : rect.height / 2)
-    };
+  const stage = document.createElement('div');
+  stage.className = 'celestial-constellation';
+  stage.dataset.activeSkill = 'fullstack';
+  stage.innerHTML = `
+    <div class="celestial-nebula" aria-hidden="true"></div>
+    <div class="celestial-dust" aria-hidden="true"></div>
+    <svg class="celestial-map" viewBox="0 0 1000 600" aria-hidden="true">
+      <defs>
+        <linearGradient id="weaver-line" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#72d9ff"/><stop offset=".48" stop-color="#a4efff"/><stop offset="1" stop-color="#7587ff"/>
+        </linearGradient>
+        <linearGradient id="weaver-ray" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#fff1b6"/><stop offset=".4" stop-color="#9cecff"/><stop offset="1" stop-color="#7b9bff" stop-opacity=".16"/>
+        </linearGradient>
+        <filter id="weaver-glow" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <g class="weaver-orbits">
+        <ellipse cx="526" cy="299" rx="406" ry="214"/>
+        <ellipse cx="526" cy="299" rx="345" ry="172" transform="rotate(-8 526 299)"/>
+        <ellipse cx="526" cy="299" rx="282" ry="132" transform="rotate(14 526 299)"/>
+      </g>
+      <g class="celestial-creature">
+        <path class="creature-line line-01" pathLength="1" d="M108 476 C215 424 256 333 334 269 C420 199 481 162 557 174 C649 188 688 259 775 279 C849 296 903 254 947 204"/>
+        <path class="creature-line line-02" pathLength="1" d="M333 270 C273 171 171 128 73 219 C158 210 225 242 284 307"/>
+        <path class="creature-line line-03" pathLength="1" d="M334 270 C273 320 251 393 293 457 C326 404 379 370 415 302"/>
+        <path class="creature-line line-04" pathLength="1" d="M557 174 C662 98 779 126 843 218 C756 193 688 216 625 253"/>
+        <path class="creature-line line-05" pathLength="1" d="M625 253 C713 273 791 333 844 421 C753 386 678 359 602 304"/>
+        <path class="creature-line line-06" pathLength="1" d="M284 307 C365 250 456 220 557 224 C643 227 696 273 775 279 C695 309 612 331 523 325 C427 319 356 299 293 457"/>
+        <path class="creature-line line-07" pathLength="1" d="M775 279 C845 246 920 250 958 202 C940 274 903 318 831 332 C878 348 915 375 934 414 C880 390 824 360 775 279"/>
+        <path class="creature-line line-08" pathLength="1" d="M418 268 C442 234 481 218 520 230 C490 239 475 261 479 287 C509 273 541 278 563 300"/>
+        <path class="creature-line line-09" pathLength="1" d="M350 238 C322 207 276 196 244 216 C277 218 297 236 304 265"/>
+        <path class="creature-line line-10" pathLength="1" d="M650 224 C690 194 741 190 780 213 C741 216 716 234 704 260"/>
+        <path class="creature-line line-11" pathLength="1" d="M109 476 C153 475 187 490 210 520 C164 510 129 494 90 520"/>
+      </g>
+      <path class="mobile-weaver" pathLength="1" d="M500 84 C419 160 568 239 500 320 C439 393 553 478 500 565"/>
+      <g class="major-links">
+        <path pathLength="1" d="M318 276 L540 238 L805 300"/>
+        <path pathLength="1" d="M318 276 L805 300"/>
+      </g>
+      <g class="skill-rays"></g>
+      <g class="map-stars">
+        <circle cx="108" cy="476" r="3"/><circle cx="244" cy="216" r="2.5"/><circle cx="334" cy="269" r="3"/>
+        <circle cx="557" cy="174" r="3.5"/><circle cx="775" cy="279" r="3"/><circle cx="947" cy="204" r="2.5"/>
+        <circle cx="844" cy="421" r="2.5"/><circle cx="293" cy="457" r="2.5"/>
+      </g>
+    </svg>
+    <div class="constellation-nodes">
+      <button class="constellation-node node-fullstack" type="button" data-constellation-skill="fullstack" aria-label="Buka Full-Stack Development" aria-pressed="true">
+        <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>I</small>Full-Stack</span>
+      </button>
+      <button class="constellation-node node-ai" type="button" data-constellation-skill="ai" aria-label="Buka AI dan Automation" aria-pressed="false">
+        <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>II</small>AI &amp; Automation</span>
+      </button>
+      <button class="constellation-node node-systems" type="button" data-constellation-skill="systems" aria-label="Buka Systems dan Networks" aria-pressed="false">
+        <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>III</small>Systems</span>
+      </button>
+    </div>
+    <div class="constellation-satellites" aria-hidden="true"></div>
+    <div class="constellation-screen-copy">
+      <p>Celestial Archive <span>/ Skill Map</span></p>
+      <h3>System Weaver</h3>
+      <span>Constellation of code and intelligence.</span>
+    </div>
+    <div class="constellation-current" aria-live="polite"><small>Awakened Talent</small><span>Full-Stack Development</span></div>`;
+  grid.before(stage);
+
+  const dust = stage.querySelector('.celestial-dust');
+  for (let index = 0; index < 92; index += 1) {
+    const star = document.createElement('i');
+    const x = (index * 47 + (index % 7) * 13) % 100;
+    const y = (index * 31 + (index % 5) * 17) % 100;
+    const size = index % 11 === 0 ? 2.4 : index % 4 === 0 ? 1.5 : .8;
+    star.style.cssText = `--x:${x}%;--y:${y}%;--s:${size}px;--d:${(index % 9) * .28}s`;
+    dust.append(star);
   }
-  function element(name, attributes) {
-    const node = document.createElementNS(ns, name);
-    for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, value);
-    return node;
+
+  const rays = stage.querySelector('.skill-rays');
+  const satellites = stage.querySelector('.constellation-satellites');
+  const current = stage.querySelector('.constellation-current span');
+  const nodeButtons = [...stage.querySelectorAll('[data-constellation-skill]')];
+  const mobileQuery = matchMedia('(max-width: 700px)');
+  let activeSkill = 'fullstack';
+  let resizeFrame = 0;
+
+  function svgPath(attributes) {
+    const path = document.createElementNS(ns, 'path');
+    Object.entries(attributes).forEach(([key, value]) => path.setAttribute(key, value));
+    return path;
   }
-  function draw() {
-    frame = 0;
-    const selected = section.querySelector('[data-skill][aria-selected="true"]');
-    const targets = [...panel.children];
-    if (!selected || !targets.length) return;
-    const bounds = svg.getBoundingClientRect();
-    if (!bounds.width || !bounds.height) return;
-    svg.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
-    svg.querySelectorAll('[data-constellation-dynamic]').forEach(node => node.remove());
-    const compact = innerWidth <= 600;
-    const source = point(selected, bounds, 'bottom');
-    const sourceStar = element('circle', {cx: source.x, cy: source.y, r: 4.5, class: 'constellation-star', 'data-constellation-dynamic': '', style: '--star-delay:80ms'});
-    svg.append(sourceStar);
-    targets.forEach((target, index) => {
-      target.style.setProperty('--skill-delay', `${300 + index * 70}ms`);
-      const end = point(target, bounds);
-      const start = compact && index > 0 ? point(targets[index - 1], bounds) : source;
-      if (!compact || index > 0) {
-        const bend = compact ? 10 : Math.max(34, Math.abs(end.y - start.y) * .42);
-        const path = element('path', {
-          d: compact
-            ? `M ${start.x} ${start.y} Q ${(start.x + end.x) / 2} ${Math.min(start.y, end.y) - bend}, ${end.x} ${end.y}`
-            : `M ${start.x} ${start.y} C ${start.x} ${start.y + bend}, ${end.x} ${end.y - bend}, ${end.x} ${end.y}`,
-          'data-constellation-dynamic': '',
-          style: `--path-delay:${index * 70}ms`
-        });
-        svg.append(path);
-        const length = Math.ceil(path.getTotalLength());
-        path.style.setProperty('--path-length', String(length));
-      }
-      svg.append(element('rect', {
-        x: end.x - 3.1, y: end.y - 3.1, width: 6.2, height: 6.2, rx: 1,
-        class: 'constellation-star', 'data-constellation-dynamic': '',
-        style: `--star-delay:${280 + index * 70}ms`, transform: `rotate(45 ${end.x} ${end.y})`
-      }));
+
+  function updateSatellites() {
+    activeSkill = section.querySelector('[data-skill][aria-selected="true"]')?.dataset.skill || activeSkill;
+    const isMobile = mobileQuery.matches;
+    const layout = (isMobile ? mobileLayouts : desktopLayouts)[activeSkill];
+    const start = (isMobile ? anchors.mobile : anchors.desktop)[activeSkill];
+    const skills = [...panel.children].map(item => item.textContent.trim());
+
+    stage.dataset.activeSkill = activeSkill;
+    current.textContent = names[activeSkill];
+    nodeButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.constellationSkill === activeSkill)));
+    rays.replaceChildren();
+    satellites.replaceChildren();
+
+    skills.forEach((skill, index) => {
+      const point = layout[index] || layout[layout.length - 1];
+      const startX = start[0] * 10;
+      const startY = start[1] * 6;
+      const endX = point[0] * 10;
+      const endY = point[1] * 6;
+      const curve = isMobile ? 28 : 44 + index * 5;
+      const path = svgPath({
+        class: 'skill-ray',
+        pathLength: '1',
+        d: `M${startX} ${startY} C${startX + (endX > startX ? curve : -curve)} ${startY}, ${endX} ${endY - 22}, ${endX} ${endY}`,
+        style: `--ray-delay:${.95 + index * .08}s`
+      });
+      rays.append(path);
+
+      const item = document.createElement('span');
+      item.className = 'constellation-satellite';
+      item.style.cssText = `--left:${point[0]}%;--top:${point[1]}%;--satellite-delay:${1.12 + index * .08}s`;
+      const marker = document.createElement('i');
+      const label = document.createElement('b');
+      label.textContent = skill;
+      item.append(marker, label);
+      satellites.append(item);
     });
-    section.classList.remove('constellation-awake');
-    if (visible) requestAnimationFrame(() => section.classList.add('constellation-awake'));
-  }
-  function schedule() {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(draw);
+
+    stage.classList.remove('satellites-awake');
+    requestAnimationFrame(() => stage.classList.add('satellites-awake'));
   }
 
-  new MutationObserver(schedule).observe(panel, {childList: true});
-  new ResizeObserver(schedule).observe(section);
+  nodeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const target = tabs.find(tab => tab.dataset.skill === button.dataset.constellationSkill);
+      target?.click();
+      if (target) target.focus({preventScroll: true});
+    });
+  });
+
+  new MutationObserver(updateSatellites).observe(panel, {childList: true});
+  mobileQuery.addEventListener?.('change', updateSatellites);
+  addEventListener('resize', () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(updateSatellites);
+  }, {passive: true});
+
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
-      visible = entries[0].isIntersecting;
-      svg.style.animationPlayState = visible ? 'running' : 'paused';
-      if (visible) schedule();
-    }, {threshold: .12}).observe(section);
+      const visible = entries[0].isIntersecting;
+      stage.dataset.active = String(visible);
+      if (visible) stage.classList.add('constellation-revealed');
+    }, {threshold: .2}).observe(stage);
+  } else {
+    stage.classList.add('constellation-revealed');
   }
-  addEventListener('pageshow', schedule);
-  schedule();
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) stage.classList.add('constellation-revealed');
+  updateSatellites();
 })();
