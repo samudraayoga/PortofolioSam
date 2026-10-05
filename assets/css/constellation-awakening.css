@@ -1,0 +1,95 @@
+/* Skills awaken as one connected constellation. */
+.skills-section { position: relative; isolation: isolate; }
+.skills-section > :not(.skill-constellation) { position: relative; z-index: 2; }
+.skill-constellation {
+  position: absolute;
+  inset: 82px -24px -22px;
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+}
+.skill-constellation path {
+  fill: none;
+  stroke: url(#constellation-light);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  opacity: .58;
+  filter: drop-shadow(0 0 5px #e9d59a80);
+  stroke-dasharray: var(--path-length, 600);
+  stroke-dashoffset: var(--path-length, 600);
+}
+.skills-section.constellation-awake .skill-constellation path {
+  animation: constellation-draw 820ms var(--path-delay, 0ms) cubic-bezier(.2,.76,.2,1) forwards;
+}
+.skill-constellation .constellation-star {
+  fill: #fff1bd;
+  stroke: #c7dfd4;
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 7px #fff1bd);
+}
+.skills-section.constellation-awake .constellation-star {
+  animation: constellation-star-awake 560ms var(--star-delay, 350ms) cubic-bezier(.2,.8,.2,1) forwards;
+}
+.skill-constellation .constellation-dust { fill: #d8e9df; opacity: .22; }
+.talent-card[aria-selected=true] .talent-icon {
+  position: relative;
+  box-shadow: 0 0 0 7px #e8d49a10, 0 0 28px #ebd89a42;
+}
+.talent-card[aria-selected=true] .talent-icon::after {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  border: 1px solid #ead39775;
+  border-radius: 50%;
+  animation: constellation-source-pulse 2.8s ease-in-out infinite;
+}
+.skill-items span {
+  position: relative;
+  transition: color 260ms ease, border-color 260ms ease, box-shadow 260ms ease, transform 320ms cubic-bezier(.2,.76,.2,1);
+}
+.skills-section.constellation-awake .skill-items span {
+  animation: constellation-label 520ms var(--skill-delay, 380ms) cubic-bezier(.2,.78,.2,1) both;
+}
+.skills-section.constellation-awake .skill-items span::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff0b7;
+  box-shadow: 0 0 8px #fff0b7;
+  transform: translateX(-50%);
+}
+.night .skill-constellation path { opacity: .78; filter: drop-shadow(0 0 7px #aecde8a0); }
+.night .skill-constellation .constellation-star { fill: #dcecff; stroke: #f2d99c; }
+
+@keyframes constellation-draw { to { stroke-dashoffset: 0; } }
+@keyframes constellation-star-awake {
+  0% { opacity: 0; transform: scale(.2) rotate(-35deg); }
+  62% { opacity: 1; transform: scale(1.55) rotate(8deg); }
+  100% { opacity: .95; transform: scale(1) rotate(0); }
+}
+@keyframes constellation-source-pulse {
+  0%,100% { opacity: .28; transform: scale(.92); }
+  50% { opacity: .85; transform: scale(1.08); }
+}
+@keyframes constellation-label {
+  from { opacity: .25; transform: translateY(7px); box-shadow: 0 0 0 #f0d99f00; }
+  to { opacity: 1; transform: translateY(0); box-shadow: 0 0 15px #f0d99f12; }
+}
+
+@media (max-width: 600px) {
+  .skill-constellation { inset: 110px -6px -10px; opacity: .72; }
+  .skill-constellation path { stroke-width: .9; }
+  .skill-constellation .constellation-star:first-of-type { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skill-constellation path { stroke-dashoffset: 0; }
+  .skill-constellation .constellation-star { opacity: .85; }
+  .skills-section.constellation-awake :is(.skill-constellation path,.constellation-star,.skill-items span,.talent-icon::after) { animation: none !important; }
+}

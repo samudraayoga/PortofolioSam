@@ -459,7 +459,7 @@
 
   // A short wash ties the day/night palette change together.
   $('.theme-toggle')?.addEventListener('click', () => {
-    if (reduced.matches) return;
+    if (reduced.matches || window.SamudraCelestialTheme) return;
     const wash = document.createElement('span');
     wash.className = 'theme-wash';
     wash.setAttribute('aria-hidden', 'true');

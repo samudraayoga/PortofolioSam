@@ -24,16 +24,20 @@
   reducedMotion.addEventListener('change', updateProfessionAnimation);
 
   const themeButton = $('.theme-toggle');
-  function setNight(night) {
-    document.body.classList.toggle('night', night);
-    themeButton.setAttribute('aria-pressed', String(night));
-    themeButton.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode');
-    $('use', themeButton).setAttribute('href', night ? '#i-sun' : '#i-moon');
+  function setNight(night, animated = false) {
+    const apply = () => {
+      document.body.classList.toggle('night', night);
+      themeButton.setAttribute('aria-pressed', String(night));
+      themeButton.setAttribute('aria-label', night ? 'Switch to day mode' : 'Switch to night mode');
+      $('use', themeButton).setAttribute('href', night ? '#i-sun' : '#i-moon');
+    };
+    if (animated && window.SamudraCelestialTheme) window.SamudraCelestialTheme.transition(night, apply);
+    else apply();
   }
   try { setNight(localStorage.getItem('samudra-night') === 'true'); } catch (_) { /* Storage may be unavailable in local file mode. */ }
   themeButton.addEventListener('click', () => {
     const night = !document.body.classList.contains('night');
-    setNight(night);
+    setNight(night, true);
     try { localStorage.setItem('samudra-night', String(night)); } catch (_) { /* The switch still works without persistence. */ }
   });
 

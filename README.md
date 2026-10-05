@@ -17,6 +17,8 @@ Pertahankan struktur folder repo: HTML di root, stylesheet di `assets/css`, Java
 - Panel profil sinematik: foto berkembang ke panel karakter, diikuti ornamen dan biodata. Foto mengikuti pilihan formal atau santai.
 - Transisi gambar dan judul dari kartu proyek ke studi kasus, termasuk saat kembali. Browser pendukung memakai View Transitions; file lokal dan browser lain memakai transisi sederhana.
 - Animasi menyesuaikan layar ponsel dan preferensi reduced motion.
+- Konstelasi skill menggambar ulang jalur cahaya dari kategori aktif ke setiap keahlian ketika pengguna memilih Full-Stack, AI, atau Systems.
+- Pergantian siang–malam mengubah posisi matahari dan bulan, warna landscape, horizon, dan bintang dengan transisi menyebar dari tombol tema.
 - Tab keahlian, detail sorotan pekerjaan, dan perluasan linimasa pengalaman.
 - Halaman studi kasus chatbot WhatsApp dengan peran, fitur, arsitektur, teknologi, dan galeri dokumentasi aplikasi.
 - Halaman studi kasus ERP Raho Premier dengan peran, teknologi, cakupan modul, dan galeri inventori, logistik, manajemen sistem, serta ringkasan proyek.
@@ -32,6 +34,7 @@ Tautan kontak eksternal memerlukan koneksi internet dan dapat membuka aplikasi t
 - Sunting `assets/css/scenery.css` untuk background landscape, transisi hero, dan warna bagian bawah halaman utama.
 - Sunting `assets/js/script.js` untuk menyesuaikan interaksi.
 - `assets/css/landscape-motion.css` dan `assets/js/landscape-motion.js` mengatur atmosfer hero; `character-reveal.css` / `.js` mengatur panel profil; `project-portal.css` / `.js` mengatur transisi proyek dan visual pembuka studi kasus, masing-masing di direktori CSS / JavaScript yang sama.
+- `constellation-awakening.css` / `.js` mengatur jalur skill, sedangkan `celestial-theme.css` / `.js` mengatur transformasi siang–malam.
 - Sunting `chatbot.html` untuk isi studi kasus chatbot, `assets/css/chatbot.css` untuk tampilannya, dan `assets/js/chatbot.js` untuk interaksi galerinya.
 - Sunting `erp.html` untuk isi studi kasus ERP dan `assets/css/erp.css` untuk tampilannya. Galeri memakai `assets/js/chatbot.js` dengan folder gambar dari atribut `data-gallery-base`.
 - Sunting `mlbb.html` untuk isi studi kasus MLBB Heroes Matchup dan `assets/css/mlbb.css` untuk tampilannya. Halaman ini memakai fondasi `assets/css/main.css` dan `assets/css/chatbot.css`, dengan screenshot di `assets/mlbb`.
