@@ -98,6 +98,9 @@
     portrait.alt = casual ? 'Yoga Samudra Heriyanto in a casual setting, wearing a brown shirt' : 'Formal portrait of Yoga Samudra Heriyanto wearing a grey suit';
     portrait.classList.toggle('casual', casual);
     $$('[data-portrait]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    portrait.closest('.character-stage')?.dispatchEvent(new CustomEvent('portraitchange', {
+      detail: {outfit: casual ? 'casual' : 'formal'}
+    }));
   }));
 
   const skillData = {

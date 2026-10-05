@@ -24,6 +24,52 @@
     vision.append(awakening);
   }
 
+  // Character selection: the hero portrait becomes an interactive archive entry.
+  const characterStage = $('.character-stage');
+  const portraitCard = $('.portrait-card');
+  const portraitImage = $('#portrait');
+  if (characterStage && portraitCard && portraitImage) {
+    const selection = document.createElement('div');
+    selection.className = 'character-selection-ui';
+    selection.innerHTML = `
+      <div class="character-title-card" aria-hidden="true"><small>Hydro / System Weaver</small><strong>Samudra</strong><span>Character Selection</span></div>
+      <div class="character-attribute-card" aria-hidden="true"><small>Element Profile</small><b>Hydro</b><span>Clarity · Adaptability</span></div>
+      <div class="character-traits" aria-hidden="true"><span>Full-Stack</span><span>AI Engineering</span><span>System Design</span></div>
+      <a class="character-constellation-link" href="#keahlian"><i aria-hidden="true">✦</i> Open Constellation <span aria-hidden="true">↓</span></a>`;
+    characterStage.append(selection);
+
+    const focus = value => characterStage.classList.toggle('character-selected', value);
+    const selectButton = document.createElement('button');
+    selectButton.type = 'button';
+    selectButton.className = 'character-select-trigger';
+    selectButton.setAttribute('aria-label', 'Focus Samudra character selection');
+    portraitCard.append(selectButton);
+    selectButton.addEventListener('click', () => {
+      focus(true);
+      characterStage.classList.add('character-select-flare');
+      setTimeout(() => characterStage.classList.remove('character-select-flare'), 900);
+    });
+    portraitCard.addEventListener('pointerenter', () => focus(true));
+    portraitCard.addEventListener('pointerleave', () => focus(false));
+    portraitCard.addEventListener('focusin', () => focus(true));
+    portraitCard.addEventListener('focusout', event => {
+      if (!portraitCard.contains(event.relatedTarget)) focus(false);
+    });
+
+    characterStage.addEventListener('portraitchange', event => {
+      characterStage.dataset.outfit = event.detail?.outfit || 'formal';
+      characterStage.classList.remove('outfit-shifting');
+      void characterStage.offsetWidth;
+      characterStage.classList.add('outfit-shifting');
+      setTimeout(() => characterStage.classList.remove('outfit-shifting'), 900);
+    });
+
+    $('.character-constellation-link', selection)?.addEventListener('click', () => {
+      characterStage.classList.add('constellation-departing');
+      setTimeout(() => characterStage.classList.remove('constellation-departing'), 1000);
+    });
+  }
+
   const chapterEffects = {
     profil: ['wind', 'Character Archive'],
     keahlian: ['stars', 'Celestial Constellation'],
