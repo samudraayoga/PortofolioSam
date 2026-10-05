@@ -13,7 +13,6 @@
     const roles = typedElement.dataset.typedItems.split(',').map(role => role.trim());
     professionIndex = 0;
     typedElement.replaceChildren();
-    typedElement.closest('.hero-profession')?.querySelector('.role-morph-dots')?.remove();
 
     const first = document.createElement('span');
     first.className = 'role-morph-word';
@@ -21,16 +20,6 @@
     typedElement.append(first);
     requestAnimationFrame(() => typedElement.style.width = `${first.getBoundingClientRect().width}px`);
     if (reducedMotion.matches) return;
-
-    const dots = document.createElement('span');
-    dots.className = 'role-morph-dots';
-    dots.setAttribute('aria-hidden', 'true');
-    dots.replaceChildren(...roles.map((_, index) => {
-      const dot = document.createElement('i');
-      dot.classList.toggle('active', index === 0);
-      return dot;
-    }));
-    typedElement.closest('.hero-profession')?.append(dots);
 
     const changeRole = () => {
       if (document.hidden) { professionTimer = setTimeout(changeRole, 1200); return; }
@@ -44,7 +33,6 @@
       typedElement.style.width = `${nextWidth}px`;
       current?.classList.add('role-morph-exit');
       requestAnimationFrame(() => next.classList.add('role-morph-enter-active'));
-      [...dots.children].forEach((dot, index) => dot.classList.toggle('active', index === professionIndex));
       setTimeout(() => {
         current?.remove();
         next.classList.remove('role-morph-enter', 'role-morph-enter-active');
