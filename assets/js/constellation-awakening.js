@@ -181,6 +181,17 @@
     });
   });
 
+  // The regular talent cards and the constellation nodes share one awakening.
+  // This keeps keyboard, touch, and pointer paths equally cinematic.
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    stage.classList.add('talent-focused');
+    resetButton.hidden = false;
+    stage.classList.remove('talent-unlocking');
+    void stage.offsetWidth;
+    stage.classList.add('talent-unlocking');
+    setTimeout(() => stage.classList.remove('talent-unlocking'), 1150);
+  }));
+
   function resetFocus() {
     stage.classList.remove('talent-focused', 'focus-flare');
     resetButton.hidden = true;

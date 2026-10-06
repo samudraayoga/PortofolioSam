@@ -214,6 +214,10 @@ body.codex-intro-running{overflow:hidden}
 @keyframes gate-copy-out{to{opacity:0;transform:translateY(-8px)}}
 @keyframes gate-departure{0%,45%{opacity:1}100%{opacity:0}}
 @keyframes skill-current{0%,100%{transform:translateX(-130%)}50%{transform:translateX(130%)}}
+@keyframes talent-lock-in{0%{opacity:0;background:radial-gradient(circle at var(--focus-x) var(--focus-y),#baf4ff 0 2%,transparent 5%)}45%{opacity:1}100%{opacity:1}}
+@keyframes talent-ray-awaken{0%{stroke-dashoffset:1;stroke-width:1.2;opacity:.2}55%{stroke-dashoffset:0;stroke-width:3;opacity:1}100%{stroke-dashoffset:0;stroke-width:1.2;opacity:1}}
+@keyframes talent-satellite-awaken{0%{transform:scale(.35);filter:brightness(1)}55%{transform:scale(1.35);filter:brightness(2.1)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes talent-node-bloom{0%{transform:scale(.75)}55%{transform:scale(1.4);filter:brightness(1.9)}100%{transform:scale(1)}}
 
 @media(max-width:800px){
   .talent-grid:before,.journey-list:before,.journey-list:after{display:none}

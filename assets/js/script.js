@@ -184,7 +184,12 @@
     $('#project-description').textContent = project.description;
     $('#project-points').replaceChildren(...project.points.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
     $('#project-tags').replaceChildren(...project.tags.map(text => { const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = text; return tag; }));
-    openDialog($('#project-dialog'), button);
+    const dialog = $('#project-dialog');
+    dialog.classList.remove('domain-entering');
+    void dialog.offsetWidth;
+    dialog.classList.add('domain-entering');
+    setTimeout(() => dialog.classList.remove('domain-entering'), 1050);
+    openDialog(dialog, button);
   }));
 
   let toastTimer;

@@ -9,6 +9,16 @@
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
 
+  // A quiet, editorial reading indicator. It makes the long-form portfolio feel
+  // intentional without competing with the scene-specific animations below.
+  if (!reduced.matches) {
+    const progress = document.createElement('div');
+    progress.className = 'journey-progress-indicator';
+    progress.setAttribute('aria-hidden', 'true');
+    progress.innerHTML = '<i></i>';
+    body.prepend(progress);
+  }
+
   const atmosphere = document.createElement('div');
   atmosphere.className = 'world-atmosphere';
   atmosphere.setAttribute('aria-hidden', 'true');
@@ -122,15 +132,41 @@
       tech.addEventListener('pointerenter', () => card.dataset.techFocus = String(techIndex + 1));
       tech.addEventListener('pointerleave', () => delete card.dataset.techFocus);
     });
+    // Keep the illumination inside the artwork, so it reads as a gallery light
+    // rather than a novelty cursor effect.
+    card.addEventListener('pointermove', event => {
+      if (!finePointer.matches || reduced.matches) return;
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty('--spotlight-x', `${event.clientX - bounds.left}px`);
+      card.style.setProperty('--spotlight-y', `${event.clientY - bounds.top}px`);
+    });
+    card.addEventListener('pointerleave', () => card.classList.remove('project-spotlit'));
+    card.addEventListener('pointerenter', () => card.classList.add('project-spotlit'));
   });
 
   const journey = $('.journey-list');
   if (journey) {
+    const route = document.createElement('span');
+    route.className = 'journey-route';
+    route.setAttribute('aria-hidden', 'true');
+    journey.prepend(route);
     const mote = document.createElement('span');
     mote.className = 'ley-line-mote';
     mote.setAttribute('aria-hidden', 'true');
     journey.append(mote);
-    $$('.journey-item', journey).forEach((item, index) => item.style.setProperty('--ley-index', index));
+    const mapLabel = document.createElement('span');
+    mapLabel.className = 'journey-map-label';
+    mapLabel.setAttribute('aria-hidden', 'true');
+    mapLabel.textContent = 'WAYPOINT ROUTE';
+    journey.append(mapLabel);
+    $$('.journey-item', journey).forEach((item, index) => {
+      item.style.setProperty('--ley-index', index);
+      const waypoint = document.createElement('span');
+      waypoint.className = 'journey-waypoint';
+      waypoint.setAttribute('aria-hidden', 'true');
+      waypoint.textContent = String(index + 1).padStart(2, '0');
+      item.querySelector('.journey-node')?.append(waypoint);
+    });
   }
 
   const contact = $('#kontak');
@@ -174,6 +210,12 @@
     root.style.setProperty('--world-progress', progress.toFixed(4));
     root.style.setProperty('--world-pan', `${(progress * -34).toFixed(2)}px`);
     if (nav) nav.style.setProperty('--chapter-progress', progress.toFixed(4));
+    if (journey) {
+      const rect = journey.getBoundingClientRect();
+      const span = Math.max(1, rect.height - innerHeight * .42);
+      const journeyProgress = Math.max(0, Math.min(1, (innerHeight * .7 - rect.top) / span));
+      journey.style.setProperty('--journey-progress', journeyProgress.toFixed(4));
+    }
     const chapters = ['beranda', 'profil', 'keahlian', 'karya', 'perjalanan', 'kontak'];
     let current = 'beranda';
     chapters.forEach(id => {

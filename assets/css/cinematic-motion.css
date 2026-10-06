@@ -89,7 +89,15 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 
 /* 5–6. Project domain entrance and interactive data preview. */
 .work-card { --art-x: 50%; --art-y: 50%; }
+.journey-progress-indicator { position:fixed; z-index:100; top:0; left:0; width:100%; height:2px; background:rgba(237,221,166,.14); pointer-events:none; }
+.journey-progress-indicator i { display:block; width:calc(var(--world-progress, 0) * 100%); height:100%; background:linear-gradient(90deg,#81cddd,#f2dda1 72%,#fff6c8); box-shadow:0 0 12px rgba(218,201,139,.85); transition:width .12s linear; }
 .work-art { perspective: 950px; }
+.work-card::before { content:''; position:absolute; z-index:6; inset:0; pointer-events:none; opacity:0; background:radial-gradient(300px circle at var(--spotlight-x,50%) var(--spotlight-y,40%),rgba(255,249,218,.23),transparent 62%); mix-blend-mode:soft-light; transition:opacity .35s ease; }
+.work-card { position:relative; overflow:hidden; transition:transform .45s cubic-bezier(.16,.8,.2,1),box-shadow .45s ease,border-color .45s ease; }
+.work-card.project-spotlit { transform:translateY(-7px); border-color:rgba(202,172,101,.72); box-shadow:0 22px 48px rgba(20,57,65,.16),0 0 0 1px rgba(247,226,166,.22); }
+.work-card.project-spotlit::before { opacity:1; }
+.work-card.project-spotlit .work-art > img { transform:scale(1.025); filter:saturate(1.08) brightness(1.045); }
+.work-art > img { transition:transform .7s cubic-bezier(.16,.8,.2,1),filter .5s ease; }
 .domain-gate { position: absolute; z-index: 5; inset: 13%; pointer-events: none; opacity: 0; transform: scale(.72) rotate(45deg); border: 1px solid color-mix(in srgb,var(--project-accent) 70%,transparent); box-shadow: 0 0 45px color-mix(in srgb,var(--project-accent) 24%,transparent); }
 .domain-gate::before,.domain-gate::after,.domain-gate i { content: ''; position: absolute; inset: 9%; border: 1px solid color-mix(in srgb,var(--project-accent) 35%,transparent); }
 .domain-gate::after { inset: 22%; border-radius: 50%; }
@@ -110,9 +118,20 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .work-card[data-tech-focus] .work-art img { filter: saturate(1.25) brightness(1.04); transform: scale(1.045); }
 
 /* 7. Ley Line journey. */
+.journey-list { position:relative; --journey-route-start:218px; }
+.journey-route { position:absolute; z-index:1; left:var(--journey-route-start); top:23px; bottom:23px; width:1px; background:rgba(172,151,99,.23); pointer-events:none; }
+.journey-route::after { content:''; position:absolute; inset:0; background:linear-gradient(#a5e0d0,#f3db99 74%,#f9ecc2); transform:scaleY(var(--journey-progress,0)); transform-origin:top; box-shadow:0 0 10px rgba(159,220,202,.75); transition:transform .15s linear; }
+.journey-item { position:relative; z-index:2; }
 .ley-line-mote { position: absolute; z-index: 3; left: 218px; top: 38px; width: 9px; height: 9px; border-radius: 50%; background: #fff2b1; box-shadow: 0 0 0 6px rgba(237,218,156,.1),0 0 18px #9ed7c1; pointer-events: none; transform: translateY(calc((100% - 76px) * var(--journey-progress))); transition: transform .14s linear; }
 .journey-item.cinematic-active .journey-node { animation: ley-node-awaken 1.6s ease-in-out infinite alternate; }
 .journey-item.cinematic-active .journey-body::after { content: ''; display: block; width: 58px; height: 1px; margin-top: 15px; background: linear-gradient(90deg,#f1d99a,transparent); animation: ley-trace 1s ease-out both; }
+.journey-map-label { position:absolute; left:245px; top:16px; color:rgba(239,221,169,.72); font:600 7px/1 var(--sans); letter-spacing:.2em; }
+.journey-waypoint { position:absolute; left:50%; top:50%; display:grid; place-items:center; min-width:20px; height:20px; padding:0 4px; border:1px solid rgba(238,219,159,.65); border-radius:50%; color:#f9e7b5; background:#102d3bd9; font:600 6px/1 var(--sans); letter-spacing:.04em; opacity:0; transform:translate(-50%,-50%) rotate(-45deg) scale(.6); transition:opacity .4s ease,transform .5s cubic-bezier(.16,.8,.2,1); }
+.journey-item.cinematic-seen .journey-waypoint { opacity:1; transform:translate(-50%,-50%) rotate(-45deg) scale(1); }
+
+/* The AI case opens as a compact domain, then resolves into readable project detail. */
+#project-dialog.domain-entering[open] .dialog-inner::before { content:'✦'; position:absolute; z-index:3; left:50%; top:50%; display:grid; width:76px; height:76px; place-items:center; border:1px solid #f5de9a; border-radius:50%; color:#fff2bd; background:radial-gradient(circle,rgba(98,195,224,.45),rgba(6,28,53,.92) 62%); box-shadow:0 0 0 12px rgba(114,219,247,.09),0 0 48px rgba(118,218,247,.65); font:32px/1 var(--serif); pointer-events:none; transform:translate(-50%,-50%) scale(.25) rotate(-45deg); animation:project-domain-seal .95s cubic-bezier(.16,.8,.2,1) both; }
+#project-dialog.domain-entering[open] .dialog-inner::after { content:'DOMAIN RECORD / AI INTEGRATION'; position:absolute; z-index:3; left:50%; top:calc(50% + 54px); color:#dff9ff; font:600 8px/1 var(--sans); letter-spacing:.22em; white-space:nowrap; pointer-events:none; transform:translate(-50%,-50%); animation:project-domain-copy .9s ease-out both; }
 
 /* 8. Distinct chapter signatures. */
 [data-cinematic-chapter] { position: relative; }
@@ -219,6 +238,8 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @keyframes vision-idle { to{translate:0 -4px;filter:brightness(1.15)} }
 @keyframes character-light-pass { 0%,65%{transform:translateX(-130%)} 90%,100%{transform:translateX(130%)} }
 @keyframes character-select-flare { from{opacity:1;transform:scale(.35)} to{opacity:0;transform:scale(1.6)} }
+@keyframes project-domain-seal { 0%{opacity:0;transform:translate(-50%,-50%) scale(.18) rotate(-45deg)} 42%{opacity:1;transform:translate(-50%,-50%) scale(1.16) rotate(15deg)} 100%{opacity:0;transform:translate(-50%,-50%) scale(2.5) rotate(65deg)} }
+@keyframes project-domain-copy { 0%,32%{opacity:0;letter-spacing:.42em} 55%{opacity:1} 100%{opacity:0;letter-spacing:.22em} }
 @keyframes outfit-ripple { 0%{opacity:0;transform:scale(.3)} 35%{opacity:1} 100%{opacity:0;transform:scale(1.7)} }
 @keyframes outfit-arrive { 0%{opacity:.25;transform:scale(1.08);filter:brightness(1.7) saturate(.6)} 100%{opacity:1;transform:scale(1);filter:none} }
 @keyframes constellation-launch { 0%{transform:translate(0,0) scale(1)} 55%{transform:translate(34px,24px) scale(1.7)} 100%{transform:translate(72px,56px) scale(.15);opacity:0} }
@@ -232,13 +253,16 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
   .elemental-cursor,.hydro-cursor-drop,.chapter-signature,.chapter-nav-line,.chapter-nav-traveller { display:none!important; }
   .domain-gate { inset:18%; }
   .ley-line-mote { display:none; }
+  .journey-route { left:calc(var(--journey-route-start) - 1px); top:19px; bottom:19px; }
   .world-atmosphere { opacity:.55; }
   .character-stage.cinematic-active .portrait-card { animation-duration:7s; }
   .character-title-card,.character-attribute-card,.character-traits,.character-constellation-link { display:none; }
   .character-selected .portrait-card { transform:translateY(-3px) scale(1.015); }
 }
+@media (min-width:601px) and (max-width:800px) { .journey-list { --journey-route-start:123px; } }
+@media (max-width:600px) { .journey-list { --journey-route-start:13px; } .journey-route { display:block; } }
 @media (prefers-reduced-motion:reduce) {
-  .world-atmosphere,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.wish-finale,.constellation-energy-channel { display:none!important; }
+  .world-atmosphere,.journey-progress-indicator,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.journey-route,.wish-finale,.constellation-energy-channel { display:none!important; }
   .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
   .character-select-trigger,.character-selection-ui { display:none; }
   .portfolio-page::after,.paper::after { display:none; }
