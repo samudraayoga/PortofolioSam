@@ -1,4 +1,16 @@
-# Landscape asset
+# Asset notes
+
+## Hydro character portrait
+
+`samudra-hydro-art.webp` was created with the built-in image_gen tool on 8 October 2026 from the user-supplied `/Users/mac/myData/Foto/abu.jpeg`. The user's face, hair, and upright pose guided a fantasy Hydro scholar illustration. The generated PNG was converted to a 289 KB WebP with its alpha preserved. The original photo remains available via the Real Portrait toggle, alongside Casual.
+
+Final prompt: "Use case: style-transfer / identity-preserve. Edit target: attached portrait of Samudra. Create a polished Genshin Impact-inspired anime fantasy character illustration for his personal developer portfolio. Preserve his recognizable Indonesian facial features, warm medium skin, dark brown eyes, center-parted wavy black hair, calm slight smile, adult age, upright front-facing pose and head-to-upper-thigh framing. Render face with refined anime cel shading while retaining his actual likeness, not a generic anime face. Outfit: original Hydro scholar / systems alchemist, tailored navy and charcoal long coat with teal panels, understated gold piping, black inner shirt, tasteful small glowing aqua gem at chest, elegant professional silhouette. Soft painterly cel shading, crisp controlled linework, sophisticated game character splash-art finish. Navy teal gold palette matching fantasy landscape website. Centered isolated single character, complete hair and shoulders with generous transparent margin above head, body reaches lower image edge. Portrait 3:4 composition. Actual transparent background, clean alpha edges. No scenery, text, watermark, UI, weapon, extra characters, or oversized floating effects. Keep identity, hair shape, pose and proportions from photo."
+
+## Display font
+
+`fonts/hywenhei-genshin-latin.woff2` is a web-optimized Latin subset of the HYWenHei/Genshin Impact font downloaded from [Dafont Free](https://www.dafontfree.io/genshin-impact-font/) on 8 October 2026. The source page labels the font as personal-use only. The original 6.9 MB TTF was subset to the Latin, punctuation, currency, arrow, and geometric-symbol ranges and compressed to WOFF2 for portfolio performance.
+
+## Landscape asset
 
 File: `landscape.png`
 

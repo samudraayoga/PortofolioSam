@@ -73,20 +73,6 @@ body[data-world-chapter="kontak"] .world-stars { opacity: .24; animation: cinema
 body[data-world-chapter="karya"] .world-glow { background: radial-gradient(circle at 50% 42%, rgba(240, 217, 159, .08), transparent 38%); }
 body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circle at 50% 30%, rgba(139, 160, 255, .16), transparent 42%); }
 
-/* 4. Energy travels through the constellation before a talent opens. */
-.constellation-energy-channel { position: absolute; z-index: 8; inset: 0; pointer-events: none; overflow: hidden; opacity: 0; }
-.constellation-energy-channel i { position: absolute; left: 32%; bottom: 4%; width: 3px; height: 3px; border-radius: 50%; background: #fff3b8; box-shadow: 0 0 10px 3px #7cddff; offset-path: path('M 0 0 C 110 -90 175 -235 205 -350 C 255 -390 355 -375 480 -315'); opacity: 0; }
-.constellation-energy-channel i:nth-child(2) { animation-delay: .12s!important; }
-.constellation-energy-channel i:nth-child(3) { animation-delay: .24s!important; }
-.constellation-energy-channel b { position: absolute; left: var(--focus-x, 50%); top: var(--focus-y, 30%); width: 12px; height: 12px; border: 1px solid #fff1ad; border-radius: 50%; transform: translate(-50%,-50%) scale(.2); opacity: 0; }
-.energy-awakening .constellation-energy-channel { opacity: 1; }
-.energy-awakening .constellation-energy-channel i { animation: constellation-energy-travel 1s cubic-bezier(.2,.7,.2,1) both; }
-.energy-awakening .constellation-energy-channel b { animation: constellation-energy-bloom .75s .62s ease-out both; }
-.energy-awakening .skill-ray { filter: drop-shadow(0 0 8px #fff1ad); }
-.celestial-constellation[data-active-skill="fullstack"] .constellation-energy-channel { --focus-x:42.4%;--focus-y:10.2%; }
-.celestial-constellation[data-active-skill="ai"] .constellation-energy-channel { --focus-x:56.2%;--focus-y:16.5%; }
-.celestial-constellation[data-active-skill="systems"] .constellation-energy-channel { --focus-x:69.2%;--focus-y:49.3%; }
-
 /* 5–6. Project domain entrance and interactive data preview. */
 .work-card { --art-x: 50%; --art-y: 50%; }
 .journey-progress-indicator { position:fixed; z-index:100; top:0; left:0; width:100%; height:2px; background:rgba(237,221,166,.14); pointer-events:none; }
@@ -159,10 +145,11 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .hydro-page-ripple { position: fixed; z-index: 9999; width: 24px; height: 24px; margin: -12px; border-radius: 50%; pointer-events: none; border: 2px solid rgba(184,238,255,.75); box-shadow: 0 0 45px rgba(83,204,255,.45), inset 0 0 18px rgba(173,236,255,.3); animation: hydro-page-wave .7s cubic-bezier(.18,.7,.2,1) both; }
 
 /* 11. Character idle motion. */
-.character-stage.cinematic-active .portrait-card { animation: character-breathe 5.8s ease-in-out infinite; }
-.character-stage.cinematic-active .portrait-window img { animation: character-image-idle 7.5s ease-in-out infinite alternate; }
+.character-stage.cinematic-active #portrait { animation: character-image-idle 7.5s ease-in-out infinite alternate; }
+#portrait { translate: var(--portrait-pan-x, 0px) var(--portrait-pan-y, 0px); transition: translate .65s ease-out; }
+.portrait-window .portrait-crossfade { animation: none!important; transition: none!important; }
 .character-stage.cinematic-active .vision { animation: vision-idle 4.8s ease-in-out infinite alternate; }
-.character-stage.cinematic-active .portrait-card::after { content: ''; position: absolute; z-index: 3; inset: 10px; pointer-events: none; background: linear-gradient(105deg,transparent 38%,rgba(163,227,255,.13) 49%,transparent 59%); transform: translateX(-130%); animation: character-light-pass 6.5s 1.8s ease-in-out infinite; }
+.character-stage.cinematic-active .portrait-window::before { content: ''; position: absolute; z-index: 3; inset: 0; pointer-events: none; background: linear-gradient(105deg,transparent 38%,rgba(163,227,255,.09) 49%,transparent 59%); transform: translateX(-130%); animation: character-light-pass 8s 1.8s ease-in-out infinite; }
 
 /* Character selection scene. */
 .character-stage { isolation: isolate; }
@@ -183,14 +170,13 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .character-constellation-link { right: -102px; bottom: 50px; display:flex; align-items:center; gap:7px; padding: 8px 10px; border:1px solid rgba(158,225,244,.4); color:#dff8ff; background:rgba(8,33,61,.72); font:600 7px/1 var(--sans); letter-spacing:.11em; text-transform:uppercase; text-decoration:none; pointer-events:auto; transform: translateY(14px); }
 .character-constellation-link i { color:#ffe7a4; font-size:12px; font-style:normal; }
 .character-constellation-link:hover,.character-constellation-link:focus-visible { border-color:#ffebae; color:#fff5d0; }
-.character-selected .portrait-card { transform: translateY(-8px) scale(1.035); filter: saturate(1.1) brightness(1.06); box-shadow: 0 20px 88px rgba(4,30,67,.65),0 0 0 8px rgba(103,219,255,.08); }
+.character-selected .portrait-card { box-shadow: 0 20px 88px rgba(4,30,67,.65),0 0 0 4px rgba(103,219,255,.08); }
 .character-selected .character-title-card,.character-selected .character-attribute-card,.character-selected .character-traits,.character-selected .character-constellation-link { opacity:1; transform:translate(0); }
 .character-selected .orbit { opacity:.35; filter:brightness(.72); transition:opacity .6s ease,filter .6s ease; }
 .character-selected .vision { filter:brightness(1.35) drop-shadow(0 0 15px #70dbff); }
 .character-selected .hydro-awakening i { border-color:rgba(168,241,255,.82); animation-duration:4.6s; }
 .character-select-flare .vision::after { content:''; position:absolute; inset:-30px; border-radius:50%; border:1px solid #e1fbff; box-shadow:0 0 32px 12px rgba(122,225,255,.6); animation: character-select-flare .85s ease-out both; }
-.outfit-shifting .portrait-window::before { content:''; position:absolute; z-index:5; inset:-10%; pointer-events:none; background:radial-gradient(circle at 50% 50%,rgba(208,248,255,.95),rgba(90,207,255,.52) 14%,transparent 49%); animation: outfit-ripple .85s cubic-bezier(.16,.8,.2,1) both; }
-.outfit-shifting .portrait-window img { animation: outfit-arrive .85s cubic-bezier(.16,.8,.2,1) both!important; }
+.character-stage.cinematic-active.outfit-shifting .portrait-window::before { content:''; position:absolute; z-index:5; inset:0; pointer-events:none; background:linear-gradient(110deg,transparent 30%,rgba(125,220,255,.15),transparent 70%); animation: character-light-pass .45s ease-in-out both; }
 .character-stage[data-outfit="casual"] .character-title-card small::after { content:' / Casual Expedition'; color:#f2d99f; }
 .character-stage[data-outfit="formal"] .character-title-card small::after { content:' / Formal Attire'; color:#f2d99f; }
 .constellation-departing .character-constellation-link i { animation: constellation-launch .9s cubic-bezier(.16,.8,.2,1) both; }
@@ -220,8 +206,6 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @keyframes hydro-vision-drop { 0%{opacity:0;transform:rotate(var(--drop-angle)) translateX(8px) scale(.2)} 35%{opacity:1} 100%{opacity:0;transform:rotate(var(--drop-angle)) translateX(var(--drop-distance)) scale(1)} }
 @keyframes hydro-cursor-fall { to{opacity:0;transform:translate(var(--drop-x),var(--drop-y)) scale(.2)} }
 @keyframes cinematic-star-drift { to{transform:translate3d(-28px,20px,0)} }
-@keyframes constellation-energy-travel { 0%{opacity:0;offset-distance:0} 15%,78%{opacity:1} 100%{opacity:0;offset-distance:100%} }
-@keyframes constellation-energy-bloom { 0%{opacity:0;transform:translate(-50%,-50%) scale(.2)} 45%{opacity:1} 100%{opacity:0;transform:translate(-50%,-50%) scale(8)} }
 @keyframes domain-open { 0%{opacity:0;transform:scale(.55) rotate(45deg)} 56%{opacity:.8} 100%{opacity:.2;transform:scale(1.05) rotate(135deg)} }
 @keyframes domain-art-arrive { from{opacity:.18;clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);transform:scale(1.08)} to{opacity:1;clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:none} }
 @keyframes project-data-pulse { 0%,100%{opacity:.08;transform:scale(.6)} 50%{opacity:.78;transform:scale(1.25)} }
@@ -235,7 +219,7 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @keyframes hydro-page-wave { to{opacity:0;transform:scale(85);border-width:0} }
 @keyframes character-breathe { 0%,100%{translate:0 0} 50%{translate:0 -3px} }
 @keyframes character-image-idle { from{transform:scale(1.003) translateY(0)} to{transform:scale(1.018) translateY(-2px)} }
-@keyframes vision-idle { to{translate:0 -4px;filter:brightness(1.15)} }
+@keyframes vision-idle { from{translate:var(--vision-pan-x,0px) var(--vision-pan-y,0px)} to{translate:var(--vision-pan-x,0px) calc(var(--vision-pan-y,0px) - 3px)} }
 @keyframes character-light-pass { 0%,65%{transform:translateX(-130%)} 90%,100%{transform:translateX(130%)} }
 @keyframes character-select-flare { from{opacity:1;transform:scale(.35)} to{opacity:0;transform:scale(1.6)} }
 @keyframes project-domain-seal { 0%{opacity:0;transform:translate(-50%,-50%) scale(.18) rotate(-45deg)} 42%{opacity:1;transform:translate(-50%,-50%) scale(1.16) rotate(15deg)} 100%{opacity:0;transform:translate(-50%,-50%) scale(2.5) rotate(65deg)} }
@@ -257,11 +241,13 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
   .world-atmosphere { opacity:.55; }
   .character-stage.cinematic-active .portrait-card { animation-duration:7s; }
   .character-title-card,.character-attribute-card,.character-traits,.character-constellation-link { display:none; }
-  .character-selected .portrait-card { transform:translateY(-3px) scale(1.015); }
+  .character-selected .portrait-card { transform:none; }
 }
 @media (min-width:601px) and (max-width:800px) { .journey-list { --journey-route-start:123px; } }
 @media (max-width:600px) { .journey-list { --journey-route-start:13px; } .journey-route { display:block; } }
 @media (prefers-reduced-motion:reduce) {
+  .character-stage .portrait-window::before { display:none!important; }
+  #portrait { translate:none!important; }
   .world-atmosphere,.journey-progress-indicator,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.journey-route,.wish-finale,.constellation-energy-channel { display:none!important; }
   .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
   .character-select-trigger,.character-selection-ui { display:none; }

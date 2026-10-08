@@ -92,21 +92,54 @@
   matchMedia('(min-width: 601px)').addEventListener('change', e => { if (e.matches) closeMenu(); });
 
   const portrait = $('#portrait');
-  $$('[data-portrait]').forEach(button => button.addEventListener('click', () => {
-    const casual = button.dataset.portrait === 'casual';
-    portrait.src = casual ? 'assets/samudra-casual.jpeg' : 'assets/samudra-formal.jpeg';
-    portrait.alt = casual ? 'Yoga Samudra Heriyanto in a casual setting, wearing a brown shirt' : 'Formal portrait of Yoga Samudra Heriyanto wearing a grey suit';
-    portrait.classList.toggle('casual', casual);
+  const portraits = {
+    formal: {src: 'assets/samudra-formal.jpeg', alt: 'Formal portrait of Yoga Samudra Heriyanto wearing a grey suit'},
+    casual: {src: 'assets/samudra-casual.jpeg', alt: 'Yoga Samudra Heriyanto in a casual setting, wearing a brown shirt'}
+  };
+  let portraitRequest = 0;
+  let portraitFade;
+  let portraitOverlay;
+  $$('[data-portrait]').forEach(button => button.addEventListener('click', async () => {
+    const outfit = button.dataset.portrait;
+    const selected = portraits[outfit];
+    if (!portrait || !selected) return;
+    const request = ++portraitRequest;
+    if (button.getAttribute('aria-pressed') === 'true') return;
+    const next = new Image();
+    next.src = selected.src;
+    try { await next.decode(); } catch (_) { return; }
+    if (request !== portraitRequest) return;
+    portraitFade?.cancel();
+    portraitOverlay?.remove();
+    const old = portrait.cloneNode(false);
+    old.removeAttribute('id');
+    old.alt = '';
+    old.setAttribute('aria-hidden', 'true');
+    old.classList.add('portrait-crossfade');
+    const current = getComputedStyle(portrait);
+    old.style.transform = current.transform;
+    old.style.translate = current.translate;
+    portrait.parentElement.append(old);
+    portraitOverlay = old;
+    portrait.src = selected.src;
+    portrait.alt = selected.alt;
+    portrait.classList.toggle('casual', outfit === 'casual');
+    portrait.classList.toggle('character-art', outfit === 'art');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      portraitFade = old.animate([{opacity: 1}, {opacity: 0}], {duration: 450, easing: 'ease-in-out'});
+      portraitFade.finished.then(() => old.remove()).catch(() => old.remove());
+    } else old.remove();
     $$('[data-portrait]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
     portrait.closest('.character-stage')?.dispatchEvent(new CustomEvent('portraitchange', {
-      detail: {outfit: casual ? 'casual' : 'formal'}
+      detail: {outfit}
     }));
   }));
 
   const skillData = {
-    fullstack: ['JavaScript', 'React', 'Next.js', 'Django', 'SQL', 'PostgreSQL'],
+    fullstack: ['JavaScript', 'React', 'Next.js', 'Python', 'Django', 'PostgreSQL'],
     ai: ['Python', 'Machine Learning', 'Computer Vision', 'Multi-Agent Systems', 'RAG Architecture'],
-    systems: ['Computer Networks', 'Routing', 'Subnetting', 'IT Support', 'System Design', 'BPMN']
+    systems: ['Computer Networks', 'Routing', 'Subnetting', 'IT Support', 'System Design', 'Network Troubleshooting'],
+    project: ['Project Planning', 'Agile / Scrum', 'Stakeholder Management', 'Risk Management', 'Team Coordination', 'BPMN / Documentation']
   };
   const skillTabs = $$('[data-skill]');
   function selectSkill(tab) {

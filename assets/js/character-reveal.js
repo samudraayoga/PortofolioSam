@@ -104,7 +104,12 @@
     shell.setAttribute('aria-hidden', 'true');
     const image = source.cloneNode(false);
     image.removeAttribute('id');
-    image.removeAttribute('class');
+    image.className = source.classList.contains('character-art') ? 'character-art' : '';
+    image.style.transform = 'none';
+    image.style.translate = 'none';
+    image.style.objectFit = sourceStyle.objectFit;
+    image.style.padding = reverse ? destinationStyle.padding : sourceStyle.padding;
+    shell.style.background = getComputedStyle(source.parentElement).background;
     image.alt = '';
     image.style.objectPosition = reverse ? destinationStyle.objectPosition : sourceStyle.objectPosition;
     shell.append(image);
@@ -118,7 +123,7 @@
     const from = {left: `${sourceRect.left}px`, top: `${sourceRect.top}px`, width: `${sourceRect.width}px`, height: `${sourceRect.height}px`, borderRadius: sourceRadius, opacity: 1};
     const to = {left: `${targetRect.left}px`, top: `${targetRect.top}px`, width: `${targetRect.width}px`, height: `${targetRect.height}px`, borderRadius: '0px', opacity: 1};
     const effect = animate(shell, reverse ? [to, from] : [from, to], {duration: reverse ? 380 : 760});
-    animate(image, [{objectPosition: reverse ? destinationStyle.objectPosition : sourceStyle.objectPosition}, {objectPosition: reverse ? sourceStyle.objectPosition : destinationStyle.objectPosition}], {duration: reverse ? 380 : 760});
+    animate(image, [{objectPosition: reverse ? destinationStyle.objectPosition : sourceStyle.objectPosition, padding: reverse ? destinationStyle.padding : sourceStyle.padding}, {objectPosition: reverse ? sourceStyle.objectPosition : destinationStyle.objectPosition, padding: reverse ? sourceStyle.padding : destinationStyle.padding}], {duration: reverse ? 380 : 760});
     const token = generation;
     effect?.finished.then(() => { if (token === generation) clearFlight(); }).catch(() => {});
     return effect;
@@ -147,6 +152,7 @@
     if (source) {
       portrait.src = source.currentSrc || source.src;
       portrait.alt = source.alt;
+      portrait.classList.toggle('character-art', source.classList.contains('character-art'));
       portrait.style.objectPosition = getComputedStyle(source).objectPosition;
     }
     if (!dialog.open) {
@@ -160,7 +166,7 @@
     if (reduced.matches) return true;
 
     const morph = portraitFlight(source);
-    animate(inner, [{opacity: 0}, {opacity: 1}], {duration: 430});
+    animate(inner, [{opacity: 0, clipPath: 'inset(5% 5% 5% 5%)'}, {opacity: 1, clipPath: 'inset(0 0 0 0)'}], {duration: 430});
     if (!morph) animate(portrait, [{opacity: 0, transform: 'scale(1.06)'}, {opacity: 1, transform: 'scale(1)'}], {duration: 850});
     animate(frame, [{opacity: 0, clipPath: 'inset(0 100% 100% 0)'}, {opacity: 1, clipPath: 'inset(0 0 0 0)'}], {delay: 270, duration: 720});
     animate(star, [{opacity: 0, transform: 'scale(.65) rotate(-30deg)'}, {opacity: 1, transform: 'scale(1) rotate(0deg)'}], {delay: 520, duration: 600});
@@ -169,7 +175,7 @@
       if (element === rule) {
         animate(element, [{opacity: 0, transform: 'scaleX(0)'}, {opacity: 1, transform: 'scaleX(1)'}], {delay: 400, duration: 700});
       } else {
-        animate(element, [{opacity: 0, transform: 'translateY(17px)'}, {opacity: 1, transform: 'translateY(0)'}], {delay: 150 + Math.min(index, 7) * 65, duration: 640});
+        animate(element, [{opacity: 0, transform: 'translateY(17px)'}, {opacity: 1, transform: 'translateY(0)'}], {delay: 350 + Math.min(index, 7) * 65, duration: 640});
       }
     });
     return true;

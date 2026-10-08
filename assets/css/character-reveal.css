@@ -79,7 +79,9 @@
 #profile-dialog.character-reveal .dialog-close:focus-visible,
 #profile-dialog .character-copy a:focus-visible { outline: 2px solid #ffe5a7; outline-offset: 5px; }
 #profile-dialog .character-flight { position: fixed; z-index: 40; overflow: hidden; pointer-events: none; margin: 0; box-shadow: 0 0 30px #c8d8bd1a; }
-#profile-dialog .character-flight img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#profile-dialog .character-flight img { width: 100%; height: 100%; object-fit: cover; display: block; box-sizing: border-box; }
+#profile-dialog .character-visual:has(.character-art) { background: radial-gradient(ellipse at 50% 35%,#386779,#183b4c 72%); }
+#profile-dialog .character-visual > img.character-art { padding-top: 16px; box-sizing: border-box; filter: none; }
 @keyframes character-veil-in { from { background-color: #04172500; backdrop-filter: blur(0); } to { background-color: #041725d6; backdrop-filter: blur(12px); } }
 @keyframes character-veil-out { from { background-color: #041725d6; backdrop-filter: blur(12px); } to { background-color: #04172500; backdrop-filter: blur(0); } }
 @media (max-width: 760px) {

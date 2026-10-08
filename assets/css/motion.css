@@ -178,7 +178,7 @@ body.codex-intro-running{overflow:hidden}
   .work-card:hover .work-link svg,.case-text-link:hover span{transform:translateX(5px)}
   .dialog-close:hover{transform:rotate(90deg);background:#e5cc9420}
   .mlbb-screen:hover .mlbb-screen-stage img{transform:scale(1.018)}
-  .portrait-card:hover .portrait-window>img:not(.portrait-crossfade){transform:scale(1.018);filter:saturate(1.03)}
+  .portrait-card:hover .portrait-window>img:not(.portrait-crossfade){filter:saturate(1.03)}
   .profile-trigger:hover:after,.btn:hover:after{transform:translateX(140%)}
 }
 

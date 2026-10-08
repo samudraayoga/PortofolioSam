@@ -66,12 +66,15 @@
       if (!portraitCard.contains(event.relatedTarget)) focus(false);
     });
 
+    let outfitTimer;
     characterStage.addEventListener('portraitchange', event => {
+      clearTimeout(outfitTimer);
       characterStage.dataset.outfit = event.detail?.outfit || 'formal';
       characterStage.classList.remove('outfit-shifting');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       void characterStage.offsetWidth;
       characterStage.classList.add('outfit-shifting');
-      setTimeout(() => characterStage.classList.remove('outfit-shifting'), 900);
+      outfitTimer = setTimeout(() => characterStage.classList.remove('outfit-shifting'), 450);
     });
 
     $('.character-constellation-link', selection)?.addEventListener('click', () => {
@@ -97,21 +100,6 @@
     signature.innerHTML = `<span>${label}</span><i></i><i></i><i></i>`;
     section.prepend(signature);
   });
-
-  const stage = $('.celestial-constellation');
-  if (stage) {
-    const channel = document.createElement('div');
-    channel.className = 'constellation-energy-channel';
-    channel.setAttribute('aria-hidden', 'true');
-    channel.innerHTML = '<i></i><i></i><i></i><b></b>';
-    stage.append(channel);
-    $$('.constellation-node', stage).forEach(node => node.addEventListener('click', () => {
-      stage.classList.remove('energy-awakening');
-      void stage.offsetWidth;
-      stage.classList.add('energy-awakening');
-      setTimeout(() => stage.classList.remove('energy-awakening'), 1350);
-    }));
-  }
 
   $$('.work-card').forEach((card, index) => {
     const art = $('.work-art', card);

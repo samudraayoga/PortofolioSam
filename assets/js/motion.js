@@ -153,8 +153,8 @@
       {opacity: 1, scale: 1}
     ], {duration: 850 * introFactor, delay: introDelay + (firstVisit ? 180 + index * 100 : index * 45)}));
     animate($('.portrait-card'), [
-      {opacity: 0, transform: 'translateY(28px) scale(.94)'},
-      {opacity: 1, transform: 'translateY(0) scale(1)'}
+      {opacity: 0, clipPath: 'inset(0 0 100% 0)'},
+      {opacity: 1, clipPath: 'inset(0 0 0 0)'}
     ], {duration: 780 * introFactor, delay: introDelay + (firstVisit ? 300 : 80)});
     $$('.hero-copy > *').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
@@ -192,7 +192,6 @@
   const landscape = $('.landscape');
   const sceneSky = $('.scene-sky');
   const sceneForeground = $('.scene-foreground');
-  const portraitCard = $('.portrait-card');
   const vision = $('.vision');
   let parallaxFrame = 0;
   function resetParallax() {
@@ -201,8 +200,9 @@
     if (landscape) landscape.style.transform = '';
     if (sceneSky) sceneSky.style.translate = '';
     if (sceneForeground) sceneForeground.style.translate = '';
-    if (portraitCard) portraitCard.style.translate = '';
-    if (vision) vision.style.translate = '';
+    $('#portrait')?.style.removeProperty('--portrait-pan-x');
+    $('#portrait')?.style.removeProperty('--portrait-pan-y');
+    if (vision) { vision.style.removeProperty('--vision-pan-x'); vision.style.removeProperty('--vision-pan-y'); }
   }
   hero?.addEventListener('pointermove', event => {
     if (reduced.matches || !finePointer.matches || !landscape) return;
@@ -213,8 +213,11 @@
       landscape.style.transform = `translate(${x}px, ${y}px) scale(1.035)`;
       if (sceneSky) sceneSky.style.translate = `${x * .2}px ${y * .15}px`;
       if (sceneForeground) sceneForeground.style.translate = `${x * 1.15}px ${y * .75}px`;
-      if (portraitCard) portraitCard.style.translate = `${x * -.32}px ${y * -.28}px`;
-      if (vision) vision.style.translate = `${x * -.75}px ${y * -.65}px`;
+      const image = $('#portrait');
+      image?.style.setProperty('--portrait-pan-x', `${x * -.32}px`);
+      image?.style.setProperty('--portrait-pan-y', `${y * -.28}px`);
+      vision?.style.setProperty('--vision-pan-x', `${x * -.75}px`);
+      vision?.style.setProperty('--vision-pan-y', `${y * -.65}px`);
       parallaxFrame = 0;
     });
   });
@@ -349,29 +352,6 @@
     });
   }, {passive: true});
   updateJourney();
-
-  // Keep the previous portrait visible until the new image has loaded.
-  const portrait = $('#portrait');
-  let portraitOverlay;
-  $$('[data-portrait]').forEach(button => button.addEventListener('click', () => {
-    if (reduced.matches || button.getAttribute('aria-pressed') === 'true' || !portrait) return;
-    portraitOverlay?.remove();
-    const old = portrait.cloneNode(false);
-    old.removeAttribute('id');
-    old.alt = '';
-    old.setAttribute('aria-hidden', 'true');
-    old.classList.add('portrait-crossfade');
-    portrait.parentElement.append(old);
-    portraitOverlay = old;
-    const fade = () => {
-      if (portraitOverlay !== old) return;
-      const effect = animate(old, [{opacity: 1}, {opacity: 0}], {duration: 360});
-      effect?.finished.finally(() => old.remove());
-    };
-    portrait.addEventListener('load', fade, {once: true});
-    portrait.addEventListener('error', () => old.remove(), {once: true});
-    setTimeout(() => { if (portrait.complete) fade(); }, 0);
-  }, {capture: true}));
 
   // Dialog motion starts from the control that opened it.
   function setDialogOrigin(trigger, dialog) {
