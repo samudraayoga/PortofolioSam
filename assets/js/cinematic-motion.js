@@ -71,7 +71,7 @@
       clearTimeout(outfitTimer);
       characterStage.dataset.outfit = event.detail?.outfit || 'formal';
       characterStage.classList.remove('outfit-shifting');
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (event.detail?.automatic || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       void characterStage.offsetWidth;
       characterStage.classList.add('outfit-shifting');
       outfitTimer = setTimeout(() => characterStage.classList.remove('outfit-shifting'), 450);
@@ -101,60 +101,43 @@
     section.prepend(signature);
   });
 
-  $$('.work-card').forEach((card, index) => {
-    const art = $('.work-art', card);
-    if (art) {
-      const gate = document.createElement('span');
-      gate.className = 'domain-gate';
-      gate.setAttribute('aria-hidden', 'true');
-      gate.innerHTML = '<i></i><i></i><i></i>';
-      art.append(gate);
-      const flow = document.createElement('span');
-      flow.className = 'project-data-flow';
-      flow.setAttribute('aria-hidden', 'true');
-      flow.innerHTML = '<i></i><i></i><i></i><i></i>';
-      art.append(flow);
-    }
-    card.style.setProperty('--domain-delay', `${index * 90}ms`);
-    $$('.work-tech span', card).forEach((tech, techIndex) => {
-      tech.addEventListener('pointerenter', () => card.dataset.techFocus = String(techIndex + 1));
-      tech.addEventListener('pointerleave', () => delete card.dataset.techFocus);
-    });
-    // Keep the illumination inside the artwork, so it reads as a gallery light
-    // rather than a novelty cursor effect.
-    card.addEventListener('pointermove', event => {
-      if (!finePointer.matches || reduced.matches) return;
-      const bounds = card.getBoundingClientRect();
-      card.style.setProperty('--spotlight-x', `${event.clientX - bounds.left}px`);
-      card.style.setProperty('--spotlight-y', `${event.clientY - bounds.top}px`);
-    });
-    card.addEventListener('pointerleave', () => card.classList.remove('project-spotlit'));
-    card.addEventListener('pointerenter', () => card.classList.add('project-spotlit'));
-  });
-
   const journey = $('.journey-list');
+  const journeyItems = journey ? $$('.journey-item', journey) : [];
+  let journeyRoute = null;
   if (journey) {
+    journey.classList.add('journey-ready');
     const route = document.createElement('span');
     route.className = 'journey-route';
     route.setAttribute('aria-hidden', 'true');
     journey.prepend(route);
-    const mote = document.createElement('span');
-    mote.className = 'ley-line-mote';
-    mote.setAttribute('aria-hidden', 'true');
-    journey.append(mote);
+    journeyRoute = route;
     const mapLabel = document.createElement('span');
     mapLabel.className = 'journey-map-label';
     mapLabel.setAttribute('aria-hidden', 'true');
     mapLabel.textContent = 'WAYPOINT ROUTE';
     journey.append(mapLabel);
-    $$('.journey-item', journey).forEach((item, index) => {
+    journeyItems.forEach((item, index) => {
       item.style.setProperty('--ley-index', index);
+      item.style.setProperty('--ley-delay', `${index * 120}ms`);
       const waypoint = document.createElement('span');
       waypoint.className = 'journey-waypoint';
       waypoint.setAttribute('aria-hidden', 'true');
       waypoint.textContent = String(index + 1).padStart(2, '0');
       item.querySelector('.journey-node')?.append(waypoint);
     });
+    const awakenJourney = () => {
+      journey.classList.add('journey-awakened');
+      journeyItems.forEach(item => item.classList.add('cinematic-seen'));
+    };
+    if (reduced.matches || !('IntersectionObserver' in window)) awakenJourney();
+    else {
+      const journeyObserver = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        awakenJourney();
+        journeyObserver.disconnect();
+      }, {threshold:.16, rootMargin:'0px 0px -8%'});
+      journeyObserver.observe(journey);
+    }
   }
 
   const contact = $('#kontak');
@@ -188,7 +171,20 @@
     entry.target.classList.toggle('cinematic-active', entry.isIntersecting);
     if (entry.isIntersecting) entry.target.classList.add('cinematic-seen');
   }), {threshold: .18, rootMargin: '-5% 0px -8%'});
-  $$('[data-cinematic-chapter],.work-card,.journey-item,.character-stage').forEach(element => revealObserver.observe(element));
+  $$('[data-cinematic-chapter],.character-stage').forEach(element => revealObserver.observe(element));
+
+  function layoutJourneyRoute() {
+    if (!journey || !journeyRoute || !journeyItems.length) return;
+    const listRect = journey.getBoundingClientRect();
+    const nodePositions = journeyItems.map(item => {
+      const nodeRect = $('.journey-node', item).getBoundingClientRect();
+      return nodeRect.top + nodeRect.height / 2 - listRect.top;
+    });
+    const first = nodePositions[0];
+    const last = nodePositions[nodePositions.length - 1];
+    journeyRoute.style.top = `${first}px`;
+    journeyRoute.style.bottom = `${Math.max(0, listRect.height - last)}px`;
+  }
 
   let scrollFrame = 0;
   function updateWorld() {
@@ -198,12 +194,7 @@
     root.style.setProperty('--world-progress', progress.toFixed(4));
     root.style.setProperty('--world-pan', `${(progress * -34).toFixed(2)}px`);
     if (nav) nav.style.setProperty('--chapter-progress', progress.toFixed(4));
-    if (journey) {
-      const rect = journey.getBoundingClientRect();
-      const span = Math.max(1, rect.height - innerHeight * .42);
-      const journeyProgress = Math.max(0, Math.min(1, (innerHeight * .7 - rect.top) / span));
-      journey.style.setProperty('--journey-progress', journeyProgress.toFixed(4));
-    }
+    layoutJourneyRoute();
     const chapters = ['beranda', 'profil', 'keahlian', 'karya', 'perjalanan', 'kontak'];
     let current = 'beranda';
     chapters.forEach(id => {
@@ -215,6 +206,14 @@
   addEventListener('scroll', () => {
     if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
   }, {passive: true});
+  addEventListener('resize', () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
+  }, {passive: true});
+  if (journey && 'ResizeObserver' in window) {
+    new ResizeObserver(() => {
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
+    }).observe(journey);
+  }
   updateWorld();
 
   let pointerFrame = 0;
@@ -255,15 +254,6 @@
     if (!finePointer.matches || reduced.matches) return;
     for (let index = 0; index < 6; index += 1) setTimeout(() => drop(event.clientX, event.clientY), index * 24);
   }, {passive: true});
-
-  $$('.work-link[href]').forEach(link => link.addEventListener('pointerdown', event => {
-    if (reduced.matches) return;
-    const ripple = document.createElement('span');
-    ripple.className = 'hydro-page-ripple';
-    ripple.style.cssText = `left:${event.clientX}px;top:${event.clientY}px`;
-    body.append(ripple);
-    ripple.addEventListener('animationend', () => ripple.remove(), {once: true});
-  }));
 
   reduced.addEventListener('change', () => {
     if (reduced.matches) {

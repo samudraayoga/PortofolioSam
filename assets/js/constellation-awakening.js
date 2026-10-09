@@ -16,57 +16,49 @@
     project: 'Project Management'
   };
 
-  // Everything uses the artwork's 1080 x 1080 coordinate system. The image,
-  // paths, labels, and buttons therefore stay registered at every viewport.
+  // Each region is one open spine, in the artwork's 1080 x 1080 coordinates.
+  // Node order is spatial, not a prerequisite/proficiency ranking. Derive the
+  // curve and short horizontal label leaders from these same coordinates so
+  // a moved star cannot drift away from its route.
   const atlas = {
     fullstack: {
       anchor: [360, 108],
-      route: 'M360 108 C338 118 318 132 300 144 C281 156 266 168 255 180 C247 190 242 201 240 211 C262 222 292 239 315 257 C347 258 378 242 405 225 C442 205 479 196 515 190',
-      points: [
-        [300, 144, 218, 120, 'end'],
-        [255, 180, 174, 163, 'end'],
-        [240, 211, 151, 239, 'end'],
-        [315, 257, 218, 294, 'end'],
-        [405, 225, 406, 280, 'middle'],
-        [515, 190, 510, 242, 'middle']
-      ]
+      labelSide: 'left',
+      points: [[300, 195], [275, 245], [265, 295], [295, 345], [350, 395], [415, 445]]
     },
     ai: {
       anchor: [620, 176],
-      route: 'M620 176 C608 220 592 263 570 300 C548 338 520 367 514 405 C507 444 551 459 538 492 C528 518 505 533 494 552',
-      points: [
-        [596, 244, 690, 260, 'start'],
-        [570, 300, 650, 302, 'start'],
-        [520, 374, 605, 382, 'start'],
-        [538, 470, 626, 475, 'start'],
-        [494, 552, 575, 566, 'start']
-      ]
+      labelSide: 'right',
+      points: [[602, 280], [590, 335], [570, 410], [550, 485], [530, 560]]
     },
     systems: {
       anchor: [868, 530],
-      route: 'M868 530 C840 564 801 596 760 625 C720 652 700 661 680 675 C644 699 620 716 590 725 C545 743 502 762 466 777 C492 725 516 672 535 620',
-      points: [
-        [830, 570, 910, 500, 'start'],
-        [760, 625, 850, 646, 'start'],
-        [680, 675, 786, 706, 'start'],
-        [590, 725, 522, 752, 'end'],
-        [466, 777, 400, 817, 'end'],
-        [535, 620, 417, 604, 'end']
-      ]
+      labelSide: 'right',
+      points: [[826, 622], [805, 664], [779, 706], [748, 748], [713, 790], [675, 832]]
     },
     project: {
       anchor: [466, 777],
-      route: 'M466 777 C450 800 440 812 430 820 C455 836 480 843 500 845 C535 844 566 828 590 810 C608 792 618 768 620 745 C594 722 572 708 550 700 C520 699 492 706 470 715 C461 735 459 756 466 777',
-      points: [
-        [430, 820, 347, 846, 'end'],
-        [500, 845, 500, 900, 'middle'],
-        [590, 810, 686, 835, 'start'],
-        [620, 745, 718, 730, 'start'],
-        [550, 700, 557, 655, 'middle'],
-        [470, 715, 374, 686, 'end']
-      ]
+      labelSide: 'right',
+      labelWidth: 330,
+      points: [[385, 837], [339, 867], [293, 897], [247, 927], [201, 957], [155, 987]]
     }
   };
+
+  function spinePath({anchor, points}) {
+    const knots = [anchor, ...points];
+    return knots.reduce((path, [x, y], index) => {
+      if (index === 0) return `M${x} ${y}`;
+      const [previousX, previousY] = knots[index - 1];
+      const before = knots[Math.max(0, index - 2)];
+      const after = knots[Math.min(knots.length - 1, index + 1)];
+      // Positive, clamped Y handles keep the spine moving down: no folds,
+      // closed loops, or reversal back into another category's gateway.
+      const firstY = Math.min(y, previousY + (y - before[1]) / 6);
+      const secondY = Math.max(previousY, y - (after[1] - previousY) / 6);
+      return `${path} C${previousX + (x - before[0]) / 6} ${firstY} ${x - (after[0] - previousX) / 6} ${secondY} ${x} ${y}`;
+    }, '');
+  }
+  Object.values(atlas).forEach(config => { config.route = spinePath(config); });
 
   const stage = document.createElement('div');
   stage.className = 'celestial-constellation';
@@ -108,11 +100,6 @@
             <path class="region-preview region-ai" pathLength="1" d="${atlas.ai.route}"/>
             <path class="region-preview region-systems" pathLength="1" d="${atlas.systems.route}"/>
             <path class="region-preview region-project" pathLength="1" d="${atlas.project.route}"/>
-          </g>
-          <g class="project-convergence">
-            <path pathLength="1" d="M620 176 C584 350 526 610 466 777"/>
-            <path pathLength="1" d="M868 530 C744 616 598 709 466 777"/>
-            <path class="project-support-link" pathLength="1" d="M360 108 C390 330 428 610 466 777"/>
           </g>
           <g class="skill-network">
             <path class="skill-route" pathLength="1"></path>
@@ -225,25 +212,60 @@
     }));
   }
 
-  function drawSkillPoint(skill, point, index) {
-    const [x, y, labelX, labelY, align] = point;
+  function drawSkillPoint(skill, point, index, labelSide) {
+    const [x, y] = point;
+    const direction = labelSide === 'left' ? -1 : 1;
+    const labelX = x + direction * 36;
+    const align = direction < 0 ? 'end' : 'start';
     const group = svgElement('g', {
       class: 'skill-point',
       style: `--point-delay:${.72 + index * .1}s`
     });
-    const leaderEndX = align === 'start' ? labelX - 16 : align === 'end' ? labelX + 16 : labelX;
-    const leaderEndY = labelY - 6;
     group.append(
-      svgElement('line', {class: 'skill-leader', x1: x, y1: y, x2: leaderEndX, y2: leaderEndY}),
+      svgElement('line', {class: 'skill-leader', x1: x + direction * 17, y1: y, x2: x + direction * 27, y2: y}),
       svgElement('circle', {class: 'skill-point-halo', cx: x, cy: y, r: 14}),
       svgElement('circle', {class: 'skill-point-core', cx: x, cy: y, r: 5}),
-      svgElement('text', {class: 'skill-index', x, y: y + 5, 'text-anchor': 'middle'}),
-      svgElement('text', {class: 'skill-label', x: labelX, y: labelY, 'text-anchor': align})
+      svgElement('text', {class: 'skill-index', x, y, 'text-anchor': 'middle', 'dominant-baseline': 'central'}),
+      svgElement('text', {class: 'skill-label', x: labelX, y: y + 6, 'text-anchor': align})
     );
     group.querySelector('.skill-index').textContent = String(index + 1).padStart(2, '0');
     group.querySelector('.skill-label').textContent = skill;
     return group;
   }
+
+  function fitSkillLabels() {
+    // Measure the actual loaded font rather than assuming a character width.
+    // Long names wrap at words, centered on their own star, never truncate.
+    const compactSystems = activeSkill === 'systems' && matchMedia('(max-width: 1050px)').matches;
+    const maxWidth = compactSystems ? 185 : atlas[activeSkill]?.labelWidth || 270;
+    skillPoints.querySelectorAll('.skill-label').forEach(label => {
+      const text = label.dataset.label || label.textContent;
+      label.dataset.label = text;
+      label.textContent = text;
+      if (label.getComputedTextLength() <= maxWidth) return;
+      const words = text.split(/\s+/);
+      const lines = [];
+      let line = '';
+      words.forEach(word => {
+        const candidate = line ? `${line} ${word}` : word;
+        label.textContent = candidate;
+        if (line && label.getComputedTextLength() > maxWidth) {
+          lines.push(line);
+          line = word;
+        } else line = candidate;
+      });
+      lines.push(line);
+      const x = label.getAttribute('x');
+      const firstY = Number(label.getAttribute('y')) - (lines.length - 1) * 10;
+      label.replaceChildren(...lines.map((textLine, index) => {
+        const span = svgElement('tspan', {x, y: firstY + index * 20});
+        span.textContent = textLine;
+        return span;
+      }));
+    });
+  }
+  document.fonts?.ready.then(fitSkillLabels);
+  addEventListener('resize', fitSkillLabels);
 
   function updateLedger(skills) {
     mobileLedger.replaceChildren(...skills.map((skill, index) => {
@@ -274,14 +296,17 @@
     skillPoints.replaceChildren(...skills.map((item, index) => drawSkillPoint(
       item,
       config.points[index] || config.points[config.points.length - 1],
-      index
+      index,
+      config.labelSide
     )));
+    fitSkillLabels();
     updateLedger(skills);
     insight.querySelector('.insight-kicker').textContent = 'Selected skill path';
     insightTitle.textContent = names[skill];
     insightDescription.textContent = tabs.find(tab => tab.dataset.skill === skill)?.querySelector('p')?.textContent || '';
-    insightSkills.replaceChildren(...skills.map(item => {
+    insightSkills.replaceChildren(...skills.map((item, index) => {
       const entry = document.createElement('li');
+      entry.dataset.skillIndex = String(index + 1).padStart(2, '0');
       entry.textContent = item;
       return entry;
     }));

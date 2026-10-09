@@ -8,25 +8,28 @@
   <title>Samudra Portofolio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/css/main.css?v=20261008-4">
-  <script src="assets/js/character-reveal.js?v=20261008-2" defer></script>
+  <script src="assets/js/character-reveal.js?v=20261009-2" defer></script>
   <script src="assets/js/celestial-theme.js?v=20261005-1" defer></script>
-  <script src="assets/js/script.js?v=20261008-6" defer></script>
-  <link rel="stylesheet" href="assets/css/motion.css?v=20261008-6">
+  <script src="assets/js/script.js?v=20261009-5" defer></script>
+  <link rel="stylesheet" href="assets/css/motion.css?v=20261009-8">
   <link rel="stylesheet" href="assets/css/project-portal.css?v=20261004-1">
   <script src="assets/js/project-portal.js?v=20261004-1"></script>
   <link rel="stylesheet" href="assets/css/scenery.css?v=20261003-2">
   <link rel="stylesheet" href="assets/css/landscape-motion.css?v=20261004-1">
   <link rel="stylesheet" href="assets/css/character-reveal.css?v=20261008-2">
-  <link rel="stylesheet" href="assets/css/constellation-awakening.css?v=20261008-10">
+  <link rel="stylesheet" href="assets/css/constellation-awakening.css?v=20261009-1">
   <link rel="stylesheet" href="assets/css/celestial-theme.css?v=20261005-1">
   <link rel="stylesheet" href="assets/css/chapter-wind.css?v=20261005-1">
-  <link rel="stylesheet" href="assets/css/cinematic-motion.css?v=20261008-2">
-  <link rel="stylesheet" href="assets/css/ui-polish.css?v=20261008-3">
-  <script src="assets/js/motion.js?v=20261008-6" defer></script>
+  <link rel="stylesheet" href="assets/css/cinematic-motion.css?v=20261009-6">
+  <link rel="stylesheet" href="assets/css/ui-polish.css?v=20261009-6">
+  <link rel="stylesheet" href="assets/css/creation-reveal.css?v=20261009-1">
+  <script src="assets/js/motion.js?v=20261009-4" defer></script>
   <script src="assets/js/landscape-motion.js?v=20261004-1" defer></script>
-  <script src="assets/js/constellation-awakening.js?v=20261008-10" defer></script>
+  <script src="assets/js/constellation-awakening.js?v=20261009-1" defer></script>
   <script src="assets/js/chapter-wind.js?v=20261005-1" defer></script>
-  <script src="assets/js/cinematic-motion.js?v=20261008-2" defer></script>
+  <script src="assets/js/cinematic-motion.js?v=20261009-4" defer></script>
+  <script src="assets/js/portrait-rotation.js?v=20261009-3" defer></script>
+  <script src="assets/js/creation-reveal.js?v=20261009-1" defer></script>
 </head>
 <body class="portfolio-page">
   <a class="skip-link" href="#profil">Skip to content</a>
@@ -85,8 +88,8 @@
             <span class="character-label" aria-hidden="true">THE CURIOUS BUILDER</span>
             <div class="vision" title="Hydro · Clarity and adaptability" aria-hidden="true"><img src="assets/element-hydro.svg?v=20261005-1" alt="" width="400" height="400" decoding="async"></div>
             <div class="portrait-card">
-              <div class="portrait-window"><img id="portrait" src="assets/samudra-formal.jpeg" alt="Formal portrait of Yoga Samudra Heriyanto wearing a grey suit" width="1086" height="1448"><div class="portrait-caption"><span>✦ &nbsp; THE WEAVER OF SYSTEMS &nbsp; ✦</span><h2>Samudra</h2><p>Architect of code and intelligence.</p></div></div>
-              <div class="portrait-tabs" role="group" aria-label="Choose a formal or casual profile photo"><button type="button" data-portrait="formal" aria-pressed="true">Formal</button><button type="button" data-portrait="casual" aria-pressed="false">Casual</button></div>
+              <div class="portrait-window"><img id="portrait" class="formal-cutout" src="assets/samudra-formal-cutout.webp" alt="Formal portrait of Yoga Samudra Heriyanto in a grey suit with subtle cyan rim lighting" width="1086" height="1448"><div class="portrait-caption"><span>✦ &nbsp; THE WEAVER OF SYSTEMS &nbsp; ✦</span><h2>Samudra</h2><p>Architect of code and intelligence.</p></div></div>
+              <button class="portrait-playback" type="button" aria-label="Pause automatic portrait changes" title="Pause automatic portrait changes" hidden><svg class="portrait-pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="portrait-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6Z"/></svg></button>
             </div>
             <button class="profile-trigger" data-open-profile><svg aria-hidden="true"><use href="#i-user"/></svg>Character Profile <span aria-hidden="true">↗</span></button>
           </div>
@@ -106,11 +109,6 @@
       <section id="profil" class="section container">
         <div class="about">
           <div class="about-intro"><div class="section-kicker"><span class="diamond"></span>Story of the explorer</div><h2>Curiosity is my compass.</h2>
-            <figure class="about-character">
-              <div class="about-character-halo" aria-hidden="true"></div>
-              <img src="assets/samudra-hydro-art.webp" alt="Yoga Samudra Heriyanto reimagined as a Hydro scholar in navy, teal, and gold" width="1086" height="1448" loading="lazy" decoding="async">
-              <figcaption><span aria-hidden="true">✦</span> The Weaver of Systems</figcaption>
-            </figure>
           </div>
           <div class="about-right character-archive">
             <div class="archive-tabs" role="tablist" aria-label="Character archive">
@@ -189,7 +187,7 @@
       </section>
 
       <section id="perjalanan" class="journey-section section container">
-        <div class="section-heading"><div><div class="eyebrow">The Journey</div><h2>Every step, are lessons.</h2></div><p>Journey from classroom and laboratory through business development</p></div>
+        <div class="section-heading"><div><div class="eyebrow">The Journey</div><h2>Every step is a lesson.</h2></div><p>Journey from classroom and laboratory through business development</p></div>
         <div class="journey-list">
           <article class="journey-item"><div class="journey-date">June 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-case"/></svg></div><div class="journey-body"><p class="journey-type">Tech Development</p><h3>IT Developer</h3><p class="journey-company">Raho Premier</p><p>Developed ERP, AI agent architecture, and chatbot WhatsApp dashboard.</p></div><button class="journey-toggle" aria-label="View my experience at Raho Premier" aria-expanded="false" aria-controls="journey-raho"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-raho" hidden><ul><li>Led ERP development as Project Manager and Full-Stack Developer, from architecture and planning to implementation and timeline management.</li><li>Designed features and workflows based on business and operational needs.</li><li>Designed agent workflows, database integration, multi-agent systems, and RAG architecture using OpenClaw.</li><li>Developed an AI-powered WhatsApp chatbot dashboard with Next.js.</li></ul></div></article>
           <article class="journey-item"><div class="journey-date">Sep 2025 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-network"/></svg></div><div class="journey-body"><p class="journey-type">Infrastructure & connectivity</p><h3>IT Support Intern</h3><p class="journey-company">PT Harrisma Buwana Jaya</p><p>Supported network infrastructure installation and configuration at client sites.</p></div><button class="journey-toggle" aria-label="View my experience at Harrisma" aria-expanded="false" aria-controls="journey-harrisma"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-harrisma" hidden><ul><li>Assisted with wired and wireless network installations.</li><li>Handled UTP cable crimping, RJ45 termination, and connectivity testing.</li><li>Installed, configured, and tested Wi-Fi routers and access points.</li></ul></div></article>
@@ -200,7 +198,7 @@
       </section>
     </div>
 
-    <section class="contact" id="kontak"><svg class="contact-symbol" aria-hidden="true"><use href="#i-star"/></svg><div class="eyebrow">The next adventure</div><h2>Great ideas start<br>with a conversation.</h2><p>Have a technical challenge or an idea you want to build?<br>Let’s find the first step together.</p><div class="contact-buttons"><a class="btn btn-gold" href="wa.me/082137971051"><svg aria-hidden="true"><use href="#i-mail"/></svg>Start a conversation<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="copy-email" aria-label="Copy email address" title="Copy email"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><a class="btn btn-outline linkedin" href="https://linkedin.com/in/yogasamudraheriyanto" target="_blank" rel="noopener noreferrer">LinkedIn<svg aria-hidden="true"><use href="#i-external"/></svg></a></div><a class="contact-email" href="mailto:samudrayoga4477@gmail.com">samudrayoga4477@gmail.com</a></section>
+    <section class="contact" id="kontak"><svg class="contact-symbol" aria-hidden="true"><use href="#i-star"/></svg><div class="eyebrow">The next adventure</div><h2>Great ideas start<br>with a conversation.</h2><p>Have a technical challenge or an idea you want to build?<br>Let’s find the first step together.</p><div class="contact-buttons"><a class="btn btn-gold" href="https://wa.me/6282137971051?text=Hi%20Samudra%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener noreferrer" aria-label="Start a conversation with Samudra on WhatsApp (opens in a new tab)"><svg aria-hidden="true"><use href="#i-mail"/></svg>Start a conversation<svg aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="copy-email" type="button" aria-label="Copy email address" title="Copy email"><svg aria-hidden="true"><use href="#i-copy"/></svg></button><a class="btn btn-outline linkedin" href="https://www.linkedin.com/in/yogasamudraheriyanto" target="_blank" rel="noopener noreferrer" aria-label="Open Samudra’s LinkedIn profile (opens in a new tab)">LinkedIn<svg aria-hidden="true"><use href="#i-external"/></svg></a></div><a class="contact-email" href="mailto:samudrayoga4477@gmail.com">samudrayoga4477@gmail.com</a></section>
     <footer class="site-footer container"><a class="footer-brand" href="#beranda">SAMUDRA<span style="color:var(--gold)"> ✦</span></a><p>© 2026 Yoga Samudra Heriyanto · Inspired by adventure, built with curiosity.</p><a class="footer-top" href="#beranda">Back to top<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></footer>
   </main>
 

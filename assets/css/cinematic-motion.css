@@ -103,17 +103,32 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .work-tech span:hover { color: #fff3c7; border-color: var(--project-accent); background: color-mix(in srgb,var(--project-accent) 14%,transparent); box-shadow: 0 0 16px color-mix(in srgb,var(--project-accent) 25%,transparent); }
 .work-card[data-tech-focus] .work-art img { filter: saturate(1.25) brightness(1.04); transform: scale(1.045); }
 
-/* 7. Ley Line journey. */
+/* 7. Adventure Chronicle: one calm reveal, then local quest-record feedback. */
+#perjalanan .chapter-arrival-mark { display:none; }
 .journey-list { position:relative; --journey-route-start:218px; }
-.journey-route { position:absolute; z-index:1; left:var(--journey-route-start); top:23px; bottom:23px; width:1px; background:rgba(172,151,99,.23); pointer-events:none; }
-.journey-route::after { content:''; position:absolute; inset:0; background:linear-gradient(#a5e0d0,#f3db99 74%,#f9ecc2); transform:scaleY(var(--journey-progress,0)); transform-origin:top; box-shadow:0 0 10px rgba(159,220,202,.75); transition:transform .15s linear; }
-.journey-item { position:relative; z-index:2; }
-.ley-line-mote { position: absolute; z-index: 3; left: 218px; top: 38px; width: 9px; height: 9px; border-radius: 50%; background: #fff2b1; box-shadow: 0 0 0 6px rgba(237,218,156,.1),0 0 18px #9ed7c1; pointer-events: none; transform: translateY(calc((100% - 76px) * var(--journey-progress))); transition: transform .14s linear; }
-.journey-item.cinematic-active .journey-node { animation: ley-node-awaken 1.6s ease-in-out infinite alternate; }
-.journey-item.cinematic-active .journey-body::after { content: ''; display: block; width: 58px; height: 1px; margin-top: 15px; background: linear-gradient(90deg,#f1d99a,transparent); animation: ley-trace 1s ease-out both; }
+.journey-route { position:absolute; z-index:1; left:var(--journey-route-start); width:1px; overflow:visible; background:rgba(172,151,99,.26); pointer-events:none; }
+.journey-route::after { content:''; position:absolute; inset:0; background:linear-gradient(#a5e0d0,#f3db99 72%,#f9ecc2); box-shadow:0 0 11px rgba(159,220,202,.7); transform:scaleY(0); transform-origin:top; }
+.journey-awakened .journey-route::after { animation:chronicle-route-draw .95s .12s cubic-bezier(.16,.8,.2,1) forwards; }
+.journey-item { position:relative; z-index:2; transition:background-color .32s ease,box-shadow .32s ease; }
+.journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body,.journey-toggle) { opacity:0; }
+.journey-awakened .journey-item .journey-node { animation:chronicle-node-arrive .62s calc(.28s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
+.journey-awakened .journey-item .journey-date { animation:chronicle-copy-arrive .48s calc(.34s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
+.journey-awakened .journey-item .journey-body { animation:chronicle-copy-arrive .5s calc(.4s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
+.journey-awakened .journey-item .journey-toggle { animation:chronicle-control-arrive .42s calc(.48s + var(--ley-delay)) ease-out both; }
 .journey-map-label { position:absolute; left:245px; top:16px; color:rgba(239,221,169,.72); font:600 7px/1 var(--sans); letter-spacing:.2em; }
-.journey-waypoint { position:absolute; left:50%; top:50%; display:grid; place-items:center; min-width:20px; height:20px; padding:0 4px; border:1px solid rgba(238,219,159,.65); border-radius:50%; color:#f9e7b5; background:#102d3bd9; font:600 6px/1 var(--sans); letter-spacing:.04em; opacity:0; transform:translate(-50%,-50%) rotate(-45deg) scale(.6); transition:opacity .4s ease,transform .5s cubic-bezier(.16,.8,.2,1); }
-.journey-item.cinematic-seen .journey-waypoint { opacity:1; transform:translate(-50%,-50%) rotate(-45deg) scale(1); }
+.journey-waypoint { position:absolute; left:50%; top:50%; display:grid; place-items:center; min-width:20px; height:20px; padding:0 4px; border:1px solid rgba(238,219,159,.65); border-radius:50%; color:#f9e7b5; background:#102d3bd9; font:600 6px/1 var(--sans); letter-spacing:.04em; transform:translate(-50%,-50%) rotate(-45deg); }
+.journey-body { position:relative; }
+.journey-body::before { content:''; position:absolute; right:calc(100% + 13px); top:17px; width:42px; height:1px; opacity:0; background:linear-gradient(90deg,#9ed7c1,#f1d99a); box-shadow:0 0 9px rgba(158,215,193,.68); transform:scaleX(0); transform-origin:left; transition:opacity .18s ease; }
+.journey-item:hover .journey-body::before,.journey-expanded .journey-body::before { animation:ley-detail-channel .55s cubic-bezier(.16,.8,.2,1) both; }
+.journey-item:hover .journey-node { transform:rotate(45deg) scale(1.06); box-shadow:0 0 0 6px rgba(240,217,159,.09),0 0 22px rgba(158,215,193,.58); filter:brightness(1.12); }
+.journey-toggle { transition:transform .3s cubic-bezier(.16,.8,.2,1),background-color .25s ease,box-shadow .3s ease; }
+.journey-item:hover .journey-toggle,.journey-expanded .journey-toggle { background:#315665d9; box-shadow:0 0 0 5px rgba(240,217,159,.07),0 0 18px rgba(158,215,193,.28); }
+.journey-expanded { background:linear-gradient(90deg,rgba(20,58,73,.25),transparent 78%); box-shadow:inset 2px 0 rgba(240,217,159,.7); }
+.journey-detail-pulse .journey-node { animation:ley-detail-pulse .76s cubic-bezier(.16,.8,.2,1) both!important; }
+.journey-details { margin-top:0; padding:18px 22px 17px; border:1px solid rgba(221,201,145,.32); border-left:2px solid rgba(239,217,159,.78); background:linear-gradient(100deg,rgba(15,48,65,.76),rgba(24,62,76,.36)); box-shadow:0 16px 38px rgba(3,20,36,.18); backdrop-filter:blur(8px); }
+@media (min-width:1101px) {
+  .journey-item { grid-template-columns:180px 42px minmax(0,720px) 42px; justify-content:start; }
+}
 
 /* The AI case opens as a compact domain, then resolves into readable project detail. */
 #project-dialog.domain-entering[open] .dialog-inner::before { content:'✦'; position:absolute; z-index:3; left:50%; top:50%; display:grid; width:76px; height:76px; place-items:center; border:1px solid #f5de9a; border-radius:50%; color:#fff2bd; background:radial-gradient(circle,rgba(98,195,224,.45),rgba(6,28,53,.92) 62%); box-shadow:0 0 0 12px rgba(114,219,247,.09),0 0 48px rgba(118,218,247,.65); font:32px/1 var(--serif); pointer-events:none; transform:translate(-50%,-50%) scale(.25) rotate(-45deg); animation:project-domain-seal .95s cubic-bezier(.16,.8,.2,1) both; }
@@ -209,8 +224,15 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @keyframes domain-open { 0%{opacity:0;transform:scale(.55) rotate(45deg)} 56%{opacity:.8} 100%{opacity:.2;transform:scale(1.05) rotate(135deg)} }
 @keyframes domain-art-arrive { from{opacity:.18;clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);transform:scale(1.08)} to{opacity:1;clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:none} }
 @keyframes project-data-pulse { 0%,100%{opacity:.08;transform:scale(.6)} 50%{opacity:.78;transform:scale(1.25)} }
+@keyframes chronicle-route-draw { from{transform:scaleY(0);opacity:.25} to{transform:scaleY(1);opacity:1} }
+@keyframes chronicle-node-arrive { 0%{opacity:0;filter:brightness(2);box-shadow:0 0 0 0 rgba(240,217,159,0)} 58%{opacity:1;filter:brightness(1.4);box-shadow:0 0 0 9px rgba(240,217,159,.1),0 0 27px rgba(158,215,193,.72)} 100%{opacity:1;filter:none;box-shadow:0 0 0 4px rgba(240,217,159,.05),0 0 12px rgba(158,215,193,.28)} }
+@keyframes chronicle-copy-arrive { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes chronicle-control-arrive { from{opacity:0;transform:scale(.72)} to{opacity:1;transform:scale(1)} }
 @keyframes ley-node-awaken { to{box-shadow:0 0 0 8px rgba(240,217,159,.12),0 0 25px #9ed7c1;filter:brightness(1.22)} }
 @keyframes ley-trace { from{transform:scaleX(0);transform-origin:left} to{transform:scaleX(1);transform-origin:left} }
+@keyframes journey-copy-awaken { from{opacity:.38;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ley-detail-channel { from{opacity:0;transform:scaleX(0)} 55%{opacity:1} to{opacity:.72;transform:scaleX(1)} }
+@keyframes ley-detail-pulse { 0%{filter:brightness(1);box-shadow:0 0 0 0 rgba(240,217,159,.28)} 48%{filter:brightness(1.55);box-shadow:0 0 0 12px rgba(240,217,159,.09),0 0 30px rgba(158,215,193,.8)} 100%{filter:brightness(1.12);box-shadow:0 0 0 5px rgba(240,217,159,.08),0 0 18px rgba(158,215,193,.5)} }
 @keyframes chapter-signature-in { to{opacity:1;transform:none} }
 @keyframes chapter-signature-line { to{transform:scaleX(1)} }
 @keyframes chapter-signature-diamond { to{transform:rotate(45deg) scale(1)} }
@@ -236,8 +258,7 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @media (max-width:800px) {
   .elemental-cursor,.hydro-cursor-drop,.chapter-signature,.chapter-nav-line,.chapter-nav-traveller { display:none!important; }
   .domain-gate { inset:18%; }
-  .ley-line-mote { display:none; }
-  .journey-route { left:calc(var(--journey-route-start) - 1px); top:19px; bottom:19px; }
+  .journey-route { left:calc(var(--journey-route-start) - 1px); }
   .world-atmosphere { opacity:.55; }
   .character-stage.cinematic-active .portrait-card { animation-duration:7s; }
   .character-title-card,.character-attribute-card,.character-traits,.character-constellation-link { display:none; }
@@ -248,7 +269,10 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 @media (prefers-reduced-motion:reduce) {
   .character-stage .portrait-window::before { display:none!important; }
   #portrait { translate:none!important; }
-  .world-atmosphere,.journey-progress-indicator,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.ley-line-mote,.journey-route,.wish-finale,.constellation-energy-channel { display:none!important; }
+  .world-atmosphere,.journey-progress-indicator,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.wish-finale,.constellation-energy-channel { display:none!important; }
+  .journey-route::after { transform:scaleY(1); transition:none; }
+  .journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body,.journey-toggle) { opacity:1; }
+  .journey-item,.journey-item * { animation:none!important; transition:none!important; }
   .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
   .character-select-trigger,.character-selection-ui { display:none; }
   .portfolio-page::after,.paper::after { display:none; }

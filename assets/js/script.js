@@ -91,50 +91,6 @@
   });
   matchMedia('(min-width: 601px)').addEventListener('change', e => { if (e.matches) closeMenu(); });
 
-  const portrait = $('#portrait');
-  const portraits = {
-    formal: {src: 'assets/samudra-formal.jpeg', alt: 'Formal portrait of Yoga Samudra Heriyanto wearing a grey suit'},
-    casual: {src: 'assets/samudra-casual.jpeg', alt: 'Yoga Samudra Heriyanto in a casual setting, wearing a brown shirt'}
-  };
-  let portraitRequest = 0;
-  let portraitFade;
-  let portraitOverlay;
-  $$('[data-portrait]').forEach(button => button.addEventListener('click', async () => {
-    const outfit = button.dataset.portrait;
-    const selected = portraits[outfit];
-    if (!portrait || !selected) return;
-    const request = ++portraitRequest;
-    if (button.getAttribute('aria-pressed') === 'true') return;
-    const next = new Image();
-    next.src = selected.src;
-    try { await next.decode(); } catch (_) { return; }
-    if (request !== portraitRequest) return;
-    portraitFade?.cancel();
-    portraitOverlay?.remove();
-    const old = portrait.cloneNode(false);
-    old.removeAttribute('id');
-    old.alt = '';
-    old.setAttribute('aria-hidden', 'true');
-    old.classList.add('portrait-crossfade');
-    const current = getComputedStyle(portrait);
-    old.style.transform = current.transform;
-    old.style.translate = current.translate;
-    portrait.parentElement.append(old);
-    portraitOverlay = old;
-    portrait.src = selected.src;
-    portrait.alt = selected.alt;
-    portrait.classList.toggle('casual', outfit === 'casual');
-    portrait.classList.toggle('character-art', outfit === 'art');
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      portraitFade = old.animate([{opacity: 1}, {opacity: 0}], {duration: 450, easing: 'ease-in-out'});
-      portraitFade.finished.then(() => old.remove()).catch(() => old.remove());
-    } else old.remove();
-    $$('[data-portrait]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-    portrait.closest('.character-stage')?.dispatchEvent(new CustomEvent('portraitchange', {
-      detail: {outfit}
-    }));
-  }));
-
   const skillData = {
     fullstack: ['JavaScript', 'React', 'Next.js', 'Python', 'Django', 'PostgreSQL'],
     ai: ['Python', 'Machine Learning', 'Computer Vision', 'Multi-Agent Systems', 'RAG Architecture'],
@@ -161,24 +117,40 @@
     });
   });
 
-  $$('.journey-toggle').forEach(button => button.addEventListener('click', () => {
-    const expanded = button.getAttribute('aria-expanded') === 'true';
+  const journeyButtons = $$('.journey-toggle');
+  function setJourneyExpanded(button, expand) {
     const detail = document.getElementById(button.getAttribute('aria-controls'));
+    const item = button.closest('.journey-item');
     const startHeight = detail.getBoundingClientRect().height;
     detail.getAnimations().forEach(animation => animation.cancel());
-    button.setAttribute('aria-expanded', String(!expanded));
-    if (reducedMotion.matches) { detail.hidden = expanded; return; }
+    button.setAttribute('aria-expanded', String(expand));
+    item?.classList.toggle('journey-expanded', expand);
+    item?.closest('.journey-list')?.classList.toggle('has-expanded', journeyButtons.some(control => control.getAttribute('aria-expanded') === 'true'));
+    if (expand && item) {
+      item.classList.remove('journey-detail-pulse');
+      void item.offsetWidth;
+      item.classList.add('journey-detail-pulse');
+      setTimeout(() => item.classList.remove('journey-detail-pulse'), 760);
+    }
+    if (reducedMotion.matches) { detail.hidden = !expand; return; }
     detail.hidden = false;
-    const endHeight = expanded ? 0 : detail.scrollHeight;
+    const endHeight = expand ? detail.scrollHeight : 0;
     detail.style.overflow = 'hidden';
     const effect = detail.animate([
-      {height: `${startHeight}px`, opacity: expanded ? 1 : 0},
-      {height: `${endHeight}px`, opacity: expanded ? 0 : 1}
-    ], {duration: 260, easing: 'cubic-bezier(.2,.7,.25,1)'});
+      {height: `${startHeight}px`, opacity: expand ? 0 : 1, transform: expand ? 'translateY(-8px)' : 'translateY(0)', clipPath: expand ? 'inset(0 0 100% 0)' : 'inset(0 0 0 0)'},
+      {height: `${endHeight}px`, opacity: expand ? 1 : 0, transform: expand ? 'translateY(0)' : 'translateY(-8px)', clipPath: expand ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)'}
+    ], {duration: 420, easing: 'cubic-bezier(.16,.8,.2,1)'});
     effect.finished.then(() => {
-      detail.hidden = button.getAttribute('aria-expanded') === 'false';
+      detail.hidden = button.getAttribute('aria-expanded') !== 'true';
       detail.style.overflow = '';
     }).catch(() => {});
+  }
+  journeyButtons.forEach(button => button.addEventListener('click', () => {
+    const expand = button.getAttribute('aria-expanded') !== 'true';
+    if (expand) journeyButtons.forEach(other => {
+      if (other !== button && other.getAttribute('aria-expanded') === 'true') setJourneyExpanded(other, false);
+    });
+    setJourneyExpanded(button, expand);
   }));
 
   function closeDialog(dialog) {
@@ -218,10 +190,6 @@
     $('#project-points').replaceChildren(...project.points.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
     $('#project-tags').replaceChildren(...project.tags.map(text => { const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = text; return tag; }));
     const dialog = $('#project-dialog');
-    dialog.classList.remove('domain-entering');
-    void dialog.offsetWidth;
-    dialog.classList.add('domain-entering');
-    setTimeout(() => dialog.classList.remove('domain-entering'), 1050);
     openDialog(dialog, button);
   }));
 

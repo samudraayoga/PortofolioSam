@@ -114,11 +114,9 @@ body.codex-intro-running{overflow:hidden}
 .work-chapter-number{position:absolute;right:28px;top:21px;z-index:4;color:var(--project-accent);font:400 13px var(--serif);letter-spacing:3px;text-shadow:0 0 12px currentColor}
 .work-chapter-number:before{content:'DOMAIN / ';font:8px var(--sans);letter-spacing:1.5px;color:#d6dfd9aa}
 
-/* One travelling line reveals the journey. */
-.journey-list{position:relative;--journey-progress:0}
-.journey-list:before,.journey-list:after{content:'';position:absolute;left:222px;top:38px;bottom:38px;width:1px;pointer-events:none}
-.journey-list:before{background:#d9c79133}
-.journey-list:after{background:linear-gradient(#f3dfaa,#9ed7c1);transform:scaleY(var(--journey-progress));transform-origin:top;box-shadow:0 0 10px #e9d49899}
+/* The cinematic journey owns the single travelling ley line. */
+.journey-list{position:relative}
+.journey-list:before,.journey-list:after{content:none}
 .journey-node{transition:background-color 350ms ease,box-shadow 350ms ease,transform 350ms var(--motion-ease)}
 .journey-item.motion-seen .journey-node{box-shadow:0 0 0 5px #e9d49816,0 0 18px #e9d49855;transform:rotate(45deg) scale(1.04)}
 .journey-toggle svg{transition:transform 280ms var(--motion-ease)}
@@ -258,7 +256,6 @@ body.codex-intro-running{overflow:hidden}
   html{scroll-behavior:auto}
   *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .landscape{transform:none!important}
-  .journey-list:after{transform:scaleY(1)}
   .project-illustration:after,.theme-wash{display:none}
   .contact-star,.flow-pulse{display:none}
   .celestial-gate{display:none}.scene-depth{display:none}

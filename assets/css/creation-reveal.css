@@ -1,0 +1,65 @@
+/* Quest chapters: normal document flow, stationary previews, one-shot reveals. */
+#karya .works-grid { grid-template-columns: 1fr; gap: 48px; }
+#karya .works-grid .work-card {
+  position: relative; top: auto; min-height: 0; padding: 48px 0 0;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: clamp(28px,4vw,60px);
+  border: 0; background: none; box-shadow: none; backdrop-filter: none;
+  -webkit-backdrop-filter: none; overflow: visible; transform: none;
+  transform-style: flat; transition: none;
+}
+#karya .work-card:nth-child(even) { grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); }
+#karya .work-card::before {
+  content: ''; position: absolute; inset: 0 0 auto; height: 1px;
+  background: linear-gradient(90deg,#e7ce95b3,#e7ce9540 75%,transparent);
+  opacity: 1; transform: none; mix-blend-mode: normal; box-shadow: none; transition: none;
+}
+#karya .work-card::after { display: none; }
+#karya .work-art {
+  height: clamp(300px,32vw,430px); min-height: 0; padding: clamp(16px,2.5vw,32px);
+  border: 1px solid #e7ce9526; background: #102f42b3; perspective: none;
+  box-shadow: none;
+}
+#karya .work-art > img { animation: none; transform: none; filter: none; transition: none; }
+#karya .work-body { padding: 12px 0; min-width: 0; justify-content: center; }
+#karya .work-body h3 { font-size: clamp(27px,2.7vw,38px); margin-bottom: 16px; }
+#karya .work-body p { line-height: 1.85; }
+#karya .work-link { position: relative; min-height: 44px; border-top-color: #e7ce952e; padding-bottom: 9px; }
+#karya .work-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg,#edd49b,transparent); transform: scaleX(.18);
+  transform-origin: left; transition: transform .25s ease;
+}
+#karya .work-link:is(:hover,:focus-visible)::after { transform: scaleX(1); }
+#karya .work-link:is(:hover,:focus-visible) svg { transform: translateX(4px); }
+#karya .work-tech span:hover { transform: none; box-shadow: none; }
+#karya .work-chapter-number { top: 14px; right: 0; text-shadow: none; color: #e7ce95; }
+#karya .work-chapter-number::before { content: 'CHAPTER / '; }
+#karya .quest-light-sweep {
+  position: absolute; z-index: 2; top: 0; bottom: 0; left: -20%; width: 20%;
+  pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg,transparent,#9adfec12,#bfefff38,transparent);
+}
+#karya .quest-ready:not(.quest-revealed) :is(.work-art,.work-body > *) { opacity: 0; }
+#karya .quest-ready:not(.quest-revealed)::before { transform: scaleX(0); transform-origin: left; }
+#karya .quest-drawing::before { transform-origin: left; animation: quest-line 400ms ease-out both; }
+@keyframes quest-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width:800px) {
+  #karya .works-grid { gap: 36px; }
+  #karya .works-grid .work-card { grid-template-columns: 1fr; gap: 20px; padding-top: 42px; }
+  #karya .work-card:nth-child(even) :is(.work-art,.work-body) { grid-column: auto; grid-row: auto; }
+  #karya .work-art { height: 300px; }
+  #karya .work-body { padding: 0; }
+  #karya .quest-drawing::before { animation: none; }
+}
+@media (max-width:600px) {
+  #karya .work-art { height: 235px; padding: 14px; }
+  #karya .work-body h3 { font-size: 26px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #karya .quest-ready:not(.quest-revealed) :is(.work-art,.work-body > *) { opacity: 1; }
+  #karya .quest-ready:not(.quest-revealed)::before { transform: none; }
+  #karya .quest-drawing::before { animation: none; }
+  #karya .work-link::after { transition: none; }
+  #karya .work-link svg { transition: none; }
+  #karya .work-link:is(:hover,:focus-visible) svg { transform: none; }
+}

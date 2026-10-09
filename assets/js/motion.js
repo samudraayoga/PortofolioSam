@@ -155,7 +155,7 @@
     animate($('.portrait-card'), [
       {opacity: 0, clipPath: 'inset(0 0 100% 0)'},
       {opacity: 1, clipPath: 'inset(0 0 0 0)'}
-    ], {duration: 780 * introFactor, delay: introDelay + (firstVisit ? 300 : 80)});
+    ], {duration: 780 * introFactor, delay: introDelay + (firstVisit ? 300 : 80), fill: 'backwards'});
     $$('.hero-copy > *').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
@@ -170,8 +170,8 @@
   // Each chapter reveals once. Siblings receive a restrained stagger.
   if ('IntersectionObserver' in window && !reduced.matches) {
     const groups = [
-      '.about > *', '.section-heading > *', '.talent-grid > *', '.works-grid > *',
-      '.journey-list > *', '.case-section-heading > *', '.case-story > *',
+      '.about > *', '.section-heading > *', '.talent-grid > *',
+      '.case-section-heading > *', '.case-story > *',
       '.case-gallery', '.case-features > *', '.case-stack > *', '.mlbb-gallery > *',
       '.case-closing > .case-container > *', '.about-tags .tag', '.signature',
       '.contact > :not(.contact-star)'
@@ -296,16 +296,12 @@
   });
 
   // Pointer light follows interactive archive panels.
-  $$('.work-card, .talent-card, .case-features article').forEach(card => {
+  $$('.talent-card, .case-features article').forEach(card => {
     card.addEventListener('pointermove', event => {
       if (!finePointer.matches || reduced.matches) return;
       const bounds = card.getBoundingClientRect();
       card.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`);
       card.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`);
-      if (card.matches('.work-card')) {
-        card.style.setProperty('--tilt-x', `${((event.clientY - bounds.top) / bounds.height - .5) * -2.2}deg`);
-        card.style.setProperty('--tilt-y', `${((event.clientX - bounds.left) / bounds.width - .5) * 2.2}deg`);
-      }
     });
     card.addEventListener('pointerleave', () => {
       card.style.removeProperty('--tilt-x');
@@ -335,23 +331,6 @@
       contactObserver.observe(contact);
     }
   }
-
-  // Timeline light fills according to reading progress.
-  const journey = $('.journey-list');
-  let scrollFrame = 0;
-  function updateJourney() {
-    if (!journey) return;
-    const rect = journey.getBoundingClientRect();
-    const progress = Math.max(0, Math.min(1, (innerHeight * .68 - rect.top) / Math.max(rect.height, 1)));
-    journey.style.setProperty('--journey-progress', progress.toFixed(3));
-  }
-  addEventListener('scroll', () => {
-    if (!scrollFrame) scrollFrame = requestAnimationFrame(() => {
-      updateJourney();
-      scrollFrame = 0;
-    });
-  }, {passive: true});
-  updateJourney();
 
   // Dialog motion starts from the control that opened it.
   function setDialogOrigin(trigger, dialog) {

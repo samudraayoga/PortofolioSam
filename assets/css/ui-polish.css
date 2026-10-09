@@ -20,20 +20,42 @@
     radial-gradient(ellipse at 50% 35%,transparent 34%,#123d572e 72%,#0b304c66);
 }
 .portrait-window > #portrait { filter: saturate(.9); }
-.portrait-tabs { min-height: 54px; padding: 5px 8px; align-items: center; gap: 8px; }
-.portrait-tabs button {
-  min-height: 44px; min-width: 90px; padding: 10px 16px;
-  color: #d2dfe2; font: 600 12px/1.3 var(--sans); letter-spacing: .2px;
-  border-radius: 2px; transition: background .2s ease,color .2s ease;
+.portrait-window:has(> #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout)),
+#profile-dialog .character-visual:has(> img:is(.formal-cutout,.casual-cutout,.sweater-cutout)) {
+  background: radial-gradient(ellipse at 50% 30%,#31566a,#163b50 62%,#102d40);
 }
-.portrait-tabs button + button::before { height: 16px; top: 14px; left: -4px; }
-.portrait-tabs button:hover { background: #afddec0c; color: #fff4cc; }
-.portrait-tabs button[aria-pressed="true"] { color: #ffe7ad; background: #ead3980b; }
-.portrait-tabs button[aria-pressed="true"]::after {
-  content: ''; position: absolute; height: 2px; bottom: 3px; left: 18px; right: 18px;
-  background: #efd59b; box-shadow: 0 0 7px #efd59b44;
+.night .portrait-window:has(> #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout)),
+.night #profile-dialog .character-visual:has(> img:is(.formal-cutout,.casual-cutout,.sweater-cutout)) {
+  background: radial-gradient(ellipse at 50% 30%,#24445e,#122c42 62%,#0e2538);
 }
-.character-select-trigger { inset: 9px 9px 64px; }
+.portrait-window > #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout),
+#profile-dialog .character-visual > img:is(.formal-cutout,.casual-cutout,.sweater-cutout) { filter: none; }
+/* Preserve headroom for the casual portraits, including transition clones. */
+.portrait-window > img:is(.casual-cutout,.sweater-cutout),
+#profile-dialog .character-visual > img:is(.casual-cutout,.sweater-cutout) {
+  object-position: 50% 0%; padding-top: 20px;
+}
+.character-stage[data-outfit="sweater"] .character-title-card small::after {
+  content: ' / Casual Resolve'; color: #f2d99f;
+}
+.portrait-window > #portrait { position: relative; z-index: 0; }
+.portrait-window > .portrait-crossfade { z-index: 1; }
+.portrait-window::after { z-index: 2; }
+.portrait-caption { z-index: 4; }
+.portrait-playback {
+  position: absolute; z-index: 10; right: -22px; bottom: 20px;
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 10px;
+  border: 1px solid var(--ui-frame); border-radius: 50%;
+  color: #f0dbac; background: #113347ed;
+  transition: background .2s ease,border-color .2s ease;
+}
+.portrait-playback[hidden] { display: none; }
+.portrait-playback:hover { background: #21485a; border-color: #ffe4a0; }
+.portrait-playback svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; }
+.portrait-play-icon { display: none; fill: currentColor; }
+.portrait-playback[data-paused="true"] .portrait-pause-icon { display: none; }
+.portrait-playback[data-paused="true"] .portrait-play-icon { display: block; }
+.character-select-trigger { inset: 9px; }
 .character-stage .profile-trigger {
   position: relative; bottom: auto; right: auto; margin-top: 16px;
   min-height: 44px; padding: 11px 20px; justify-content: center;
@@ -74,7 +96,7 @@
 .talent-focused .monoceros-reference { filter: url(#narwhal-art-glow) brightness(.83); }
 .gateway-links path { stroke: #9adff270; stroke-width: 2.8; }
 .gateway-links .tusk-link { stroke: #eddca56b; }
-.talent-focused .gateway-links { opacity: .4; }
+.talent-focused .gateway-links { opacity: .12; }
 .skill-route { stroke-width: 4.8; }
 .skill-route-pulse { stroke-width: 7; }
 .node-star {
@@ -91,7 +113,8 @@
   border: 2px solid #fff1ba; background: radial-gradient(circle,#fff6cf5c,#76dcff0a 70%);
   box-shadow: 0 0 0 9px #ffe5a21c,0 0 32px #ffebadba;
 }
-.talent-focused .constellation-node:not([aria-pressed="true"]) { opacity: .62!important; filter: none; }
+.talent-focused .constellation-node:not([aria-pressed="true"]) { opacity: .32!important; filter: none; }
+.talent-focused[data-active-skill="project"] :is(.node-ai,.node-systems):not([aria-pressed="true"]) { opacity: .32!important; }
 .talent-focused .constellation-node:not([aria-pressed="true"]):is(:hover,:focus-visible) { opacity: 1!important; }
 .node-copy {
   width: max-content; max-width: 210px; padding: 5px 8px; border-radius: 3px;
@@ -105,7 +128,7 @@
 .network-awake .constellation-node[aria-pressed="true"] .node-copy {
   top: -34px; left: 50%; right: auto; transform: translateX(-50%);
 }
-.network-awake .node-fullstack[aria-pressed="true"] .node-copy { top: 49px; }
+.network-awake .node-fullstack[aria-pressed="true"] .node-copy { top: 50%; left: 54px; transform: translateY(-50%); }
 .network-awake .constellation-node:not([aria-pressed="true"]) .node-copy { opacity: 0; visibility: hidden; }
 .network-awake .constellation-node:not([aria-pressed="true"]):is(:hover,:focus-visible) .node-copy { opacity: 1; visibility: visible; }
 .constellation-screen-copy { max-width: 265px; top: 38px; left: 38px; }
@@ -141,11 +164,15 @@
 @media (max-width:700px) {
   .celestial-constellation { min-height: 700px; border-radius: 4px 24px 4px 24px; }
   .narwhal-atlas { left: 50%; top: 42%; width: calc(100% - 24px); max-width: 430px; }
+  .narwhal-atlas { transition-property: transform,top; }
   /* Keep the camera moving toward each region, with a gentler zoom on small screens. */
   .talent-focused[data-active-skill="fullstack"] .narwhal-atlas { transform: translate(-43.5%,-45.5%) scale(1.12); }
   .talent-focused[data-active-skill="ai"] .narwhal-atlas { transform: translate(-53%,-45%) scale(1.13); }
-  .talent-focused[data-active-skill="systems"] .narwhal-atlas { transform: translate(-58%,-50%) scale(1.14); }
-  .talent-focused[data-active-skill="project"] .narwhal-atlas { transform: translate(-47%,-58%) scale(1.12); }
+  .talent-focused[data-active-skill="systems"] .narwhal-atlas { top: 36%; transform: translate(-58%,-50%) scale(1.14); }
+  .talent-focused[data-active-skill="project"] .narwhal-atlas { top: 34%; transform: translate(-47%,-58%) scale(1.12); }
+  .skill-point-halo { r: 23; }
+  .skill-point-core { r: 18; }
+  .skill-index { font-size: 26px; }
   .constellation-screen-copy { left: 22px; top: 24px; max-width: 185px; }
   .constellation-screen-copy p { font-size: 9px; }
   .constellation-screen-copy p span { display: none; }
@@ -165,6 +192,10 @@
   }
   .constellation-insight h4 { font-size: 18px; }
   .constellation-insight small { display: none; }
+  .network-awake .insight-skills li::before {
+    content: attr(data-skill-index); margin-right: 6px; color: #eed6a5;
+    font-variant-numeric: tabular-nums;
+  }
   .constellation-current { width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
   .mobile-skill-ledger { display: none!important; }
 }
@@ -172,7 +203,6 @@
   .hero-copy .hero-profession { min-height: 1.4em; margin: 16px 0 22px; font-size: clamp(17px,4.8vw,24px); }
   .character-stage { min-height: 480px; }
   .character-stage .profile-trigger { min-height: 44px; font-size: 11px; }
-  .portrait-tabs button { min-width: 88px; font-size: 11px; }
   .celestial-orb { width: 34px; height: 34px; }
   .theme-toggle,.menu-toggle,.sound-toggle { min-width: 44px; min-height: 44px; }
   .header-actions { gap: 6px; }
@@ -190,5 +220,5 @@
   .constellation-reset { padding-inline: 8px; font-size: 10px; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .portfolio-page :is(.node-star,.monoceros-reference,.constellation-insight,.profile-trigger,.portrait-tabs button) { animation: none!important; transition: none!important; }
+  .portfolio-page :is(.node-star,.monoceros-reference,.constellation-insight,.profile-trigger,.portrait-playback) { animation: none!important; transition: none!important; }
 }

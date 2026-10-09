@@ -1,8 +1,43 @@
 # Asset notes
 
+## Casual portrait cutout
+
+`samudra-casual-cutout.webp` was edited with the built-in image_gen tool on 8 October 2026 from `samudra-casual.jpeg`. The seated pose, brown shirt, glasses and watch are retained; the surrounding wall, bench and objects are removed. The tighter crop and warm key light with restrained cyan edges complement the Formal photo without replacing the person's real appearance with an illustration. The original JPEG is retained unchanged. The 1086 × 1448 transparent result was converted to a 266,398-byte WebP with lossless alpha. Both hero tabs and the profile reveal use the same navy–teal day/night stage.
+
+Final prompt:
+
+```text
+Use case: identity-preserve / background removal and lighting edit.
+Asset type: transparent photorealistic portrait cutout for a navy–teal fantasy-inspired portfolio character card.
+Input image: the supplied original casual seated portrait is the sole identity and clothing reference.
+Primary request: isolate this exact person, preserve his identity and original seated leaning-forward pose, and reframe into a balanced 3:4 portrait from the top of his hair through his hands and upper thighs. Reduce the original excessive headroom. Head near the upper 10–12% of the canvas, figure centered with a little breathing room beside shoulders. Crop away the shoes and lower legs so the crossed legs do not dominate.
+Preserve: recognizable facial features, natural mild smile, head tilt, center-parted black hair, black-framed glasses, brown corduroy short-sleeved collared shirt and pocket pen, black wristwatch, body proportions and natural overlapping hand pose. Retain realistic skin and fabric texture; no beautification or face redesign.
+Scene/backdrop: fully transparent alpha background. Remove the entire wall, bench, laptop, cables, ashtray and all surrounding objects. Clean natural hair and clothing edges with no grey halo. Do not render a checkerboard, scenery or any opaque background.
+Lighting: gentle warm soft key light on face and brown shirt, with a very thin restrained cyan rim on outer hair and shoulder edges for integration over dark navy–teal. The cyan edge is subtler than a heroic formal portrait: no neon outline. Keep skin warm and natural. Reduce the distracting purple glasses reflection slightly while preserving realistic lenses and visible eyes.
+Style: real photographic edit, not anime, not illustration, not fantasy armor. No new clothes, props, jewelry, text, logo or watermark. Keep original pose rather than inventing a standing pose. Natural anatomy and fingers.
+Output: one high-quality 3:4 transparent portrait cutout, ideally 1086x1448, ready to fade into a website card at its lower edge.
+```
+
+## Formal portrait cutout
+
+`samudra-formal-cutout.webp` was edited with the built-in image_gen tool on 8 October 2026 using `samudra-formal.jpeg` as the edit target. The grey studio backdrop was removed, and subtle cyan rim lighting was added for the navy–teal hero. The original JPEG is retained. The 1086 × 1448 result was converted to a 228,112-byte WebP with lossless alpha. The hero and profile dialog supply their own day/night gradient backgrounds; the Hydro illustration is unchanged.
+
+Final prompt:
+
+```text
+Use case: identity-preserve / background-extraction.
+Asset type: photorealistic transparent formal portrait cutout for a navy–teal fantasy-themed professional portfolio hero.
+Input image 1 is the EDIT TARGET, not a style reference. Edit this actual photograph; do not redraw the person or turn him into an illustration.
+Primary request: remove only the grey studio backdrop cleanly, and subtly harmonize the existing photographic lighting for compositing onto a dark blue/teal background.
+Preserve invariants: exact recognizable face, facial features, warm natural skin tone and texture, dark brown eyes, center-parted black hair including wisps, expression, age, grey suit, black shirt, buttons, fabric texture, body proportions, hands-in-pockets pose, camera angle and original head-to-upper-thigh composition. Retain the same centered placement, original 3:4 canvas aspect ratio, and original generous transparent space above the hair. Do not crop tighter or change the subject scale.
+Lighting: restrained realistic soft cyan rim light along outer hair and shoulders only, as if reflected from a nearby blue environment; retain the natural mildly warm key light on the face. Very subtle cool reflections on the suit fabric. No glowing outlines, no cyan tint across skin, no exaggerated neon effects.
+Background: actual fully transparent alpha around the entire subject, especially clean hair and suit edges; no grey leftovers, no grey halo, no scenery or baked-in gradient, no checkerboard pattern baked into pixels.
+Avoid: anime, painting, fantasy clothes, props, new accessories, changed face or hairstyle, airbrushed plastic skin, new pose, text, watermark, UI, picture frame, heavy color grading. Preserve the original portrait while making only the background and minor lighting edits.
+```
+
 ## Hydro character portrait
 
-`samudra-hydro-art.webp` was created with the built-in image_gen tool on 8 October 2026 from the user-supplied `/Users/mac/myData/Foto/abu.jpeg`. The user's face, hair, and upright pose guided a fantasy Hydro scholar illustration. The generated PNG was converted to a 289 KB WebP with its alpha preserved. The original photo remains available via the Real Portrait toggle, alongside Casual.
+`samudra-hydro-art.webp` was created with the built-in image_gen tool on 8 October 2026 from the user-supplied `/Users/mac/myData/Foto/abu.jpeg`. The user's face, hair, and upright pose guided a fantasy Hydro scholar illustration. The generated PNG was converted to a 289 KB WebP with its alpha preserved. The illustration is displayed in the story section; the hero offers Formal and Casual photos. The original source photo is retained unchanged.
 
 Final prompt: "Use case: style-transfer / identity-preserve. Edit target: attached portrait of Samudra. Create a polished Genshin Impact-inspired anime fantasy character illustration for his personal developer portfolio. Preserve his recognizable Indonesian facial features, warm medium skin, dark brown eyes, center-parted wavy black hair, calm slight smile, adult age, upright front-facing pose and head-to-upper-thigh framing. Render face with refined anime cel shading while retaining his actual likeness, not a generic anime face. Outfit: original Hydro scholar / systems alchemist, tailored navy and charcoal long coat with teal panels, understated gold piping, black inner shirt, tasteful small glowing aqua gem at chest, elegant professional silhouette. Soft painterly cel shading, crisp controlled linework, sophisticated game character splash-art finish. Navy teal gold palette matching fantasy landscape website. Centered isolated single character, complete hair and shoulders with generous transparent margin above head, body reaches lower image edge. Portrait 3:4 composition. Actual transparent background, clean alpha edges. No scenery, text, watermark, UI, weapon, extra characters, or oversized floating effects. Keep identity, hair shape, pose and proportions from photo."
 
