@@ -1,6 +1,6 @@
 # Portofolio Samudra
 
-Portofolio web statis berbahasa Indonesia dengan suasana petualangan fantasi yang terinspirasi Genshin Impact.
+Portofolio web statis bilingual (English/Indonesia) dengan suasana petualangan fantasi yang terinspirasi Genshin Impact.
 
 ## Membuka portofolio
 
@@ -12,7 +12,8 @@ Pertahankan struktur folder repo: HTML di root, stylesheet di `assets/css`, Java
 
 - Tata letak responsif untuk layar desktop dan ponsel.
 - Background landscape yang menyambung dari hero hingga footer, dengan kartu transparan dan warna teks yang disesuaikan.
-- Pilihan foto formal atau santai serta suasana siang atau malam.
+- Rotasi otomatis tiga potret (formal, casual, dan sweater) serta suasana siang atau malam.
+- Pergantian bahasa English/Indonesia yang tersimpan antarkunjungan dan tetap mencakup konten dinamis.
 - Landscape hidup dengan awan, kabut lembut, sorot cahaya, dan daun yang melintas sesekali. Animasi berhenti ketika hero tidak terlihat atau tab tidak aktif.
 - Panel profil sinematik: foto berkembang ke panel karakter, diikuti ornamen dan biodata. Foto mengikuti pilihan formal atau santai.
 - Transisi gambar dan judul dari kartu proyek ke studi kasus, termasuk saat kembali. Browser pendukung memakai View Transitions; file lokal dan browser lain memakai transisi sederhana.

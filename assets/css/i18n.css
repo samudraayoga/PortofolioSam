@@ -1,0 +1,15 @@
+.language-toggle{position:relative;width:36px;height:36px;border:1px solid #f0e1b73d;border-radius:50%;background:#153e4a24;color:#fff7df;display:grid;grid-template-rows:13px 7px;place-content:center;gap:2px;padding:0;overflow:hidden;isolation:isolate;transition:background .24s ease,border-color .24s ease,box-shadow .24s ease,transform .24s ease}
+.language-toggle:hover{background:#f0d99f1f;border-color:#f0d99f88;box-shadow:0 0 18px #d7c5842e;transform:translateY(-1px)}
+.language-toggle:focus-visible{outline:2px solid #fff3bd;outline-offset:3px}
+.language-flag{width:18px;height:11px;display:block;object-fit:cover;border-radius:1px;box-shadow:0 0 0 1px #ffffff55,0 2px 5px #071b2966}
+.language-code{font:600 6px/1 var(--sans,Arial,sans-serif);letter-spacing:1.1px;text-align:center;color:#f6e6b9}
+.language-toggle.is-switching .language-flag{animation:languageFlagShift .42s cubic-bezier(.2,.75,.2,1)}
+.language-ripple{position:fixed;z-index:9997;width:24px;height:24px;margin:-12px 0 0 -12px;border:1px solid #f4dda1;border-radius:50%;pointer-events:none;box-shadow:0 0 18px #8ce5f0aa,inset 0 0 12px #f5dfa066;animation:languageSigil .58s cubic-bezier(.2,.72,.2,1) forwards}
+body.language-shifting main,body.language-shifting footer,body.language-shifting .case-header{transition:opacity .16s ease,filter .16s ease;opacity:.86;filter:blur(.25px)}
+.language-live{position:fixed!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.case-nav .language-toggle{margin-left:auto;flex:0 0 auto;background:#163b48;color:#f5e2ad;border-color:#ddc98766}
+.case-nav .language-toggle+.case-back{margin-left:0}
+@keyframes languageFlagShift{0%{opacity:1;transform:perspective(60px) rotateY(0) scale(1)}45%{opacity:.15;transform:perspective(60px) rotateY(90deg) scale(.82)}55%{opacity:.15;transform:perspective(60px) rotateY(-90deg) scale(.82)}100%{opacity:1;transform:perspective(60px) rotateY(0) scale(1)}}
+@keyframes languageSigil{0%{opacity:.9;transform:scale(.5) rotate(0)}65%{opacity:.48}100%{opacity:0;transform:scale(8) rotate(90deg)}}
+@media(max-width:600px){.language-toggle{width:31px;height:31px;grid-template-rows:11px 6px;gap:2px}.language-flag{width:16px;height:10px}.language-code{font-size:5.5px}.case-nav .language-toggle{width:30px;height:30px;margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.language-toggle,.language-flag,body.language-shifting main,body.language-shifting footer,body.language-shifting .case-header{animation:none!important;transition:none!important}.language-ripple{display:none}}
