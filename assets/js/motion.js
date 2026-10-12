@@ -169,7 +169,11 @@
 
   // Each chapter reveals once. Siblings receive a restrained stagger.
   if ('IntersectionObserver' in window && !reduced.matches) {
-    const groups = [
+    const groups = document.body.classList.contains('unified-interface') ? [
+      '.case-section-heading > *', '.case-story > *',
+      '.case-gallery', '.case-features > *', '.case-stack > *', '.mlbb-gallery > *',
+      '.case-closing > .case-container > *'
+    ] : [
       '.about > *', '.section-heading > *', '.talent-grid > *',
       '.case-section-heading > *', '.case-story > *',
       '.case-gallery', '.case-features > *', '.case-stack > *', '.mlbb-gallery > *',

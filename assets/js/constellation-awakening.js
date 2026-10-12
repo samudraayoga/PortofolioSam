@@ -95,6 +95,14 @@
             <path class="convergence-link" pathLength="1" d="M620 176 C584 350 526 610 466 777"/>
             <path class="tusk-link" pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
           </g>
+          <g class="gateway-energy">
+            <path pathLength="1" d="M360 108 C448 118 535 146 620 176"/>
+            <path pathLength="1" d="M620 176 C694 276 786 410 868 530"/>
+            <path pathLength="1" d="M868 530 C744 616 598 709 466 777"/>
+            <path pathLength="1" d="M466 777 C438 562 401 315 360 108"/>
+            <path pathLength="1" d="M620 176 C584 350 526 610 466 777"/>
+            <path pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
+          </g>
           <g class="region-previews">
             <path class="region-preview region-fullstack" pathLength="1" d="${atlas.fullstack.route}"/>
             <path class="region-preview region-ai" pathLength="1" d="${atlas.ai.route}"/>
@@ -171,6 +179,24 @@
   const nodeButtons = [...stage.querySelectorAll('[data-constellation-skill]')];
   let activeSkill = '';
   let activationTimer = 0;
+  let invitationTimer = 0;
+  let invitationIndex = 0;
+
+  function scheduleInvitation() {
+    clearTimeout(invitationTimer);
+    if (reducedMotion.matches) return;
+    invitationTimer = setTimeout(() => {
+      const node = nodeButtons[invitationIndex % nodeButtons.length];
+      invitationIndex += 1;
+      if (stage.dataset.active === 'true' && !stage.classList.contains('talent-focused')) {
+        node.classList.remove('is-inviting');
+        void node.offsetWidth;
+        node.classList.add('is-inviting');
+        setTimeout(() => node.classList.remove('is-inviting'), 1500);
+      }
+      scheduleInvitation();
+    }, 4200);
+  }
 
   function svgElement(tag, attributes = {}) {
     const element = document.createElementNS(ns, tag);
@@ -324,6 +350,7 @@
     if (skill === activeSkill && stage.classList.contains('network-awake')) return;
     const previousSkill = activeSkill;
     clearTimeout(activationTimer);
+    nodeButtons.forEach(button => button.classList.remove('is-inviting'));
     stage.classList.add('talent-focused', 'talent-collapsing');
     resetButton.hidden = false;
     activationTimer = setTimeout(() => renderSkill(skill, previousSkill), reducedMotion.matches ? 0 : 150);
@@ -381,6 +408,7 @@
     insightSkills.replaceChildren();
     insight.querySelector('small').textContent = 'Tab to a star · Enter to explore';
     resetButton.hidden = true;
+    scheduleInvitation();
   }
 
   resetButton.addEventListener('click', () => {
@@ -411,11 +439,21 @@
     new IntersectionObserver(entries => {
       const visible = entries[0].isIntersecting;
       stage.dataset.active = String(visible);
-      if (visible) stage.classList.add('constellation-revealed');
+      if (visible) {
+        stage.classList.add('constellation-revealed');
+        scheduleInvitation();
+      } else clearTimeout(invitationTimer);
     }, {threshold: .2}).observe(stage);
   } else {
     stage.classList.add('constellation-revealed');
+    stage.dataset.active = 'true';
+    scheduleInvitation();
   }
 
   if (reducedMotion.matches) stage.classList.add('constellation-revealed');
+  reducedMotion.addEventListener('change', () => {
+    nodeButtons.forEach(button => button.classList.remove('is-inviting'));
+    if (reducedMotion.matches) clearTimeout(invitationTimer);
+    else scheduleInvitation();
+  });
 })();

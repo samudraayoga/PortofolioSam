@@ -1,0 +1,921 @@
+/* Unified Genshin-inspired archive interface. Typography intentionally inherits the existing system. */
+.unified-interface {
+  --archive-navy: #12283a;
+  --archive-navy-deep: #081827;
+  --archive-panel: rgba(14, 39, 54, .88);
+  --archive-panel-soft: rgba(24, 57, 70, .72);
+  --archive-ivory: #ece5d8;
+  --archive-gold: #d3bc8e;
+  --archive-gold-bright: #f3dfa9;
+  --archive-hydro: #78d8ee;
+  --archive-copy: #e7eef0;
+  --archive-muted: #adc0c7;
+  --archive-line: rgba(216, 197, 151, .32);
+  --archive-ease: cubic-bezier(.2, .75, .2, 1);
+}
+
+/* One material and control hierarchy throughout the portfolio. */
+.unified-interface :is(.character-archive, .project-archive, .quest-journal, .education-ribbon, .dialog-inner) {
+  border-color: var(--archive-line);
+  background: linear-gradient(145deg, rgba(9, 29, 44, .94), rgba(21, 55, 68, .84));
+  box-shadow: inset 0 0 0 1px rgba(255, 246, 213, .035), 0 24px 70px rgba(2, 14, 25, .32);
+}
+.unified-interface :is(.character-archive, .project-archive, .quest-journal) {
+  position: relative;
+  border: 1px solid var(--archive-line);
+  border-radius: 5px 26px 5px 26px;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.unified-interface :is(.character-archive, .project-archive, .quest-journal)::before {
+  content: '';
+  position: absolute;
+  inset: 11px;
+  z-index: 0;
+  border: 1px solid rgba(232, 215, 170, .1);
+  border-radius: 3px 20px 3px 20px;
+  pointer-events: none;
+}
+.unified-interface :is(.character-archive, .project-archive, .quest-journal) > * { position: relative; z-index: 1; }
+
+.unified-interface :is(.btn, .profile-trigger, .work-link) {
+  border-radius: 999px;
+}
+.unified-interface .btn {
+  min-height: 48px;
+  padding-inline: 24px;
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.unified-interface .btn-gold {
+  background: linear-gradient(180deg, #f4dfa6, #d9bd7e);
+  border-color: #fff0c3;
+  color: #243945;
+  box-shadow: 0 9px 28px rgba(6, 24, 37, .28), inset 0 1px rgba(255, 255, 255, .48);
+}
+.unified-interface .btn-outline {
+  background: rgba(8, 31, 45, .48);
+  border-color: rgba(229, 208, 155, .42);
+}
+.unified-interface .btn:is(:hover, :focus-visible) { transform: translateY(-2px); }
+.unified-interface :is(.theme-toggle, .language-toggle, .sound-toggle, .copy-email, .portrait-playback) {
+  border-color: rgba(222, 202, 151, .42);
+  background-color: rgba(11, 38, 52, .66);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .025);
+}
+
+/* Hero: a character-selection stage, no longer a photo card. */
+.unified-interface .hero-content {
+  grid-template-columns: minmax(0, .92fr) minmax(470px, 1.08fr);
+  gap: clamp(34px, 5vw, 86px);
+}
+.unified-interface .character-stage {
+  min-height: 600px;
+  isolation: isolate;
+}
+.unified-interface .character-stage::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: min(650px, 48vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(78, 180, 205, .22) 0 8%, rgba(43, 111, 143, .16) 30%, transparent 68%),
+    conic-gradient(from 40deg, transparent, rgba(233, 215, 166, .08), transparent 26% 74%, rgba(119, 218, 238, .08), transparent);
+  filter: blur(.2px);
+  pointer-events: none;
+}
+.unified-interface .portrait-card {
+  width: min(430px, 80%);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.unified-interface .portrait-card::before { display: none; }
+.unified-interface .portrait-window {
+  height: 535px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent !important;
+  filter: drop-shadow(0 24px 30px rgba(3, 18, 32, .34));
+}
+.unified-interface .portrait-window > img:is(.formal-cutout, .casual-cutout, .sweater-cutout),
+.unified-interface .portrait-window > .portrait-crossfade {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  object-fit: contain;
+  object-position: 50% 100%;
+}
+.unified-interface .portrait-window::after {
+  inset: auto -8% 0;
+  height: 42%;
+  background: linear-gradient(0deg, rgba(8, 30, 43, .98), rgba(13, 45, 60, .76) 32%, transparent 100%);
+}
+.unified-interface .portrait-caption {
+  left: 4%;
+  right: 4%;
+  bottom: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(228, 207, 153, .34);
+}
+.unified-interface .portrait-caption::before,
+.unified-interface .portrait-caption::after {
+  content: '◆';
+  position: absolute;
+  top: -7px;
+  color: var(--archive-gold-bright);
+  font-size: 8px;
+}
+.unified-interface .portrait-caption::before { left: -1px; }
+.unified-interface .portrait-caption::after { right: -1px; }
+.unified-interface .character-stage .profile-trigger {
+  margin-top: 5px;
+  min-width: 205px;
+  border-radius: 999px;
+  background: rgba(10, 38, 53, .88);
+  box-shadow: 0 12px 30px rgba(2, 18, 29, .25);
+}
+.unified-interface .portrait-playback { right: 4px; bottom: 76px; }
+.unified-interface .vision {
+  top: 38px;
+  right: 7%;
+  width: 58px;
+  height: 58px;
+}
+.unified-interface .character-label { left: 6%; top: 162px; }
+.unified-interface .orbit { width: 510px; height: 510px; opacity: .7; }
+.unified-interface .orbit-two { width: 585px; height: 585px; opacity: .45; }
+
+/* Profile archive selection state. */
+.unified-interface .character-archive { background-color: var(--archive-panel); }
+.unified-interface .archive-tabs button {
+  position: relative;
+  color: var(--archive-muted);
+  border-radius: 2px;
+}
+.unified-interface .archive-tabs button[aria-selected='true'] {
+  color: var(--archive-gold-bright);
+  background: linear-gradient(90deg, rgba(213, 189, 132, .16), transparent);
+}
+
+/* Constellation is the signature interaction; the old duplicate ledger is hidden. */
+.unified-interface .skills-section > .talent-grid,
+.unified-interface .skills-section > .skill-detail { display: none !important; }
+.unified-interface .celestial-constellation {
+  min-height: clamp(650px, 54vw, 760px);
+  margin-top: 0;
+  border-color: rgba(222, 202, 151, .46);
+  box-shadow: inset 0 0 90px rgba(5, 20, 42, .72), 0 28px 80px rgba(2, 13, 26, .36);
+}
+.unified-interface .celestial-constellation::before { border-color: rgba(234, 217, 174, .18); }
+.unified-interface .monoceros-reference { opacity: .86; }
+.unified-interface .gateway-links path { stroke-width: 2.35; opacity: .72; }
+.unified-interface .node-star {
+  box-shadow: 0 0 0 6px rgba(124, 223, 255, .09), 0 0 20px rgba(90, 202, 244, .48);
+}
+.unified-interface .constellation-node[aria-pressed='true'] .node-star {
+  box-shadow: 0 0 0 10px rgba(255, 229, 162, .12), 0 0 40px rgba(255, 235, 173, .8), 0 0 70px rgba(96, 210, 255, .32);
+}
+
+/* Project Archive. */
+.unified-interface .works-section { padding-top: 82px; padding-bottom: 110px; }
+.unified-interface .project-archive {
+  display: grid;
+  grid-template-columns: minmax(255px, 315px) minmax(0, 1fr);
+  min-height: 610px;
+}
+.unified-interface .project-archive-nav {
+  padding: 30px 0 30px 30px;
+  border-right: 1px solid var(--archive-line);
+}
+.unified-interface .archive-nav-heading,
+.unified-interface .journal-index-heading {
+  display: grid;
+  gap: 5px;
+  margin: 0 25px 22px 0;
+  padding: 0 12px 18px;
+  border-bottom: 1px solid var(--archive-line);
+  color: var(--archive-gold-bright);
+  text-transform: uppercase;
+  letter-spacing: .13em;
+}
+.unified-interface :is(.archive-nav-heading, .journal-index-heading) span { font-size: 11px; }
+.unified-interface :is(.archive-nav-heading, .journal-index-heading) small { color: var(--archive-muted); font-size: 8px; letter-spacing: .16em; }
+.unified-interface .project-archive-nav > button,
+.unified-interface .quest-journal-index > button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  padding: 15px 24px 15px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(216, 197, 151, .14);
+  color: var(--archive-muted);
+  background: transparent;
+  text-align: left;
+  transition: color 180ms ease, background-color 180ms ease, padding-left 180ms ease;
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) > button::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  background: var(--archive-gold-bright);
+  box-shadow: 0 0 14px rgba(243, 223, 169, .75);
+  transform: scaleY(0);
+  transition: transform 220ms var(--archive-ease);
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) > button:is(:hover, :focus-visible) {
+  color: var(--archive-copy);
+  background: rgba(120, 216, 238, .055);
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) > button[aria-selected='true'] {
+  padding-left: 17px;
+  color: var(--archive-gold-bright);
+  background: linear-gradient(90deg, rgba(211, 188, 142, .14), rgba(120, 216, 238, .035));
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) > button[aria-selected='true']::after { transform: scaleY(1); }
+.unified-interface .record-index {
+  color: var(--archive-gold);
+  font-size: 9px;
+  letter-spacing: .12em;
+  padding-top: 2px;
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) button > span:last-child { display: grid; gap: 3px; min-width: 0; }
+.unified-interface :is(.project-archive-nav, .quest-journal-index) button small {
+  overflow: hidden;
+  color: currentColor;
+  font-size: 7px;
+  letter-spacing: .12em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: .7;
+}
+.unified-interface :is(.project-archive-nav, .quest-journal-index) button strong {
+  overflow: hidden;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.unified-interface .project-archive-stage { min-width: 0; padding: 28px 32px 32px; }
+.unified-interface .project-stage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  margin-bottom: 18px;
+  color: var(--archive-gold);
+  font-size: 8px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.unified-interface .project-stage-counter { color: var(--archive-copy); font-size: 9px; font-weight: 500; }
+.unified-interface #karya .works-grid { display: block; }
+.unified-interface #karya .work-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(245px, .8fr);
+  gap: clamp(24px, 3vw, 42px);
+  min-height: 510px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.unified-interface #karya .work-card::before,
+.unified-interface #karya .work-card::after { display: none; }
+.unified-interface #karya .work-card .work-art {
+  grid-column: 1;
+  grid-row: 1;
+}
+.unified-interface #karya .work-card .work-body {
+  grid-column: 2;
+  grid-row: 1;
+}
+.unified-interface #karya .work-art {
+  height: 100%;
+  min-height: 430px;
+  padding: clamp(18px, 2.3vw, 30px);
+  border: 1px solid rgba(216, 197, 151, .22);
+  border-radius: 3px 18px 3px 18px;
+  background: rgba(6, 24, 38, .62);
+  box-shadow: inset 0 0 42px rgba(4, 18, 33, .42);
+}
+.unified-interface #karya .work-art::after { border-color: rgba(233, 214, 163, .18); }
+.unified-interface #karya .work-art > img { transform: none; filter: none; }
+.unified-interface #karya .work-body {
+  justify-content: center;
+  min-width: 0;
+  padding: 22px 4px;
+}
+.unified-interface #karya .work-body h3 {
+  font: 500 clamp(26px, 2.25vw, 34px) / 1.28 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.unified-interface #karya .work-body p { min-height: 0; color: var(--archive-muted); }
+.unified-interface #karya .work-link {
+  margin-top: 20px;
+  padding: 12px 18px;
+  border: 1px solid rgba(216, 197, 151, .34);
+  color: var(--archive-gold-bright);
+  background: rgba(13, 45, 59, .7);
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+.unified-interface #karya .work-link::after { display: none; }
+.unified-interface #karya .work-link:is(:hover, :focus-visible) {
+  border-color: rgba(244, 224, 170, .72);
+  background: rgba(34, 79, 91, .76);
+}
+.unified-interface #karya .work-chapter-number,
+.unified-interface #karya .quest-light-sweep { display: none !important; }
+
+/* Quest Journal. */
+.unified-interface .journey-section { padding-top: 0; padding-bottom: 100px; }
+.unified-interface .quest-journal {
+  display: grid;
+  grid-template-columns: minmax(285px, 350px) minmax(0, 1fr);
+  min-height: 480px;
+}
+.unified-interface .quest-journal-index {
+  padding: 30px 0 30px 30px;
+  border-right: 1px solid var(--archive-line);
+}
+.unified-interface .quest-journal-index > button {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding-left: 14px;
+}
+.unified-interface .quest-journal-index > button[aria-selected='true'] { padding-left: 19px; }
+.unified-interface .quest-journal-index button strong {
+  overflow: visible;
+  font: 500 13px / 1.4 var(--serif);
+  letter-spacing: 0;
+  text-overflow: clip;
+  white-space: normal;
+}
+.unified-interface .quest-journal-index button em {
+  overflow: hidden;
+  color: var(--archive-muted);
+  font-size: 9px;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.unified-interface .journey-list {
+  min-width: 0;
+  padding: 40px 42px;
+  border: 0;
+}
+.unified-interface .journey-list::before,
+.unified-interface .journey-route,
+.unified-interface .journey-map-label { display: none !important; }
+.unified-interface .journey-item {
+  display: grid;
+  grid-template-columns: 108px 44px minmax(0, 1fr) 40px;
+  gap: 22px;
+  align-items: start;
+  min-height: 350px;
+  padding: 34px;
+  border: 1px solid rgba(216, 197, 151, .22);
+  border-radius: 3px 18px 3px 18px;
+  background: linear-gradient(135deg, rgba(24, 60, 72, .55), rgba(7, 25, 40, .52));
+  box-shadow: inset 0 0 40px rgba(2, 14, 27, .26);
+}
+.unified-interface .journey-item::before { display: none; }
+.unified-interface .journey-item .journey-date { color: var(--archive-gold); }
+.unified-interface .journey-item .journey-body::before { display: none; }
+.unified-interface .journey-item .journey-node {
+  box-shadow: 0 0 0 5px rgba(120, 216, 238, .05), 0 0 20px rgba(120, 216, 238, .16);
+}
+.unified-interface .journey-item.is-active .journey-node {
+  border-color: rgba(245, 225, 169, .76);
+  box-shadow: 0 0 0 7px rgba(243, 223, 169, .08), 0 0 24px rgba(120, 216, 238, .28);
+}
+.unified-interface .journey-details {
+  grid-column: 3 / 5;
+  margin-top: 5px;
+  padding: 18px 20px;
+  border: 1px solid rgba(216, 197, 151, .22);
+  border-left: 2px solid var(--archive-gold);
+  background: rgba(7, 26, 41, .48);
+}
+.unified-interface .journey-toggle { width: 38px; height: 38px; }
+.unified-interface .education-ribbon {
+  margin-top: 18px;
+  border-radius: 999px;
+  background: rgba(13, 42, 56, .86);
+}
+
+/* Visual motion is orchestrated by archive-interface.js; disable overlapping chapter spectacles. */
+.unified-interface :is(.chapter-arrival-mark, .chapter-signature, .wind-pass, .domain-gate, .project-data-flow, .wish-finale) {
+  display: none !important;
+}
+.unified-interface .work-card.project-spotlit { transform: none; box-shadow: none; }
+.unified-interface .work-card.cinematic-seen .work-art > img,
+.unified-interface .journey-awakened .journey-item :is(.journey-node, .journey-date, .journey-body, .journey-toggle) {
+  animation: none !important;
+  opacity: 1 !important;
+}
+.unified-interface .journey-ready .journey-item :is(.journey-date, .journey-node, .journey-body, .journey-toggle) { opacity: 1; }
+.unified-interface .contact.cinematic-active::after { animation: none; }
+
+.unified-motion-ready .unified-arrival:not(.is-arrived) {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.unified-interface .unified-arrival {
+  position: relative;
+  transition: opacity 500ms var(--archive-ease), transform 600ms var(--archive-ease);
+}
+.unified-interface .unified-arrival.is-arrived { opacity: 1; transform: none; }
+.unified-interface .unified-arrival::after {
+  content: '';
+  position: absolute;
+  z-index: 12;
+  left: 0;
+  top: 0;
+  width: min(190px, 26%);
+  height: 1px;
+  background: linear-gradient(90deg, var(--archive-gold-bright), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+.unified-interface .unified-arrival.is-arrived::after { animation: archive-line-arrive 620ms 100ms var(--archive-ease) both; }
+@keyframes archive-line-arrive { to { transform: scaleX(1); } }
+
+@media (max-width: 1050px) {
+  .unified-interface .hero-content { grid-template-columns: minmax(0, 1fr) minmax(390px, .92fr); }
+  .unified-interface .character-stage { min-height: 545px; transform: none; margin: 0; }
+  .unified-interface .portrait-card { width: 370px; }
+  .unified-interface .portrait-window { height: 480px; }
+  .unified-interface .orbit { width: 455px; height: 455px; }
+  .unified-interface .orbit-two { width: 515px; height: 515px; }
+  .unified-interface .project-archive { grid-template-columns: 270px minmax(0, 1fr); }
+  .unified-interface #karya .work-card { grid-template-columns: 1fr; min-height: 0; }
+  .unified-interface #karya .work-card .work-art,
+  .unified-interface #karya .work-card .work-body {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .unified-interface #karya .work-art { height: 330px; min-height: 0; }
+  .unified-interface #karya .work-body { padding-block: 5px; }
+  .unified-interface .quest-journal { grid-template-columns: 300px minmax(0, 1fr); }
+  .unified-interface .journey-list { padding: 32px; }
+  .unified-interface .journey-item { grid-template-columns: 1fr auto; min-height: 360px; }
+  .unified-interface .journey-item .journey-date { grid-column: 1; }
+  .unified-interface .journey-item .journey-node { display: none; }
+  .unified-interface .journey-item .journey-body { grid-column: 1; }
+  .unified-interface .journey-item .journey-toggle { grid-column: 2; grid-row: 1 / 3; }
+  .unified-interface .journey-details { grid-column: 1 / 3; }
+}
+
+@media (max-width: 800px) {
+  .unified-interface .hero-content { grid-template-columns: 1fr; }
+  .unified-interface .character-stage { min-height: 570px; min-width: 0; }
+  .unified-interface .project-archive,
+  .unified-interface .quest-journal { display: block; min-height: 0; }
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index {
+    display: grid;
+    grid-auto-columns: minmax(245px, 78%);
+    grid-auto-flow: column;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 22px;
+    border-right: 0;
+    border-bottom: 1px solid var(--archive-line);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .unified-interface :is(.archive-nav-heading, .journal-index-heading) { display: none; }
+  .unified-interface :is(.project-archive-nav, .quest-journal-index) > button {
+    min-height: 70px;
+    padding: 12px 15px;
+    border: 1px solid rgba(216, 197, 151, .18);
+    scroll-snap-align: start;
+  }
+  .unified-interface :is(.project-archive-nav, .quest-journal-index) > button::after {
+    left: 15%; right: 15%; top: auto; bottom: -1px; width: auto; height: 2px;
+    transform: scaleX(0);
+  }
+  .unified-interface :is(.project-archive-nav, .quest-journal-index) > button[aria-selected='true'] { padding-left: 15px; }
+  .unified-interface :is(.project-archive-nav, .quest-journal-index) > button[aria-selected='true']::after { transform: scaleX(1); }
+  .unified-interface .quest-journal-index > button { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .unified-interface .project-archive-stage { padding: 24px; }
+  .unified-interface #karya .work-card { grid-template-columns: 1fr; gap: 20px; }
+  .unified-interface #karya .work-art { height: 315px; }
+  .unified-interface .journey-list { padding: 24px; }
+  .unified-interface .journey-item { min-height: 315px; padding: 28px; }
+  .unified-interface .education-ribbon { border-radius: 18px; }
+}
+
+@media (max-width: 600px) {
+  .unified-interface .hero-content { padding-bottom: 35px; }
+  .unified-interface .character-stage { min-height: 500px; max-width: 360px; }
+  .unified-interface .portrait-card { width: min(310px, 88vw); }
+  .unified-interface .portrait-window { height: 405px; }
+  .unified-interface .portrait-caption { bottom: 14px; padding-top: 13px; }
+  .unified-interface .portrait-playback { right: -5px; bottom: 62px; }
+  .unified-interface .vision { top: 30px; right: 2px; width: 48px; height: 48px; }
+  .unified-interface .character-label { left: 0; top: 132px; }
+  .unified-interface .orbit { width: 355px; height: 355px; }
+  .unified-interface .orbit-two { width: 410px; height: 410px; }
+  .unified-interface .celestial-constellation { min-height: 710px; }
+  .unified-interface .project-archive,
+  .unified-interface .quest-journal { border-radius: 4px 19px 4px 19px; }
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index { grid-auto-columns: minmax(225px, 88%); padding: 17px; }
+  .unified-interface .project-archive-stage { padding: 18px; }
+  .unified-interface #karya .work-card { gap: 16px; }
+  .unified-interface #karya .work-art { height: 235px; padding: 13px; }
+  .unified-interface #karya .work-body { padding: 2px 0 0; }
+  .unified-interface #karya .work-body h3 { font-size: 27px; }
+  .unified-interface #karya .work-link { padding: 11px 15px; }
+  .unified-interface .journey-list { padding: 18px; }
+  .unified-interface .journey-item { min-height: 300px; padding: 23px; gap: 14px; }
+  .unified-interface .journey-details { padding: 15px; }
+  .unified-interface .education-ribbon { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-motion-ready .unified-arrival:not(.is-arrived),
+  .unified-interface .unified-arrival { opacity: 1; transform: none; transition: none; }
+  .unified-interface .unified-arrival.is-arrived::after { animation: none; transform: scaleX(1); }
+}
+
+/* --------------------------------------------------------------------------
+   Living Celestial Motion System
+   Motion is scene-owned: it pauses outside the viewport and collapses to a
+   lighter treatment on touch devices and for reduced-motion preferences.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --ambient-x: 0;
+  --ambient-y: 0;
+  --ambient-x-px: 0px;
+  --ambient-y-px: 0px;
+  --ambient-fog-x: 0px;
+  --ambient-fog-y: 0px;
+  --ambient-mote-x: 0px;
+  --ambient-mote-y: 0px;
+}
+
+/* Global motes and fog share the existing world-atmosphere layer. */
+.unified-interface .world-atmosphere {
+  opacity: .42;
+  mix-blend-mode: screen;
+}
+.unified-interface .world-fog-banks,
+.unified-interface .world-mote-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.unified-interface .world-fog-banks {
+  transform: translate3d(var(--ambient-fog-x), var(--ambient-fog-y), 0);
+  transition: transform 1.4s var(--archive-ease);
+}
+.unified-interface .world-fog-banks i {
+  position: absolute;
+  left: -24%;
+  width: 148%;
+  height: 23%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 22% 50%, rgba(132, 218, 229, .09), transparent 38%),
+    radial-gradient(ellipse at 66% 58%, rgba(190, 232, 220, .07), transparent 42%);
+  filter: blur(24px);
+  opacity: .72;
+  will-change: transform;
+  animation: archive-world-fog 32s -9s ease-in-out infinite alternate;
+}
+.unified-interface .world-fog-banks i:first-child { top: 19%; }
+.unified-interface .world-fog-banks i:last-child {
+  top: 64%;
+  opacity: .45;
+  animation-duration: 43s;
+  animation-delay: -27s;
+  animation-direction: alternate-reverse;
+}
+.unified-interface .world-mote-field {
+  transform: translate3d(var(--ambient-mote-x), var(--ambient-mote-y), 0);
+  transition: transform 1.1s var(--archive-ease);
+}
+.unified-interface .world-mote-field i {
+  position: absolute;
+  left: var(--mote-x);
+  top: var(--mote-y);
+  width: var(--mote-size);
+  height: var(--mote-size);
+  border-radius: 50%;
+  background: #e9fbff;
+  box-shadow: 0 0 8px rgba(138, 224, 246, .82);
+  opacity: 0;
+  animation: archive-world-mote var(--mote-duration) var(--mote-delay) ease-in-out infinite;
+}
+body[data-world-chapter='karya'] .world-atmosphere,
+body[data-world-chapter='profil'] .world-atmosphere { opacity: .5; }
+body[data-world-chapter='keahlian'] .world-atmosphere,
+body[data-world-chapter='perjalanan'] .world-atmosphere { opacity: .7; }
+
+/* Slow highlights travel over active archive materials. */
+.unified-interface .panel-shimmer {
+  position: absolute !important;
+  z-index: 4 !important;
+  left: -42%;
+  top: -25%;
+  width: 28%;
+  height: 150%;
+  background: linear-gradient(90deg, transparent, rgba(232, 247, 241, .09), rgba(244, 220, 158, .12), transparent);
+  filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transform: skewX(-18deg);
+}
+.unified-interface .ambient-active > .panel-shimmer {
+  animation: archive-panel-shimmer 8.5s 1.3s ease-in-out infinite;
+}
+
+/* Hero: materialization on arrival, then calm character-selection ambience. */
+.unified-interface .materialization-scan,
+.unified-interface .hero-idle-motes {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+}
+.unified-interface .materialization-scan {
+  left: 8%;
+  right: 8%;
+  width: auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(121, 226, 248, .85), #fff1b5, rgba(121, 226, 248, .85), transparent);
+  box-shadow: 0 0 16px rgba(108, 221, 248, .9), 0 0 38px rgba(108, 221, 248, .36);
+  opacity: 0;
+}
+.unified-interface .hero-materializing .materialization-scan { animation: archive-materialize-scan 1.45s .12s var(--archive-ease) both; }
+.unified-interface .hero-materializing .portrait-window {
+  animation: archive-character-materialize 1.35s .1s var(--archive-ease) both;
+}
+.unified-interface .hero-materializing .portrait-caption { animation: archive-caption-arrive .72s .8s var(--archive-ease) both; }
+.unified-interface .hero-idle-motes i {
+  position: absolute;
+  left: var(--hero-x);
+  top: var(--hero-y);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #dffaff;
+  box-shadow: 0 0 9px #79dff8;
+  opacity: 0;
+}
+.unified-interface .character-stage.ambient-active .hero-idle-motes i {
+  animation: archive-hero-mote 6.8s var(--hero-delay) ease-in-out infinite;
+}
+.unified-interface .character-stage.ambient-active .portrait-card {
+  animation: archive-character-float 6.8s ease-in-out infinite;
+}
+.unified-interface .character-stage.ambient-active .orbit:not(.orbit-two) {
+  animation: archive-orbit-primary 34s linear infinite;
+}
+.unified-interface .character-stage.ambient-active .orbit-two {
+  animation: archive-orbit-secondary 49s linear infinite reverse;
+}
+.unified-interface .character-stage.ambient-active .vision {
+  animation: vision-idle 4.8s ease-in-out infinite alternate, archive-vision-pulse 5.4s 1.2s ease-in-out infinite;
+}
+.unified-interface .portrait-transmuting .portrait-window::before {
+  display: block !important;
+  background: linear-gradient(105deg, transparent 30%, rgba(134, 232, 255, .28) 47%, rgba(255, 237, 174, .32) 51%, transparent 69%);
+  animation: archive-portrait-sweep .82s var(--archive-ease) both !important;
+}
+.unified-interface .portrait-transmuting .portrait-caption {
+  animation: archive-caption-transmute .72s var(--archive-ease) both;
+}
+
+/* Constellation: a continuous low-energy current beneath awakening effects. */
+.gateway-energy path {
+  fill: none;
+  stroke: url(#narwhal-transit);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: .018 .982;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  filter: url(#narwhal-glow);
+}
+.celestial-constellation.constellation-revealed.ambient-active:not(.talent-focused) .gateway-energy path {
+  opacity: .58;
+  animation: archive-gateway-current 6.2s linear infinite;
+}
+.celestial-constellation .gateway-energy path:nth-child(2) { animation-delay: -.9s !important; }
+.celestial-constellation .gateway-energy path:nth-child(3) { animation-delay: -1.8s !important; }
+.celestial-constellation .gateway-energy path:nth-child(4) { animation-delay: -2.7s !important; }
+.celestial-constellation .gateway-energy path:nth-child(5) { animation-delay: -3.6s !important; }
+.celestial-constellation .gateway-energy path:nth-child(6) { animation-delay: -4.5s !important; }
+.celestial-constellation.constellation-revealed.ambient-active:not(.talent-focused) .node-star {
+  animation: archive-gateway-breathe 4.6s ease-in-out infinite;
+}
+.celestial-constellation.constellation-revealed .node-ai .node-star { animation-delay: -1.1s !important; }
+.celestial-constellation.constellation-revealed .node-systems .node-star { animation-delay: -2.2s !important; }
+.celestial-constellation.constellation-revealed .node-project .node-star { animation-delay: -3.3s !important; }
+.celestial-constellation .constellation-node.is-inviting .node-star {
+  animation: archive-gateway-invite 1.45s var(--archive-ease) both !important;
+}
+.celestial-constellation .constellation-node.is-inviting .node-copy { color: #fff5c9; }
+.network-awake .skill-point-halo {
+  animation: archive-skill-halo 1.8s var(--point-delay) ease-out both;
+}
+
+/* Project Archive: domain aperture, ordered content reveal, and idle camera. */
+.unified-interface .archive-motion-trace {
+  position: absolute !important;
+  z-index: 7 !important;
+  inset: 11px;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}
+.unified-interface .project-archive.project-switching > .archive-motion-trace {
+  animation: archive-trace-visibility .82s ease-out both;
+}
+.unified-interface .project-archive.project-switching > .archive-motion-trace::before,
+.unified-interface .quest-journal.quest-switching > .archive-motion-trace::before {
+  content: '';
+  position: absolute;
+  left: -20%;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  background: linear-gradient(90deg, transparent, rgba(123, 224, 247, .38), #f6dfa6, rgba(123, 224, 247, .2), transparent);
+  filter: blur(2px);
+}
+.unified-interface .project-archive.project-switching > .archive-motion-trace::before {
+  animation: archive-domain-sweep .78s var(--archive-ease) both;
+}
+.unified-interface .project-archive .work-card.panel-entering .work-art {
+  animation: archive-domain-aperture .7s .05s var(--archive-ease) both;
+}
+.unified-interface .project-archive .work-card.panel-entering .work-body > * {
+  animation: archive-project-copy-in .52s var(--archive-ease) both;
+}
+.unified-interface .project-archive .work-card.panel-entering .work-body > :nth-child(1) { animation-delay: .2s; }
+.unified-interface .project-archive .work-card.panel-entering .work-body > :nth-child(2) { animation-delay: .27s; }
+.unified-interface .project-archive .work-card.panel-entering .work-body > :nth-child(3) { animation-delay: .34s; }
+.unified-interface .project-archive .work-card.panel-entering .work-body > :nth-child(4) { animation-delay: .41s; }
+.unified-interface .project-archive.ambient-active .work-card.is-active:not(.panel-entering) .work-art > img {
+  animation: archive-project-idle 12s ease-in-out infinite alternate !important;
+}
+
+/* Quest Journal: selected memory travels through a ley-line before resolving. */
+.unified-interface .quest-journal.quest-switching > .archive-motion-trace {
+  opacity: 1;
+}
+.unified-interface .quest-journal.quest-switching > .archive-motion-trace::before {
+  top: 50%;
+  bottom: auto;
+  width: 34%;
+  height: 1px;
+  box-shadow: 0 0 13px rgba(151, 229, 216, .9);
+  animation: archive-ley-travel .7s var(--archive-ease) both;
+}
+.unified-interface .quest-journal .journey-item.panel-entering .journey-date,
+.unified-interface .quest-journal .journey-item.panel-entering .journey-node,
+.unified-interface .quest-journal .journey-item.panel-entering .journey-body,
+.unified-interface .quest-journal .journey-item.panel-entering .journey-toggle {
+  animation: archive-quest-memory-in .58s var(--archive-ease) both !important;
+}
+.unified-interface .quest-journal .journey-item.panel-entering .journey-node { animation-delay: .08s !important; }
+.unified-interface .quest-journal .journey-item.panel-entering .journey-body { animation-delay: .15s !important; }
+.unified-interface .quest-journal .journey-item.panel-entering .journey-toggle { animation-delay: .24s !important; }
+.unified-interface .quest-journal.ambient-active .journey-item.is-active .journey-node {
+  animation: archive-waypoint-idle 3.8s ease-in-out infinite alternate;
+}
+
+/* Section arrival is a veil opening, not a generic upward fade. */
+.unified-motion-ready .unified-arrival:not(.is-arrived) {
+  clip-path: inset(0 0 13% 0);
+  filter: blur(3px) brightness(.86);
+}
+.unified-interface .unified-arrival {
+  transition: opacity 560ms var(--archive-ease), transform 700ms var(--archive-ease), clip-path 760ms var(--archive-ease), filter 620ms ease;
+}
+.unified-interface .unified-arrival.is-arrived {
+  clip-path: inset(0 0 0 0);
+  filter: none;
+}
+
+@keyframes archive-world-fog {
+  from { transform: translate3d(-5%, 1%, 0) scaleX(.96); }
+  to { transform: translate3d(6%, -3%, 0) scaleX(1.04); }
+}
+@keyframes archive-world-mote {
+  0%, 100% { opacity: 0; transform: translate3d(0, 14px, 0) scale(.55); }
+  18%, 68% { opacity: .52; }
+  82% { opacity: 0; transform: translate3d(10px, -22px, 0) scale(1.2); }
+}
+@keyframes archive-panel-shimmer {
+  0%, 69% { opacity: 0; transform: translateX(0) skewX(-18deg); }
+  74% { opacity: .72; }
+  88%, 100% { opacity: 0; transform: translateX(560%) skewX(-18deg); }
+}
+@keyframes archive-materialize-scan {
+  0% { top: 2%; opacity: 0; }
+  12%, 76% { opacity: 1; }
+  100% { top: 96%; opacity: 0; }
+}
+@keyframes archive-character-materialize {
+  0% { opacity: 0; clip-path: inset(100% 0 0 0); filter: brightness(2) saturate(.45) blur(5px); }
+  55% { opacity: .88; filter: brightness(1.55) saturate(.72) blur(1px); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); filter: none; }
+}
+@keyframes archive-caption-arrive {
+  from { opacity: 0; transform: translateY(12px); letter-spacing: .08em; }
+  to { opacity: 1; transform: translateY(0); letter-spacing: normal; }
+}
+@keyframes archive-hero-mote {
+  0%, 100% { opacity: 0; transform: translate3d(0, 9px, 0) scale(.5); }
+  25%, 66% { opacity: .72; }
+  82% { opacity: 0; transform: translate3d(var(--hero-drift), -21px, 0) scale(1.25); }
+}
+@keyframes archive-character-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+@keyframes archive-orbit-primary { from { transform: rotate(-18deg); } to { transform: rotate(342deg); } }
+@keyframes archive-orbit-secondary { from { transform: rotate(45deg); } to { transform: rotate(405deg); } }
+@keyframes archive-vision-pulse {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(24, 63, 80, .35), 0 0 25px rgba(122, 218, 238, .28); }
+  50% { box-shadow: 0 0 0 8px rgba(103, 213, 238, .08), 0 0 42px rgba(122, 218, 238, .58); }
+}
+@keyframes archive-portrait-sweep { from { transform: translateX(-135%); opacity: 0; } 30% { opacity: 1; } to { transform: translateX(135%); opacity: 0; } }
+@keyframes archive-caption-transmute { 0%, 100% { opacity: 1; transform: none; } 45% { opacity: .1; transform: translateY(6px); } }
+@keyframes archive-gateway-current { to { stroke-dashoffset: 0; } }
+@keyframes archive-gateway-breathe {
+  0%, 100% { filter: brightness(.92); box-shadow: 0 0 0 6px rgba(124, 223, 255, .07), 0 0 17px rgba(90, 202, 244, .38); }
+  50% { filter: brightness(1.2); box-shadow: 0 0 0 10px rgba(124, 223, 255, .09), 0 0 31px rgba(90, 202, 244, .65); }
+}
+@keyframes archive-gateway-invite {
+  0%, 100% { transform: scale(1); }
+  38% { transform: scale(1.22); filter: brightness(1.65); box-shadow: 0 0 0 17px rgba(255, 231, 162, .09), 0 0 48px rgba(255, 238, 178, .86); }
+}
+@keyframes archive-skill-halo { 0% { opacity: 0; r: 7; } 45% { opacity: 1; r: 23; } 100% { opacity: .85; r: 14; } }
+@keyframes archive-trace-visibility { 0%, 100% { opacity: 0; } 15%, 70% { opacity: 1; } }
+@keyframes archive-domain-sweep { from { transform: translateX(0); } to { transform: translateX(720%); } }
+@keyframes archive-domain-aperture {
+  from { opacity: .12; clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); filter: brightness(1.55); }
+  to { opacity: 1; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); filter: brightness(1); }
+}
+@keyframes archive-project-copy-in { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes archive-project-idle { from { transform: scale(1); filter: saturate(1); } to { transform: scale(1.026); filter: saturate(1.05) brightness(1.025); } }
+@keyframes archive-ley-travel { from { opacity: 0; transform: translateX(0) scaleX(.25); } 28% { opacity: 1; } to { opacity: 0; transform: translateX(350%) scaleX(1); } }
+@keyframes archive-quest-memory-in { from { opacity: 0; transform: translateY(9px); filter: brightness(1.55); } to { opacity: 1; transform: translateY(0); filter: brightness(1); } }
+@keyframes archive-waypoint-idle { to { filter: brightness(1.2); box-shadow: 0 0 0 11px rgba(243, 223, 169, .08), 0 0 32px rgba(120, 216, 238, .42); } }
+
+@media (max-width: 800px), (pointer: coarse) {
+  .unified-interface .world-atmosphere { opacity: .34 !important; }
+  .unified-interface .world-fog-banks i:last-child,
+  .unified-interface .world-mote-field i:nth-child(n + 11),
+  .unified-interface .hero-idle-motes i:nth-child(n + 6) { display: none; }
+  .unified-interface .world-fog-banks i { filter: blur(18px); animation-duration: 45s; }
+  .unified-interface .world-mote-field,
+  .unified-interface .world-fog-banks { transform: none; transition: none; }
+  .unified-interface .character-stage.ambient-active .portrait-card { animation-duration: 8.5s; }
+  .unified-interface .character-stage.ambient-active .orbit:not(.orbit-two) { animation-duration: 52s; }
+  .unified-interface .character-stage.ambient-active .orbit-two { animation-duration: 68s; }
+  .unified-interface .ambient-active > .panel-shimmer { animation-duration: 12s; opacity: .5; }
+  .celestial-constellation.constellation-revealed.ambient-active:not(.talent-focused) .gateway-energy path { animation-duration: 8.5s; opacity: .42; }
+  .unified-interface .project-archive.ambient-active .work-card.is-active:not(.panel-entering) .work-art > img { animation-duration: 16s !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-interface .world-fog-banks,
+  .unified-interface .world-mote-field,
+  .unified-interface .panel-shimmer,
+  .unified-interface .materialization-scan,
+  .unified-interface .hero-idle-motes,
+  .unified-interface .archive-motion-trace,
+  .gateway-energy { display: none !important; }
+  .unified-interface .character-stage *,
+  .unified-interface .project-archive *,
+  .unified-interface .quest-journal *,
+  .celestial-constellation * { animation: none !important; transition-duration: .01ms !important; }
+  .unified-motion-ready .unified-arrival:not(.is-arrived),
+  .unified-interface .unified-arrival,
+  .unified-interface .unified-arrival.is-arrived {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    filter: none;
+  }
+}

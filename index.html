@@ -21,19 +21,17 @@
   <link rel="stylesheet" href="assets/css/character-reveal.css?v=20261008-2">
   <link rel="stylesheet" href="assets/css/constellation-awakening.css?v=20261009-1">
   <link rel="stylesheet" href="assets/css/celestial-theme.css?v=20261005-1">
-  <link rel="stylesheet" href="assets/css/chapter-wind.css?v=20261005-1">
   <link rel="stylesheet" href="assets/css/cinematic-motion.css?v=20261009-6">
   <link rel="stylesheet" href="assets/css/ui-polish.css?v=20261009-6">
-  <link rel="stylesheet" href="assets/css/creation-reveal.css?v=20261009-1">
+  <link rel="stylesheet" href="assets/css/archive-interface.css?v=20261012-4">
   <script src="assets/js/motion.js?v=20261009-4" defer></script>
   <script src="assets/js/landscape-motion.js?v=20261004-1" defer></script>
-  <script src="assets/js/constellation-awakening.js?v=20261009-1" defer></script>
-  <script src="assets/js/chapter-wind.js?v=20261005-1" defer></script>
+  <script src="assets/js/constellation-awakening.js?v=20261012-2" defer></script>
   <script src="assets/js/cinematic-motion.js?v=20261009-4" defer></script>
   <script src="assets/js/portrait-rotation.js?v=20261009-3" defer></script>
-  <script src="assets/js/creation-reveal.js?v=20261009-1" defer></script>
+  <script src="assets/js/archive-interface.js?v=20261012-2" defer></script>
 </head>
-<body class="portfolio-page">
+<body class="portfolio-page unified-interface">
   <a class="skip-link" href="#profil">Skip to content</a>
   <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -141,60 +139,81 @@
 
       <section id="karya" class="works-section section container">
         <div class="section-heading"><div><div class="eyebrow">Creation</div><h2>Shape through innovation.</h2></div><p>Explore the development of business systems, AI solutions, and iOS applications.</p></div>
-        <div class="works-grid">
-          <article id="project-erp" class="work-card work-card-erp">
-            <div class="work-art art-erp-proof"><img src="assets/erp/inventory.png" alt="Raho Premier ERP inventory master; internal account and inventory data are blurred" width="1728" height="922" loading="lazy" decoding="async"></div>
-            <div class="work-body">
-              <div class="work-category">Fullstack Developer</div>
-              <h3>ERP Raho Premier</h3>
-              <p>An internal ERP system for inventory management and operational administration at Raho Premier.</p>
-              <div class="work-tech" aria-label="Core technologies"><span>Next.js</span><span>PostgreSQL</span><span>Prisma</span><span>Redis / BullMQ</span></div>
-              <a href="erp.html" class="work-link">Explore the ERP project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="project-archive">
+          <nav class="project-archive-nav" role="tablist" aria-label="Project archive">
+            <div class="archive-nav-heading"><span>Project Archive</span><small>Selected creations</small></div>
+            <button id="project-tab-erp" type="button" role="tab" aria-selected="true" aria-controls="project-erp" tabindex="0" data-archive-project="project-erp"><span class="record-index">01</span><span><small>Fullstack Developer</small><strong>ERP Raho Premier</strong></span></button>
+            <button id="project-tab-ai" type="button" role="tab" aria-selected="false" aria-controls="project-ai" tabindex="-1" data-archive-project="project-ai"><span class="record-index">02</span><span><small>AI Engineering · ERP Integration</small><strong>AI Agent for ERP KPIs</strong></span></button>
+            <button id="project-tab-chat" type="button" role="tab" aria-selected="false" aria-controls="project-chat" tabindex="-1" data-archive-project="project-chat"><span class="record-index">03</span><span><small>Full-Stack · System Design</small><strong>AI-Powered WhatsApp Chatbot</strong></span></button>
+            <button id="project-tab-mlbb" type="button" role="tab" aria-selected="false" aria-controls="project-mlbb" tabindex="-1" data-archive-project="project-mlbb"><span class="record-index">04</span><span><small>iOS App · Front End · Design</small><strong>MLBB Heroes Matchup</strong></span></button>
+          </nav>
+          <div class="project-archive-stage">
+            <div class="project-stage-heading"><span>Selected creation</span><strong class="project-stage-counter" aria-live="polite">01 / 04</strong></div>
+            <div class="works-grid">
+              <article id="project-erp" class="work-card work-card-erp is-active" role="tabpanel" aria-labelledby="project-tab-erp">
+                <div class="work-art art-erp-proof"><img src="assets/erp/inventory.png" alt="Raho Premier ERP inventory master; internal account and inventory data are blurred" width="1728" height="922" loading="lazy" decoding="async"></div>
+                <div class="work-body">
+                  <div class="work-category">Fullstack Developer</div>
+                  <h3>ERP Raho Premier</h3>
+                  <p>An internal ERP system for inventory management and operational administration at Raho Premier.</p>
+                  <div class="work-tech" aria-label="Core technologies"><span>Next.js</span><span>PostgreSQL</span><span>Prisma</span><span>Redis / BullMQ</span></div>
+                  <a href="erp.html" class="work-link">Explore the ERP project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+              </article>
+              <article id="project-ai" class="work-card work-card-ai" role="tabpanel" aria-labelledby="project-tab-ai" hidden>
+                <div class="work-art art-ai-documentation"><img src="assets/ai-agent/kpi-flow.svg" alt="Conceptual flow from the KPI dashboard through an ERP endpoint and the OpenClaw API with SOUL instructions to staff performance summaries" width="1200" height="720" loading="lazy" decoding="async"></div>
+                <div class="work-body">
+                  <div class="work-category">AI Engineering · ERP Integration</div>
+                  <h3>AI Agent for ERP KPIs</h3>
+                  <p>An OpenClaw agent that summarizes staff performance using KPI dashboard data through an ERP endpoint.</p>
+                  <div class="work-tech" aria-label="Core technologies"><span>OpenClaw</span><span>SOUL</span><span>API Integration</span></div>
+                  <button data-project="ai" class="work-link">Explore the integration flow<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+                </div>
+              </article>
+              <article id="project-chat" class="work-card work-card-chat" role="tabpanel" aria-labelledby="project-tab-chat" hidden>
+                <div class="work-art art-chat-proof"><img src="assets/chatbot/overview.png" alt="RAHO WhatsApp Chatbot AI documentation: Rule, RAG, and AI flows, plus Outbox and Worker" width="1708" height="962" loading="lazy" decoding="async"></div>
+                <div class="work-body">
+                  <div class="work-category">Full-Stack · System Design</div>
+                  <h3>AI-Powered WhatsApp Chatbot</h3>
+                  <p>A customer service chatbot with a knowledge base, RAG, a shared inbox, and handoffs to the support team.</p>
+                  <div class="work-tech" aria-label="Core technologies"><span>Next.js</span><span>Express</span><span>PostgreSQL</span><span>RAG</span></div>
+                  <a href="chatbot.html" class="work-link">Explore the chatbot project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+              </article>
+              <article id="project-mlbb" class="work-card work-card-mlbb" role="tabpanel" aria-labelledby="project-tab-mlbb" hidden>
+                <div class="work-art art-mlbb-proof">
+                  <img src="assets/mlbb/heroes.png" alt="Hero list and search in the MLBB Heroes Matchup iOS app" width="800" height="1694" loading="lazy" decoding="async">
+                  <img src="assets/mlbb/counter-picks.png" alt="Harley’s profile with traits, weaknesses, and recommended counter heroes with scores" width="778" height="1704" loading="lazy" decoding="async">
+                </div>
+                <div class="work-body">
+                  <div class="work-category">iOS App · Front End · Design</div>
+                  <h3>MLBB Heroes Matchup</h3>
+                  <p>A decision support app that helps players choose Mobile Legends heroes through five counter recommendations with explainable scores.</p>
+                  <div class="work-tech" aria-label="Core technologies"><span>Swift</span><span>SwiftUI</span><span>JSON</span></div>
+                  <a href="mlbb.html" class="work-link">Explore the MLBB project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+              </article>
             </div>
-          </article>
-          <article id="project-ai" class="work-card work-card-ai">
-            <div class="work-art art-ai-documentation"><img src="assets/ai-agent/kpi-flow.svg" alt="Conceptual flow from the KPI dashboard through an ERP endpoint and the OpenClaw API with SOUL instructions to staff performance summaries" width="1200" height="720" loading="lazy" decoding="async"></div>
-            <div class="work-body">
-              <div class="work-category">AI Engineering · ERP Integration</div>
-              <h3>AI Agent for ERP KPIs</h3>
-              <p>An OpenClaw agent that summarizes staff performance using KPI dashboard data through an ERP endpoint.</p>
-              <div class="work-tech" aria-label="Core technologies"><span>OpenClaw</span><span>SOUL</span><span>API Integration</span></div>
-              <button data-project="ai" class="work-link">Explore the integration flow<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            </div>
-          </article>
-          <article id="project-chat" class="work-card work-card-chat">
-            <div class="work-art art-chat-proof"><img src="assets/chatbot/overview.png" alt="RAHO WhatsApp Chatbot AI documentation: Rule, RAG, and AI flows, plus Outbox and Worker" width="1708" height="962" loading="lazy" decoding="async"></div>
-            <div class="work-body">
-              <div class="work-category">Full-Stack · System Design</div>
-              <h3>AI-Powered WhatsApp Chatbot</h3>
-              <p>A customer service chatbot with a knowledge base, RAG, a shared inbox, and handoffs to the support team.</p>
-              <div class="work-tech" aria-label="Core technologies"><span>Next.js</span><span>Express</span><span>PostgreSQL</span><span>RAG</span></div>
-              <a href="chatbot.html" class="work-link">Explore the chatbot project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </div>
-          </article>
-          <article id="project-mlbb" class="work-card work-card-mlbb">
-            <div class="work-art art-mlbb-proof">
-              <img src="assets/mlbb/heroes.png" alt="Hero list and search in the MLBB Heroes Matchup iOS app" width="800" height="1694" loading="lazy" decoding="async">
-              <img src="assets/mlbb/counter-picks.png" alt="Harley’s profile with traits, weaknesses, and recommended counter heroes with scores" width="778" height="1704" loading="lazy" decoding="async">
-            </div>
-            <div class="work-body">
-              <div class="work-category">iOS App · Front End · Design</div>
-              <h3>MLBB Heroes Matchup</h3>
-              <p>A decision support app that helps players choose Mobile Legends heroes through five counter recommendations with explainable scores.</p>
-              <div class="work-tech" aria-label="Core technologies"><span>Swift</span><span>SwiftUI</span><span>JSON</span></div>
-              <a href="mlbb.html" class="work-link">Explore the MLBB project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            </div>
-          </article>
+          </div>
         </div>
       </section>
 
       <section id="perjalanan" class="journey-section section container">
         <div class="section-heading"><div><div class="eyebrow">The Journey</div><h2>Every step is a lesson.</h2></div><p>Journey from classroom and laboratory through business development</p></div>
-        <div class="journey-list">
-          <article class="journey-item"><div class="journey-date">June 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-case"/></svg></div><div class="journey-body"><p class="journey-type">Tech Development</p><h3>IT Developer</h3><p class="journey-company">Raho Premier</p><p>Developed ERP, AI agent architecture, and chatbot WhatsApp dashboard.</p></div><button class="journey-toggle" aria-label="View my experience at Raho Premier" aria-expanded="false" aria-controls="journey-raho"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-raho" hidden><ul><li>Led ERP development as Project Manager and Full-Stack Developer, from architecture and planning to implementation and timeline management.</li><li>Designed features and workflows based on business and operational needs.</li><li>Designed agent workflows, database integration, multi-agent systems, and RAG architecture using OpenClaw.</li><li>Developed an AI-powered WhatsApp chatbot dashboard with Next.js.</li></ul></div></article>
-          <article class="journey-item"><div class="journey-date">Sep 2025 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-network"/></svg></div><div class="journey-body"><p class="journey-type">Infrastructure & connectivity</p><h3>IT Support Intern</h3><p class="journey-company">PT Harrisma Buwana Jaya</p><p>Supported network infrastructure installation and configuration at client sites.</p></div><button class="journey-toggle" aria-label="View my experience at Harrisma" aria-expanded="false" aria-controls="journey-harrisma"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-harrisma" hidden><ul><li>Assisted with wired and wireless network installations.</li><li>Handled UTP cable crimping, RJ45 termination, and connectivity testing.</li><li>Installed, configured, and tested Wi-Fi routers and access points.</li></ul></div></article>
-          <article class="journey-item"><div class="journey-date">Aug 2024 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-code"/></svg></div><div class="journey-body"><p class="journey-type">Practice & operations</p><h3>Laboratory Assistant & Administrator</h3><p class="journey-company">Informatics Laboratory, UPNYK</p><p>Guided lab sessions and kept the learning environment ready.</p></div><button class="journey-toggle" aria-label="View my laboratory experience" aria-expanded="false" aria-controls="journey-lab"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-lab" hidden><ul><li>Guided two lab classes per week and prepared practical exams for networks and systems.</li><li>Managed lab schedules, documentation, and daily operations.</li><li>Set up, maintained, and troubleshot 20 computers per session.</li></ul></div></article>
-          <article class="journey-item"><div class="journey-date">Jul 2023 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-cap"/></svg></div><div class="journey-body"><p class="journey-type">Sharing knowledge</p><h3>Teaching Assistant</h3><p class="journey-company">UPN Veteran Yogyakarta</p><p>Supported learning in Computer Networks and Programming Algorithms.</p></div><button class="journey-toggle" aria-label="View my teaching assistant experience" aria-expanded="false" aria-controls="journey-teaching"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-teaching" hidden><ul><li>Supported more than four classes each week.</li><li>Guided discussions, assignments, and network exercises, and assessed students’ work.</li></ul></div></article>
+        <div class="quest-journal">
+          <nav class="quest-journal-index" role="tablist" aria-label="Quest Journal">
+            <div class="journal-index-heading"><span>Quest Journal</span><small>Experience records</small></div>
+            <button id="journey-tab-raho" type="button" role="tab" aria-selected="true" aria-controls="journey-record-raho" tabindex="0" data-journey-record="journey-record-raho"><span><small>June 2026</small><strong>IT Developer</strong><em>Raho Premier</em></span></button>
+            <button id="journey-tab-harrisma" type="button" role="tab" aria-selected="false" aria-controls="journey-record-harrisma" tabindex="-1" data-journey-record="journey-record-harrisma"><span><small>Sep 2025 — Jan 2026</small><strong>IT Support Intern</strong><em>PT Harrisma Buwana Jaya</em></span></button>
+            <button id="journey-tab-lab" type="button" role="tab" aria-selected="false" aria-controls="journey-record-lab" tabindex="-1" data-journey-record="journey-record-lab"><span><small>Aug 2024 — Jan 2026</small><strong>Laboratory Assistant &amp; Administrator</strong><em>Informatics Laboratory, UPNYK</em></span></button>
+            <button id="journey-tab-teaching" type="button" role="tab" aria-selected="false" aria-controls="journey-record-teaching" tabindex="-1" data-journey-record="journey-record-teaching"><span><small>Jul 2023 — Jan 2026</small><strong>Teaching Assistant</strong><em>UPN Veteran Yogyakarta</em></span></button>
+          </nav>
+          <div class="journey-list" aria-label="Experience records">
+            <article id="journey-record-raho" class="journey-item is-active" role="tabpanel" aria-labelledby="journey-tab-raho"><div class="journey-date">June 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-case"/></svg></div><div class="journey-body"><p class="journey-type">Tech Development</p><h3>IT Developer</h3><p class="journey-company">Raho Premier</p><p>Developed ERP, AI agent architecture, and chatbot WhatsApp dashboard.</p></div><button class="journey-toggle" aria-label="View my experience at Raho Premier" aria-expanded="false" aria-controls="journey-raho"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-raho" hidden><ul><li>Led ERP development as Project Manager and Full-Stack Developer, from architecture and planning to implementation and timeline management.</li><li>Designed features and workflows based on business and operational needs.</li><li>Designed agent workflows, database integration, multi-agent systems, and RAG architecture using OpenClaw.</li><li>Developed an AI-powered WhatsApp chatbot dashboard with Next.js.</li></ul></div></article>
+            <article id="journey-record-harrisma" class="journey-item" role="tabpanel" aria-labelledby="journey-tab-harrisma" hidden><div class="journey-date">Sep 2025 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-network"/></svg></div><div class="journey-body"><p class="journey-type">Infrastructure & connectivity</p><h3>IT Support Intern</h3><p class="journey-company">PT Harrisma Buwana Jaya</p><p>Supported network infrastructure installation and configuration at client sites.</p></div><button class="journey-toggle" aria-label="View my experience at Harrisma" aria-expanded="false" aria-controls="journey-harrisma"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-harrisma" hidden><ul><li>Assisted with wired and wireless network installations.</li><li>Handled UTP cable crimping, RJ45 termination, and connectivity testing.</li><li>Installed, configured, and tested Wi-Fi routers and access points.</li></ul></div></article>
+            <article id="journey-record-lab" class="journey-item" role="tabpanel" aria-labelledby="journey-tab-lab" hidden><div class="journey-date">Aug 2024 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-code"/></svg></div><div class="journey-body"><p class="journey-type">Practice & operations</p><h3>Laboratory Assistant & Administrator</h3><p class="journey-company">Informatics Laboratory, UPNYK</p><p>Guided lab sessions and kept the learning environment ready.</p></div><button class="journey-toggle" aria-label="View my laboratory experience" aria-expanded="false" aria-controls="journey-lab"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-lab" hidden><ul><li>Guided two lab classes per week and prepared practical exams for networks and systems.</li><li>Managed lab schedules, documentation, and daily operations.</li><li>Set up, maintained, and troubleshot 20 computers per session.</li></ul></div></article>
+            <article id="journey-record-teaching" class="journey-item" role="tabpanel" aria-labelledby="journey-tab-teaching" hidden><div class="journey-date">Jul 2023 — Jan 2026</div><div class="journey-node"><svg aria-hidden="true"><use href="#i-cap"/></svg></div><div class="journey-body"><p class="journey-type">Sharing knowledge</p><h3>Teaching Assistant</h3><p class="journey-company">UPN Veteran Yogyakarta</p><p>Supported learning in Computer Networks and Programming Algorithms.</p></div><button class="journey-toggle" aria-label="View my teaching assistant experience" aria-expanded="false" aria-controls="journey-teaching"><svg aria-hidden="true"><use href="#i-plus"/></svg></button><div class="journey-details" id="journey-teaching" hidden><ul><li>Supported more than four classes each week.</li><li>Guided discussions, assignments, and network exercises, and assessed students’ work.</li></ul></div></article>
+          </div>
         </div>
         <div class="education-ribbon"><svg aria-hidden="true"><use href="#i-cap"/></svg><div><p>Bachelor’s degree in Computer Science · UPN Veteran Yogyakarta</p><small>An academic foundation for further exploration · GPA 3.52 / 4.00</small></div><span class="education-year">August 2022 — January 2026</span></div>
       </section>
