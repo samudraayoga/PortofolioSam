@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/css/main.css?v=20261008-4">
   <link rel="stylesheet" href="assets/css/i18n.css?v=20261009-1">
-  <script src="assets/js/i18n.js?v=20261013-1" defer></script>
+  <script src="assets/js/i18n.js?v=20261013-2" defer></script>
   <script src="assets/js/character-reveal.js?v=20261012-1" defer></script>
   <script src="assets/js/celestial-theme.js?v=20261005-1" defer></script>
   <script src="assets/js/script.js?v=20261013-1" defer></script>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="assets/css/celestial-theme.css?v=20261005-1">
   <link rel="stylesheet" href="assets/css/cinematic-motion.css?v=20261012-1">
   <link rel="stylesheet" href="assets/css/ui-polish.css?v=20261012-1">
-  <link rel="stylesheet" href="assets/css/archive-interface.css?v=20261013-2">
+  <link rel="stylesheet" href="assets/css/archive-interface.css?v=20261013-4">
   <link rel="stylesheet" href="assets/css/performance.css?v=20261013-2">
   <script src="assets/js/motion.js?v=20261009-4" defer></script>
   <script src="assets/js/landscape-motion.js?v=20261004-1" defer></script>
@@ -108,16 +108,18 @@
     <div class="paper">
       <section id="profil" class="section container">
         <div class="about">
-          <div class="about-intro"><div class="section-kicker"><span class="diamond"></span>Story of the explorer</div><h2>Tech Stack.</h2>
+          <div class="about-intro"><div class="section-kicker"><span class="diamond"></span>Tools Arsenal</div><h2>Tech Stack.</h2>
             <div class="tech-arsenal" aria-label="Developer technology arsenal">
-              <div class="tech-arsenal-heading"><span>Primary loadout</span><small>6 equipped technologies</small></div>
+              <div class="tech-arsenal-heading"><span>Primary loadout</span><small>8 equipped technologies</small></div>
               <ul class="tech-sigil-grid">
-                <li class="tech-sigil" data-tech="typescript" style="--tech-delay:80ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><rect x="11" y="11" width="42" height="42" rx="8"/><path d="M18 25h16M26 25v23M39 45c2.3 2 8 2.2 8-2.2 0-6-10-3.2-10-10 0-4.5 6.3-5.2 9.4-2.6"/></svg></span></span><span class="tech-sigil-copy"><strong>TypeScript</strong><small>Language</small></span></li>
-                <li class="tech-sigil" data-tech="react" style="--tech-delay:150ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><circle cx="32" cy="32" r="4"/><ellipse cx="32" cy="32" rx="24" ry="9"/><ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(120 32 32)"/></svg></span></span><span class="tech-sigil-copy"><strong>React</strong><small>Interface</small></span></li>
-                <li class="tech-sigil" data-tech="swift" style="--tech-delay:220ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="M13 15c9 11 17 17 28 23-7-1-13-3-19-7 6 8 14 13 25 14 5 1 7 4 8 7 3-7 1-14-5-19C42 25 31 20 13 15Z"/><path d="M24 14c8 5 16 12 22 20"/></svg></span></span><span class="tech-sigil-copy"><strong>Swift</strong><small>iOS Development</small></span></li>
-                <li class="tech-sigil" data-tech="postgresql" style="--tech-delay:290ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><ellipse cx="32" cy="17" rx="19" ry="7"/><path d="M13 17v14c0 4 8.5 7 19 7s19-3 19-7V17M13 31v14c0 4 8.5 7 19 7s19-3 19-7V31"/><path d="M21 28c6 2 16 2 22 0M21 42c6 2 16 2 22 0"/></svg></span></span><span class="tech-sigil-copy"><strong>PostgreSQL</strong><small>Database</small></span></li>
-                <li class="tech-sigil" data-tech="redis" style="--tech-delay:360ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="m32 10 22 10-22 10L10 20l22-10ZM12 30l20 9 20-9M12 40l20 9 20-9"/><circle cx="32" cy="20" r="3"/></svg></span></span><span class="tech-sigil-copy"><strong>Redis</strong><small>Cache &amp; Queue</small></span></li>
-                <li class="tech-sigil" data-tech="prisma" style="--tech-delay:430ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="m31 9 22 39-33 7L11 39 31 9Z"/><path d="m31 9-11 46 33-7-22-9M11 39l20-30"/></svg></span></span><span class="tech-sigil-copy"><strong>Prisma</strong><small>Data ORM</small></span></li>
+                <li class="tech-sigil tech-sigil-primary" data-tech="nextjs" style="--tech-delay:80ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><circle cx="32" cy="32" r="23"/><path d="M20 44V20l25 31M39 20h6v18"/></svg></span></span><span class="tech-sigil-copy"><strong>Next.js</strong><small>Full-Stack Framework</small></span></li>
+                <li class="tech-sigil" data-tech="typescript" style="--tech-delay:150ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><rect x="11" y="11" width="42" height="42" rx="8"/><path d="M18 25h16M26 25v23M39 45c2.3 2 8 2.2 8-2.2 0-6-10-3.2-10-10 0-4.5 6.3-5.2 9.4-2.6"/></svg></span></span><span class="tech-sigil-copy"><strong>TypeScript</strong><small>Language</small></span></li>
+                <li class="tech-sigil" data-tech="react" style="--tech-delay:220ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><circle cx="32" cy="32" r="4"/><ellipse cx="32" cy="32" rx="24" ry="9"/><ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(120 32 32)"/></svg></span></span><span class="tech-sigil-copy"><strong>React</strong><small>Interface</small></span></li>
+                <li class="tech-sigil" data-tech="python" style="--tech-delay:290ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph python-glyph" viewBox="0 0 64 64"><path class="python-snake python-snake-top" d="M25 5h19c8 0 13 5 13 13v5c0 8-6 14-14 14H29c-5 0-8 3-8 8v6h-8C6 51 2 46 2 40v-5c0-8 6-14 14-14h20v-4H20v-5c0-4 2-7 5-7Z"/><path class="python-snake python-snake-bottom" d="M39 59H20c-8 0-13-5-13-13v-5c0-8 6-14 14-14h14c5 0 8-3 8-8v-6h8c7 0 11 5 11 11v5c0 8-6 14-14 14H28v4h16v5c0 4-2 7-5 7Z"/><circle class="python-eye" cx="28" cy="12" r="2.6"/><circle class="python-eye" cx="36" cy="52" r="2.6"/></svg></span></span><span class="tech-sigil-copy"><strong>Python</strong><small>Language &amp; AI</small></span></li>
+                <li class="tech-sigil" data-tech="swift" style="--tech-delay:360ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="M13 15c9 11 17 17 28 23-7-1-13-3-19-7 6 8 14 13 25 14 5 1 7 4 8 7 3-7 1-14-5-19C42 25 31 20 13 15Z"/><path d="M24 14c8 5 16 12 22 20"/></svg></span></span><span class="tech-sigil-copy"><strong>Swift</strong><small>iOS Development</small></span></li>
+                <li class="tech-sigil" data-tech="postgresql" style="--tech-delay:430ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><ellipse cx="32" cy="17" rx="19" ry="7"/><path d="M13 17v14c0 4 8.5 7 19 7s19-3 19-7V17M13 31v14c0 4 8.5 7 19 7s19-3 19-7V31"/><path d="M21 28c6 2 16 2 22 0M21 42c6 2 16 2 22 0"/></svg></span></span><span class="tech-sigil-copy"><strong>PostgreSQL</strong><small>Database</small></span></li>
+                <li class="tech-sigil" data-tech="redis" style="--tech-delay:500ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="m32 10 22 10-22 10L10 20l22-10ZM12 30l20 9 20-9M12 40l20 9 20-9"/><circle cx="32" cy="20" r="3"/></svg></span></span><span class="tech-sigil-copy"><strong>Redis</strong><small>Cache &amp; Queue</small></span></li>
+                <li class="tech-sigil" data-tech="prisma" style="--tech-delay:570ms"><span class="tech-sigil-frame" aria-hidden="true"><span class="tech-sigil-icon"><svg class="tech-glyph" viewBox="0 0 64 64"><path d="m31 9 22 39-33 7L11 39 31 9Z"/><path d="m31 9-11 46 33-7-22-9M11 39l20-30"/></svg></span></span><span class="tech-sigil-copy"><strong>Prisma</strong><small>Data ORM</small></span></li>
               </ul>
             </div>
           </div>
@@ -137,7 +139,7 @@
           </div>
         </div>
         <div id="keahlian" class="skills-section">
-          <div class="section-heading"><div><div class="eyebrow">Skills Constellation</div><h2>Skills for every challenge.</h2></div><p>Explore the connected skills I use to turn ideas into working solutions.</p></div>
+          <div class="section-heading"><div><div class="eyebrow">Skills Constellation</div><h2>Talents</h2></div><p>Explore the connected skills I use to turn ideas into working solutions.</p></div>
           <div class="talent-grid" role="tablist" aria-label="Skill categories">
             <button class="talent-card" id="skill-fullstack" role="tab" aria-selected="true" aria-controls="skill-panel" tabindex="0" data-skill="fullstack"><div class="talent-top"><span class="talent-icon"><svg aria-hidden="true"><use href="#i-code"/></svg></span><span class="talent-number">I</span></div><h3>Full-Stack Development</h3><p>Bringing interfaces, logic, and data into one experience.</p><span class="talent-arrow" aria-hidden="true">↗</span></button>
             <button class="talent-card" id="skill-ai" role="tab" aria-selected="false" aria-controls="skill-panel" tabindex="-1" data-skill="ai"><div class="talent-top"><span class="talent-icon"><svg aria-hidden="true"><use href="#i-nodes"/></svg></span><span class="talent-number">II</span></div><h3>AI & Automation</h3><p>Connecting knowledge and workflows through AI.</p><span class="talent-arrow" aria-hidden="true">↗</span></button>
@@ -149,7 +151,7 @@
       </section>
 
       <section id="karya" class="works-section section container">
-        <div class="section-heading"><div><div class="eyebrow">Creation</div><h2>Shape through innovation.</h2></div><p>Explore the development of business systems, AI solutions, and iOS applications.</p></div>
+        <div class="section-heading"><div><div class="eyebrow">Shape through innovation.</div><h2>Creations</h2></div><p>Explore the development of business systems, AI solutions, and iOS applications.</p></div>
         <div class="project-archive">
           <nav class="project-archive-nav" role="tablist" aria-label="Project archive">
             <div class="archive-nav-heading"><span>Project Archive</span><small>Selected creations</small></div>
@@ -210,7 +212,7 @@
       </section>
 
       <section id="perjalanan" class="journey-section section container">
-        <div class="section-heading"><div><div class="eyebrow">The Journey</div><h2>Every step is a lesson.</h2></div><p>Journey from classroom and laboratory through business development</p></div>
+        <div class="section-heading"><div><div class="eyebrow">Shape through innovation.</div><h2>The Journey</h2></div><p>Journey from classroom and laboratory through business development</p></div>
         <div class="quest-journal">
           <nav class="quest-journal-index" role="tablist" aria-label="Quest Journal">
             <div class="journal-index-heading"><span>Quest Journal</span><small>Experience records</small></div>

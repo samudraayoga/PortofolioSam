@@ -232,8 +232,8 @@
 }
 .unified-interface .tech-sigil-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(82px, 1fr));
-  gap: 22px 12px;
+  grid-template-columns: repeat(4, minmax(64px, 1fr));
+  gap: 22px 10px;
   margin: 19px 0 0;
   padding: 0;
   list-style: none;
@@ -290,15 +290,26 @@
   stroke-linejoin: round;
   transition: color .3s ease, filter .3s ease, transform .36s var(--archive-ease);
 }
+.unified-interface .tech-sigil[data-tech='nextjs'] { --tech-hover: #f6f2e6; }
 .unified-interface .tech-sigil[data-tech='typescript'] { --tech-hover: #69a9ff; }
 .unified-interface .tech-sigil[data-tech='react'] { --tech-hover: #62dafb; }
+.unified-interface .tech-sigil[data-tech='python'] { --tech-hover: #ffd45c; }
 .unified-interface .tech-sigil[data-tech='swift'] { --tech-hover: #ff8a68; }
 .unified-interface .tech-sigil[data-tech='postgresql'] { --tech-hover: #79a9dc; }
 .unified-interface .tech-sigil[data-tech='redis'] { --tech-hover: #ff6d65; }
 .unified-interface .tech-sigil[data-tech='prisma'] { --tech-hover: #dce8f4; }
 .unified-interface .tech-sigil[data-tech='typescript'] .tech-glyph path { stroke-width: 3.4; }
 .unified-interface .tech-sigil[data-tech='react'] .tech-glyph circle,
-.unified-interface .tech-sigil[data-tech='redis'] .tech-glyph circle { fill: currentColor; stroke: none; }
+.unified-interface .tech-sigil[data-tech='redis'] .tech-glyph circle,
+.unified-interface .tech-sigil[data-tech='python'] .tech-glyph circle { fill: currentColor; stroke: none; }
+.unified-interface .tech-sigil[data-tech='nextjs'] .tech-glyph { stroke-width: 2.7; }
+.unified-interface .tech-sigil[data-tech='python'] .python-glyph { inset: 4px; width: calc(100% - 8px); height: calc(100% - 8px); }
+.unified-interface .tech-sigil[data-tech='python'] .python-snake {
+  fill: rgba(247, 222, 157, .075);
+  stroke: currentColor;
+  stroke-width: 2.5;
+}
+.unified-interface .tech-sigil[data-tech='python'] .python-eye { fill: currentColor; stroke: none; }
 .unified-interface .tech-sigil[data-tech='swift'] .tech-glyph path:first-child { fill: rgba(247, 222, 157, .12); }
 .unified-interface .tech-sigil[data-tech='prisma'] .tech-glyph path:first-child { fill: rgba(247, 222, 157, .08); }
 .unified-interface .tech-sigil[data-tech='postgresql'] .tech-glyph { stroke-width: 2.7; }
@@ -322,8 +333,8 @@
 }
 .unified-interface .about.is-arrived .tech-arsenal::after { animation: tech-arsenal-sweep 1s .42s var(--archive-ease) both; }
 .unified-interface .about.is-arrived .tech-sigil { animation: tech-sigil-arrive .62s var(--tech-delay) var(--archive-ease) both; }
-.unified-interface .about.is-arrived .tech-sigil:nth-child(2) .tech-sigil-frame,
-.unified-interface .about.is-arrived .tech-sigil:nth-child(5) .tech-sigil-frame { animation: tech-sigil-breathe 6.8s calc(var(--tech-delay) + 1.2s) ease-in-out infinite; }
+.unified-interface .about.is-arrived .tech-sigil-primary .tech-sigil-frame,
+.unified-interface .about.is-arrived .tech-sigil:nth-child(6) .tech-sigil-frame { animation: tech-sigil-breathe 6.8s calc(var(--tech-delay) + 1.2s) ease-in-out infinite; }
 @media (hover: hover) and (pointer: fine) {
   .unified-interface .tech-sigil:hover .tech-sigil-frame {
     animation: none;
@@ -721,7 +732,7 @@
   .unified-interface .portrait-caption { bottom: 14px; padding-top: 13px; }
   .unified-interface .tech-arsenal { max-width: none; margin-top: 25px; padding-top: 13px; }
   .unified-interface .tech-arsenal-heading { padding-bottom: 8px; }
-  .unified-interface .tech-sigil-grid { grid-template-columns: repeat(3, 1fr); gap: 19px 7px; margin-top: 17px; }
+  .unified-interface .tech-sigil-grid { grid-template-columns: repeat(2, 1fr); gap: 21px 10px; margin-top: 17px; }
   .unified-interface .tech-sigil { gap: 10px; }
   .unified-interface .tech-sigil-frame { width: 53px; height: 53px; border-radius: 10px; }
   .unified-interface .tech-sigil-icon { width: 39px; height: 39px; }
