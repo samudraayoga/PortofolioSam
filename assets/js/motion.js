@@ -92,38 +92,94 @@
     });
   }
 
-  // Optional synthesized ambience; it never starts without a user gesture.
+  // The supplied soundtrack is the default ambience. Browsers may block
+  // audible autoplay, so a rejected first attempt resumes on the next gesture.
   const headerActions = $('.header-actions');
   if (portfolioPage && headerActions) {
     const soundButton = document.createElement('button');
     soundButton.type = 'button';
     soundButton.className = 'sound-toggle';
-    soundButton.setAttribute('aria-label', 'Enable ambient sound');
-    soundButton.setAttribute('aria-pressed', 'false');
+    soundButton.setAttribute('aria-label', 'Disable ambient sound');
+    soundButton.setAttribute('aria-pressed', 'true');
     soundButton.innerHTML = '<span aria-hidden="true">♪</span>';
     headerActions.prepend(soundButton);
-    let audioContext, ambienceGain;
-    soundButton.addEventListener('click', () => {
-      const enabled = soundButton.getAttribute('aria-pressed') !== 'true';
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        ambienceGain = audioContext.createGain();
-        ambienceGain.gain.value = 0;
-        const oscillator = audioContext.createOscillator();
-        const filter = audioContext.createBiquadFilter();
-        oscillator.type = 'sine';
-        oscillator.frequency.value = 86;
-        filter.type = 'lowpass';
-        filter.frequency.value = 240;
-        oscillator.connect(filter).connect(ambienceGain).connect(audioContext.destination);
-        oscillator.start();
+
+    const ambience = document.createElement('audio');
+    ambience.className = 'ambient-track';
+    ambience.src = 'assets/audio/wrath.m4a?v=20261013-1';
+    ambience.preload = 'auto';
+    ambience.autoplay = true;
+    ambience.loop = true;
+    ambience.volume = .22;
+    ambience.setAttribute('playsinline', '');
+    ambience.setAttribute('aria-hidden', 'true');
+    document.body.append(ambience);
+
+    const preferenceKey = 'samudra-ambient-enabled-v2';
+    let enabled = true;
+    let unlockArmed = false;
+    try {
+      const savedPreference = localStorage.getItem(preferenceKey);
+      enabled = savedPreference === null ? true : savedPreference === 'true';
+    } catch (_) { /* Storage can be unavailable in private browsing. */ }
+
+    function syncSoundControl(state) {
+      soundButton.setAttribute('aria-pressed', String(state));
+      soundButton.setAttribute('aria-label', state ? 'Disable ambient sound' : 'Enable ambient sound');
+      soundButton.dataset.audioState = state ? (ambience.paused ? 'pending' : 'playing') : 'paused';
+    }
+
+    function disarmAudioUnlock() {
+      if (!unlockArmed) return;
+      unlockArmed = false;
+      document.removeEventListener('pointerdown', unlockAudio);
+      document.removeEventListener('keydown', unlockAudio);
+    }
+
+    function armAudioUnlock() {
+      if (unlockArmed || !enabled) return;
+      unlockArmed = true;
+      document.addEventListener('pointerdown', unlockAudio, {passive: true});
+      document.addEventListener('keydown', unlockAudio);
+    }
+
+    function startAmbience() {
+      if (!enabled || document.hidden) return;
+      const playback = ambience.play();
+      if (!playback?.then) return;
+      playback.then(() => {
+        disarmAudioUnlock();
+        syncSoundControl(true);
+      }).catch(() => {
+        syncSoundControl(true);
+        armAudioUnlock();
+      });
+    }
+
+    function unlockAudio(event) {
+      if (event.target?.closest?.('.sound-toggle')) return;
+      startAmbience();
+    }
+
+    function setAmbience(nextState, remember = true) {
+      enabled = nextState;
+      if (remember) {
+        try { localStorage.setItem(preferenceKey, String(enabled)); } catch (_) { /* Keep the in-memory choice. */ }
       }
-      audioContext.resume();
-      ambienceGain.gain.cancelScheduledValues(audioContext.currentTime);
-      ambienceGain.gain.linearRampToValueAtTime(enabled ? .018 : 0, audioContext.currentTime + .45);
-      soundButton.setAttribute('aria-pressed', String(enabled));
-      soundButton.setAttribute('aria-label', enabled ? 'Disable ambient sound' : 'Enable ambient sound');
+      if (enabled) startAmbience();
+      else {
+        disarmAudioUnlock();
+        ambience.pause();
+      }
+      syncSoundControl(enabled);
+    }
+
+    soundButton.addEventListener('click', () => setAmbience(!enabled));
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) ambience.pause();
+      else if (enabled) startAmbience();
     });
+    setAmbience(enabled, false);
   }
   function animate(element, frames, options = {}) {
     if (!element || reduced.matches) return null;
