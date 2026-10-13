@@ -18,49 +18,104 @@
   const portfolioPage = document.body.classList.contains('portfolio-page');
   const heroElement = $('.hero');
   const showGate = portfolioPage && firstVisit && !reduced.matches;
-  const gateExitDuration = 1100;
+  const compactGate = matchMedia('(max-width: 800px)').matches;
+  const gateExitDuration = compactGate ? 1850 : 2500;
+  const gateOpeningDuration = compactGate ? 1610 : 2180;
+  const gateHeroDelay = compactGate ? 930 : 1380;
+  const gateScannerDelay = compactGate ? 1210 : 1760;
 
-  // Celestial Gate appears once per browsing session, with a direct skip control.
+  // Celestial World Gate appears once per browsing session. Its explicit entry
+  // gesture also gives the default soundtrack a reliable browser unlock point.
   if (showGate) {
     const intro = document.createElement('div');
     intro.className = 'celestial-gate';
     intro.style.setProperty('--gate-exit-duration', `${gateExitDuration}ms`);
-    intro.setAttribute('aria-label', 'Opening Samudra’s portfolio');
-    intro.innerHTML = '<div class="gate-sigil" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><p class="gate-kicker">A DEVELOPER’S JOURNEY</p><strong>SAMUDRA</strong><button type="button">Skip intro</button>';
+    intro.style.setProperty('--gate-opening-duration', `${gateOpeningDuration}ms`);
+    intro.setAttribute('role', 'dialog');
+    intro.setAttribute('aria-modal', 'true');
+    intro.setAttribute('aria-labelledby', 'celestial-gate-title');
+    intro.setAttribute('aria-describedby', 'celestial-gate-description');
+    const indonesian = document.documentElement.lang.toLowerCase().startsWith('id');
+    intro.innerHTML = `
+      <div class="gate-scenery" aria-hidden="true"></div>
+      <div class="gate-starfield" aria-hidden="true"></div>
+      <i class="gate-cloud gate-cloud-far" aria-hidden="true"></i>
+      <i class="gate-cloud gate-near" aria-hidden="true"></i>
+      <div class="gate-threshold" aria-hidden="true"></div>
+      <div class="gate-structure" aria-hidden="true">
+        <span class="gate-frame"></span>
+        <span class="gate-crown">✦</span>
+        <span class="gate-door gate-door-left"><i></i></span>
+        <span class="gate-door gate-door-right"><i></i></span>
+        <span class="gate-seam"></span>
+        <div class="gate-sigil"><i></i><i></i><i></i><span>✦</span></div>
+      </div>
+      <div class="gate-copy">
+        <p class="gate-kicker">${indonesian ? 'PERJALANAN SEORANG DEVELOPER' : 'A DEVELOPER’S JOURNEY'}</p>
+        <strong id="celestial-gate-title">SAMUDRA</strong>
+        <p id="celestial-gate-description" class="gate-instruction"><span aria-hidden="true">✦</span>${indonesian ? 'Klik di mana saja untuk masuk' : 'Click anywhere to enter'}<span aria-hidden="true">✦</span></p>
+      </div>
+      <button class="gate-enter" type="button" aria-label="${indonesian ? 'Masuki dunia portofolio Samudra' : 'Enter Samudra’s portfolio world'}"><span class="gate-enter-label">${indonesian ? 'Masuki Dunia' : 'Enter the World'}</span></button>
+      <button class="gate-skip" type="button">${indonesian ? 'Lewati intro' : 'Skip intro'}</button>`;
     document.body.prepend(intro);
     document.body.classList.add('codex-intro-running');
-    let introTimer;
+    const enterButton = $('.gate-enter', intro);
+    const skipButton = $('.gate-skip', intro);
+    let openingTimer;
+    let scannerTimer;
     let cleanupTimer;
+    let opening = false;
+    let arrivalSent = false;
+    const announceArrival = () => {
+      if (arrivalSent) return;
+      arrivalSent = true;
+      document.dispatchEvent(new CustomEvent('celestialgatecomplete'));
+    };
     const removeIntro = () => {
-      clearTimeout(introTimer);
+      clearTimeout(openingTimer);
+      clearTimeout(scannerTimer);
       clearTimeout(cleanupTimer);
+      announceArrival();
       intro.remove();
       document.body.classList.remove('codex-intro-running');
       reduced.removeEventListener('change', skipIntro);
+      document.removeEventListener('keydown', handleGateKeys);
     };
     const skipIntro = () => {
-      if (!intro.classList.contains('intro-leaving')) startOpeningSequence(true);
+      if (!opening) startOpeningSequence(true);
       removeIntro();
     };
-    const dismissIntro = () => {
-      if (intro.classList.contains('intro-leaving')) return;
-      clearTimeout(introTimer);
-      // Let the outer ring pass the viewport edges on both phones and desktops.
-      const sigil = $('.gate-sigil', intro).getBoundingClientRect();
-      const centerX = sigil.left + sigil.width / 2;
-      const centerY = sigil.top + sigil.height / 2;
-      const radius = Math.hypot(Math.max(centerX, innerWidth - centerX), Math.max(centerY, innerHeight - centerY));
-      intro.style.setProperty('--gate-zoom-scale', String(Math.max(5, radius * 2.2 / sigil.width)));
-      intro.classList.add('intro-leaving');
+    const openGate = () => {
+      if (opening) return;
+      opening = true;
+      enterButton.disabled = true;
+      intro.classList.add('gate-resonating');
       startOpeningSequence();
-      cleanupTimer = setTimeout(removeIntro, gateExitDuration + 100);
+      openingTimer = setTimeout(() => intro.classList.add('gate-opening'), compactGate ? 240 : 320);
+      scannerTimer = setTimeout(announceArrival, gateScannerDelay);
+      cleanupTimer = setTimeout(removeIntro, gateExitDuration + 80);
     };
-    intro.addEventListener('animationend', event => {
-      if (event.target === intro && event.animationName === 'gate-departure') removeIntro();
-    });
-    $('button', intro).addEventListener('click', skipIntro);
+    function handleGateKeys(event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        skipIntro();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const controls = [enterButton, skipButton].filter(control => !control.disabled);
+      if (!controls.length) return;
+      const currentIndex = controls.indexOf(document.activeElement);
+      const nextIndex = event.shiftKey
+        ? (currentIndex <= 0 ? controls.length - 1 : currentIndex - 1)
+        : (currentIndex === controls.length - 1 ? 0 : currentIndex + 1);
+      event.preventDefault();
+      controls[nextIndex].focus();
+    }
+    enterButton.addEventListener('click', openGate);
+    skipButton.addEventListener('click', skipIntro);
+    document.addEventListener('keydown', handleGateKeys);
     reduced.addEventListener('change', skipIntro);
-    introTimer = setTimeout(dismissIntro, 1750);
+    requestAnimationFrame(() => enterButton.focus({preventScroll: true}));
   }
 
   // Duplicate scenic crops provide independent sky and foreground movement.
@@ -199,7 +254,7 @@
   function startOpeningSequence(skipped = false) {
     if (reduced.matches || scrollY >= 80) return;
     const introFactor = firstVisit ? 1 : .55;
-    const introDelay = showGate && !skipped ? gateExitDuration * .35 : 0;
+    const introDelay = showGate && !skipped ? gateHeroDelay : 0;
     animate($('.landscape'), [
       {opacity: .45, transform: 'scale(1.075)'},
       {opacity: 1, transform: 'scale(1.025)'}

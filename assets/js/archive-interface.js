@@ -211,14 +211,21 @@
     }
     characterStage.append(scan, motes);
 
+    let hasMaterialized = false;
     const materialize = () => {
+      if (hasMaterialized) return;
+      hasMaterialized = true;
       characterStage.classList.add('hero-materializing');
       setTimeout(() => {
         characterStage.classList.remove('hero-materializing');
         characterStage.classList.add('hero-materialized');
       }, reduced.matches ? 0 : 1750);
     };
-    setTimeout(materialize, body.classList.contains('codex-intro-running') ? 1700 : 90);
+    if (body.classList.contains('codex-intro-running')) {
+      document.addEventListener('celestialgatecomplete', materialize, {once: true});
+    } else {
+      setTimeout(materialize, 90);
+    }
 
     let portraitShiftTimer = 0;
     characterStage.addEventListener('portraitchange', () => {
