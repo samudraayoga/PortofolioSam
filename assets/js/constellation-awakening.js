@@ -137,8 +137,8 @@
       </div>
     </div>
     <div class="constellation-screen-copy">
-      <p>Celestial Archive <span>/ Living Skill Atlas</span></p>
-      <h3>Monoceros Caeli</h3>
+      <p>Hydro Element <span>/ Celestial Narwhale</span></p>
+      <h3>Skills Constellation</h3>
       <span>Choose a star to explore a skill path.</span>
     </div>
     <section class="constellation-insight" aria-label="Skill path overview">

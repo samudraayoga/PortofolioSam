@@ -1,0 +1,250 @@
+/* Tech Stack — Loadout Resonance.
+   A focused equipment-awakening sequence layered onto the existing arsenal. */
+.unified-interface .tech-arsenal.loadout-resonance {
+  --resonance-gold: #f4dda0;
+  --resonance-hydro: #72d8ed;
+  contain: layout paint;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-grid {
+  position: relative;
+  isolation: isolate;
+}
+
+.unified-interface .loadout-energy-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.unified-interface .loadout-energy-base,
+.unified-interface .loadout-energy-pulse {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.unified-interface .loadout-energy-base {
+  stroke: rgba(117, 209, 227, .12);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+}
+
+.unified-interface .loadout-energy-pulse {
+  opacity: 0;
+  stroke: url('#loadout-energy-gradient');
+  stroke-width: 1.35;
+  stroke-dasharray: 18 180;
+  filter: drop-shadow(0 0 4px rgba(111, 218, 239, .7));
+}
+
+.unified-interface .loadout-resonance.is-awakening .loadout-energy-pulse {
+  animation: loadout-current-awaken .62s var(--path-delay, 420ms) var(--archive-ease) both;
+}
+
+.unified-interface .loadout-resonance.is-awake.is-visible .loadout-energy-pulse {
+  animation: loadout-current-idle 9.6s var(--idle-delay, 0s) linear infinite;
+}
+
+.unified-interface .loadout-resonance.is-inspecting .loadout-energy-pulse {
+  animation-play-state: paused;
+  opacity: .08;
+}
+
+.unified-interface .loadout-resonance.is-inspecting .loadout-energy-pulse.is-linked {
+  opacity: .95;
+  stroke-dasharray: 12 7;
+  filter: drop-shadow(0 0 6px rgba(244, 221, 160, .82));
+}
+
+.unified-interface .loadout-resonance::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -8%;
+  top: 49px;
+  width: 36%;
+  height: calc(100% - 42px);
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(112, 217, 238, .115), transparent 68%);
+  transform: translate3d(-45%, 0, 0);
+}
+
+.unified-interface .loadout-resonance.is-awake.is-visible::before {
+  animation: loadout-resonance-wave 9.6s 2.1s ease-in-out infinite;
+}
+
+.unified-interface .loadout-resonance .tech-sigil {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(12px) scale(.94);
+}
+
+.unified-interface .about.is-arrived .loadout-resonance .tech-sigil {
+  animation: none;
+}
+
+.unified-interface .about .loadout-resonance.is-awakening .tech-sigil,
+.unified-interface .about .loadout-resonance.is-awake .tech-sigil {
+  animation: loadout-sigil-awaken .68s var(--resonance-delay, 0ms) var(--archive-ease) both;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-frame::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid transparent;
+  border-top-color: rgba(116, 220, 240, .48);
+  border-right-color: rgba(244, 221, 160, .24);
+  border-radius: 15px;
+  opacity: 0;
+  transform: rotate(-28deg) scale(.9);
+  transition: opacity .28s ease, transform .42s var(--archive-ease), border-color .28s ease;
+  pointer-events: none;
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-awakened .tech-sigil-frame::after {
+  animation: loadout-sigil-ring .72s var(--archive-ease) both;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-primary .tech-sigil-frame {
+  border-color: rgba(246, 222, 163, .68);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(109, 218, 238, .12), transparent 58%),
+    linear-gradient(145deg, rgba(25, 72, 87, .9), rgba(7, 31, 47, .94));
+}
+
+.unified-interface .about.is-arrived .loadout-resonance .tech-sigil:nth-child(6) .tech-sigil-frame {
+  animation: none;
+}
+
+.unified-interface .about.is-arrived .loadout-resonance.is-awake.is-visible .tech-sigil-primary .tech-sigil-frame {
+  animation: loadout-primary-breathe 6.8s ease-in-out infinite;
+}
+
+.unified-interface .loadout-resonance.is-awake.is-visible .tech-sigil-primary .tech-sigil-frame::after {
+  opacity: .7;
+  animation: loadout-primary-orbit 13s linear infinite;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-primary::before {
+  content: 'PRIMARY';
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  color: rgba(247, 224, 166, .72);
+  font-size: 5px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity .35s ease, transform .35s var(--archive-ease);
+}
+
+.unified-interface .loadout-resonance.is-awake .tech-sigil-primary::before {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-sigil-frame {
+  animation: none !important;
+  border-color: rgba(255, 230, 166, .94);
+  background: linear-gradient(145deg, rgba(34, 84, 98, .96), rgba(8, 36, 53, .97));
+  box-shadow: inset 0 0 0 5px rgba(255, 249, 222, .045), 0 0 20px rgba(118, 220, 240, .28), 0 11px 24px rgba(2, 18, 30, .3);
+  transform: translateY(-3px) rotate(45deg);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-sigil-frame::after {
+  opacity: 1;
+  border-top-color: var(--tech-hover, var(--resonance-gold));
+  border-right-color: rgba(244, 221, 160, .72);
+  transform: rotate(18deg) scale(1);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-glyph {
+  color: var(--tech-hover, var(--resonance-gold));
+  filter: drop-shadow(0 0 5px currentColor);
+  transform: scale(1.055);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-sigil-copy strong {
+  color: #ffe9b0;
+}
+
+body.is-scrolling .loadout-resonance *,
+body.is-scrolling .loadout-resonance::before {
+  animation-play-state: paused !important;
+}
+
+@keyframes loadout-sigil-awaken {
+  0% { opacity: 0; transform: translateY(12px) scale(.92); filter: brightness(1.65); }
+  52% { opacity: 1; filter: brightness(1.32); }
+  100% { opacity: 1; transform: none; filter: brightness(1); }
+}
+
+@keyframes loadout-sigil-ring {
+  0% { opacity: 0; transform: rotate(-32deg) scale(.76); }
+  48% { opacity: .95; }
+  100% { opacity: 0; transform: rotate(48deg) scale(1.14); }
+}
+
+@keyframes loadout-current-awaken {
+  0% { opacity: 0; stroke-dashoffset: 210; }
+  24% { opacity: 1; }
+  78% { opacity: 1; }
+  100% { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes loadout-current-idle {
+  0%, 68% { opacity: 0; stroke-dashoffset: 210; }
+  72% { opacity: .8; }
+  86% { opacity: .55; }
+  93%, 100% { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes loadout-primary-breathe {
+  0%, 100% { border-color: rgba(246, 222, 163, .58); box-shadow: inset 0 0 0 5px rgba(255, 249, 222, .025), 0 9px 22px rgba(2, 18, 30, .22); }
+  50% { border-color: rgba(250, 228, 173, .86); box-shadow: inset 0 0 0 5px rgba(255, 249, 222, .04), 0 0 19px rgba(110, 215, 237, .25), 0 9px 22px rgba(2, 18, 30, .24); }
+}
+
+@keyframes loadout-primary-orbit {
+  from { opacity: .45; transform: rotate(-28deg) scale(.96); }
+  50% { opacity: .78; }
+  to { opacity: .45; transform: rotate(332deg) scale(.96); }
+}
+
+@keyframes loadout-resonance-wave {
+  0%, 70% { opacity: 0; transform: translate3d(-45%, 0, 0); }
+  76% { opacity: .72; }
+  92% { opacity: .26; }
+  100% { opacity: 0; transform: translate3d(315%, 0, 0); }
+}
+
+@media (max-width: 800px) {
+  .unified-interface .loadout-resonance::before { display: none; }
+  .unified-interface .loadout-energy-base { opacity: .7; }
+  .unified-interface .loadout-resonance.is-awake.is-visible .loadout-energy-pulse { animation-duration: 12s; }
+  .unified-interface .loadout-resonance.is-awake.is-visible .tech-sigil-primary .tech-sigil-frame::after { animation-duration: 18s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-interface .loadout-resonance .tech-sigil {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+  .unified-interface .loadout-resonance::before,
+  .unified-interface .loadout-energy-pulse,
+  .unified-interface .loadout-resonance .tech-sigil-frame::after {
+    display: none;
+    animation: none !important;
+  }
+  .unified-interface .loadout-resonance .tech-sigil-frame { animation: none !important; }
+}

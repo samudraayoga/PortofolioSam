@@ -1,0 +1,338 @@
+/* Quest Journal — Ley-Line Playback.
+   A selected record becomes a recalled quest: origin waypoint, travelling
+   light, memory mist, inscription, then a calm readable journal state. */
+.unified-interface .quest-journal.ley-playback-ready {
+  --ley-accent: #f1d58f;
+  --ley-hydro: #83ddec;
+  isolation: isolate;
+}
+
+.unified-interface .ley-playback-field {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--ley-accent);
+  pointer-events: none;
+}
+
+.unified-interface .ley-playback-route,
+.unified-interface .ley-playback-trail {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.unified-interface .ley-playback-route {
+  opacity: .2;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 2 8;
+}
+
+.unified-interface .quest-journal.ambient-active .ley-playback-route {
+  animation: ley-route-idle 11s linear infinite;
+}
+
+.unified-interface .ley-playback-trail {
+  opacity: 0;
+  stroke: url('#ley-playback-gradient');
+  stroke-width: 1.6;
+  stroke-dasharray: 44 620;
+  filter: drop-shadow(0 0 5px var(--ley-hydro));
+}
+
+.unified-interface .quest-journal.ley-memory-travelling .ley-playback-trail {
+  animation: ley-trail-travel .76s var(--archive-ease) both;
+}
+
+.unified-interface .ley-playback-origin {
+  fill: var(--ley-accent);
+  opacity: .72;
+  filter: drop-shadow(0 0 4px var(--ley-hydro));
+}
+
+.unified-interface .ley-playback-traveller-halo {
+  fill: rgba(132, 222, 239, .16);
+  opacity: 0;
+}
+
+.unified-interface .ley-playback-traveller {
+  fill: #fff1b9;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px #fff1b9) drop-shadow(0 0 8px var(--ley-hydro));
+}
+
+.unified-interface .quest-journal.ley-memory-travelling :is(.ley-playback-traveller, .ley-playback-traveller-halo) {
+  opacity: 1;
+}
+
+.unified-interface .quest-journal.ley-memory-settled .ley-playback-traveller {
+  opacity: .42;
+  animation: ley-traveller-rest 5.6s ease-in-out infinite;
+}
+.unified-interface .quest-journal.ley-memory-settled .ley-playback-traveller-halo {
+  opacity: .12;
+  animation: ley-traveller-halo-rest 5.6s ease-in-out infinite;
+}
+
+.unified-interface .quest-journal-index > button::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  right: -5px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(244, 221, 160, .62);
+  background: #12384a;
+  opacity: 0;
+  transform: translateY(-50%) rotate(45deg) scale(.55);
+  transition: opacity .24s ease, transform .34s var(--archive-ease), box-shadow .3s ease;
+}
+
+.unified-interface .quest-journal-index > button[aria-selected='true']::before {
+  opacity: .9;
+  transform: translateY(-50%) rotate(45deg) scale(1);
+  box-shadow: 0 0 0 4px rgba(112, 216, 237, .06), 0 0 13px rgba(112, 216, 237, .48);
+}
+
+.unified-interface .quest-journal.ley-memory-preparing .quest-journal-index > button.ley-origin::before,
+.unified-interface .quest-journal.ley-memory-travelling .quest-journal-index > button.ley-origin::before {
+  animation: ley-origin-awaken .84s var(--archive-ease) both;
+}
+
+.unified-interface .journey-list {
+  position: relative;
+  isolation: isolate;
+}
+
+.unified-interface .ley-memory-layer {
+  position: absolute;
+  z-index: 7;
+  inset: 22px;
+  overflow: hidden;
+  border-radius: 3px 18px 3px 18px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.unified-interface .ley-memory-mist {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 32% 50%, color-mix(in srgb, var(--ley-accent) 18%, transparent), transparent 43%),
+    linear-gradient(90deg, rgba(7, 25, 39, .92), rgba(27, 71, 80, .72) 43%, rgba(7, 25, 39, .9));
+  filter: blur(1px);
+}
+
+.unified-interface .ley-memory-mist::before,
+.unified-interface .ley-memory-mist::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.unified-interface .ley-memory-mist::before {
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 66%, rgba(141, 224, 239, .13), transparent 36%),
+    radial-gradient(ellipse at 74% 28%, rgba(233, 213, 159, .09), transparent 34%);
+  transform: translateX(-5%);
+}
+
+.unified-interface .ley-memory-mist::after {
+  left: -26%;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  background: linear-gradient(90deg, transparent, rgba(128, 225, 242, .28), #f5dfa7, rgba(128, 225, 242, .18), transparent);
+  filter: blur(2px);
+}
+
+.unified-interface .ley-memory-inscription {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  color: rgba(226, 241, 241, .86);
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.unified-interface .ley-memory-inscription::before {
+  content: '';
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 8px;
+  border: 1px solid var(--ley-accent);
+  box-shadow: inset 0 0 0 7px rgba(119, 218, 237, .035), 0 0 19px color-mix(in srgb, var(--ley-accent) 24%, transparent);
+  transform: rotate(45deg);
+}
+
+.unified-interface .ley-memory-inscription small {
+  color: var(--ley-accent);
+  font-size: 6px;
+  letter-spacing: .3em;
+}
+
+.unified-interface .ley-memory-inscription strong {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  white-space: nowrap;
+}
+
+.unified-interface .quest-journal.ley-memory-preparing .ley-memory-layer,
+.unified-interface .quest-journal.ley-memory-travelling .ley-memory-layer {
+  animation: ley-memory-layer-visible 1s ease-out both;
+}
+.unified-interface .quest-journal.ley-memory-preparing .ley-memory-mist,
+.unified-interface .quest-journal.ley-memory-travelling .ley-memory-mist {
+  animation: ley-memory-mist-cycle .94s var(--archive-ease) both;
+}
+.unified-interface .quest-journal.ley-memory-travelling .ley-memory-mist::after {
+  animation: ley-memory-recall-sweep .72s .05s var(--archive-ease) both;
+}
+.unified-interface .quest-journal.ley-memory-travelling .ley-memory-inscription {
+  animation: ley-memory-inscription-cycle .78s ease-out both;
+}
+
+.unified-interface .quest-journal .journey-item::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at calc(30% + var(--ley-depth-x, 0%)) calc(42% + var(--ley-depth-y, 0%)), color-mix(in srgb, var(--ley-accent) 8%, transparent), transparent 32%),
+    linear-gradient(115deg, transparent 32%, rgba(124, 220, 237, .025) 48%, transparent 66%);
+  opacity: .9;
+  transition: background-position .5s ease;
+  pointer-events: none;
+}
+
+.unified-interface .quest-journal .journey-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.unified-interface .quest-journal .journey-item.panel-entering {
+  animation: ley-memory-panel-resolve .68s var(--archive-ease) both;
+}
+
+.unified-interface .quest-journal .journey-item.panel-entering .journey-details {
+  overflow: hidden;
+  animation: ley-memory-details-reveal .68s .22s var(--archive-ease) both !important;
+}
+
+.unified-interface .quest-journal .journey-item.panel-entering .journey-details::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: -2px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(var(--ley-accent), var(--ley-hydro), transparent);
+  box-shadow: 0 0 12px var(--ley-hydro);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: ley-detail-channel-draw .66s .3s var(--archive-ease) both;
+}
+
+body.is-scrolling .quest-journal.ley-playback-ready * {
+  animation-play-state: paused !important;
+}
+
+@keyframes ley-route-idle { to { stroke-dashoffset: -44; } }
+@keyframes ley-trail-travel {
+  0% { opacity: 0; stroke-dashoffset: 660; }
+  16% { opacity: 1; }
+  82% { opacity: .9; }
+  100% { opacity: 0; stroke-dashoffset: 0; }
+}
+@keyframes ley-traveller-rest {
+  0%, 100% { opacity: .32; r: 3.1px; }
+  50% { opacity: .62; r: 3.8px; }
+}
+@keyframes ley-traveller-halo-rest {
+  0%, 100% { opacity: .08; r: 8px; }
+  50% { opacity: .18; r: 12px; }
+}
+@keyframes ley-origin-awaken {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(112, 216, 237, .06), 0 0 13px rgba(112, 216, 237, .48); }
+  44% { box-shadow: 0 0 0 12px rgba(112, 216, 237, .08), 0 0 30px var(--ley-accent); }
+}
+@keyframes ley-memory-layer-visible {
+  0%, 100% { opacity: 0; }
+  8%, 76% { opacity: 1; }
+}
+@keyframes ley-memory-mist-cycle {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  25%, 44% { opacity: .92; clip-path: inset(0); }
+  100% { opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+@keyframes ley-memory-recall-sweep {
+  from { transform: translateX(0); }
+  to { transform: translateX(680%); }
+}
+@keyframes ley-memory-inscription-cycle {
+  0%, 18% { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); filter: brightness(1.5); }
+  40%, 68% { opacity: 1; transform: translate(-50%, -50%); filter: brightness(1); }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 5px)); }
+}
+@keyframes ley-memory-panel-resolve {
+  from { filter: brightness(1.28) saturate(.72); }
+  to { filter: none; }
+}
+@keyframes ley-memory-details-reveal {
+  0% { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(8px); }
+  100% { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes ley-detail-channel-draw { to { transform: scaleY(1); } }
+
+@media (max-width: 1050px) {
+  .unified-interface .ley-memory-inscription { top: 43%; }
+}
+
+@media (max-width: 800px), (pointer: coarse) {
+  .unified-interface .ley-playback-field { display: none; }
+  .unified-interface .quest-journal-index > button::before {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: -5px;
+    transform: translateX(-50%) rotate(45deg) scale(.55);
+  }
+  .unified-interface .quest-journal-index > button[aria-selected='true']::before {
+    transform: translateX(-50%) rotate(45deg) scale(1);
+  }
+  .unified-interface .ley-memory-layer { inset: 12px; }
+  .unified-interface .ley-memory-inscription { top: 42%; min-width: 190px; }
+  .unified-interface .ley-memory-inscription::before { width: 28px; height: 28px; }
+  .unified-interface .quest-journal .journey-item::after { opacity: .55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-interface .ley-playback-field,
+  .unified-interface .ley-memory-layer,
+  .unified-interface .quest-journal .journey-item::after {
+    display: none !important;
+  }
+  .unified-interface .quest-journal .journey-item.panel-entering,
+  .unified-interface .quest-journal .journey-item.panel-entering .journey-details {
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+    transform: none;
+    animation: none !important;
+  }
+}
