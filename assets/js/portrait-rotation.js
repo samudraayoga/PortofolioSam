@@ -9,6 +9,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const portraits = {
     formal: {src: 'assets/samudra-formal-cutout.webp', alt: 'Formal portrait of Yoga Samudra Heriyanto in a grey suit with subtle cyan rim lighting'},
+    urban: {src: 'assets/samudra-urban-cutout-v1.webp', alt: 'Urban casual portrait of Yoga Samudra Heriyanto in a black jacket and glasses holding a phone with cyan and gold rim lighting'},
     casual: {src: 'assets/samudra-casual-cutout.webp', alt: 'Casual seated portrait of Yoga Samudra Heriyanto in a brown shirt and glasses with warm lighting and a subtle cyan rim'},
     sweater: {src: 'assets/samudra-sweater-cutout-v1.webp', alt: 'Casual portrait of Yoga Samudra Heriyanto wearing round glasses and a light camouflage-sleeve sweatshirt with arms crossed'}
   };
@@ -94,7 +95,7 @@
     clearTimeout(timer);
     timer = 0;
     request += 1; // Invalidate any decode that finishes after a pause/navigation.
-    if (canPlay()) timer = setTimeout(changePortrait, 6000);
+    if (canPlay()) timer = setTimeout(changePortrait, 5000);
   }
 
   function syncControl() {

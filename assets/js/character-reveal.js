@@ -104,7 +104,7 @@
     shell.setAttribute('aria-hidden', 'true');
     const image = source.cloneNode(false);
     image.removeAttribute('id');
-    image.className = ['character-art', 'formal-cutout', 'casual-cutout', 'sweater-cutout'].filter(name => source.classList.contains(name)).join(' ');
+    image.className = ['character-art', 'formal-cutout', 'urban-cutout', 'casual-cutout', 'sweater-cutout'].filter(name => source.classList.contains(name)).join(' ');
     image.style.transform = 'none';
     image.style.translate = 'none';
     image.style.objectFit = sourceStyle.objectFit;
@@ -154,6 +154,7 @@
       portrait.alt = source.alt;
       portrait.classList.toggle('character-art', source.classList.contains('character-art'));
       portrait.classList.toggle('formal-cutout', source.classList.contains('formal-cutout'));
+      portrait.classList.toggle('urban-cutout', source.classList.contains('urban-cutout'));
       portrait.classList.toggle('casual-cutout', source.classList.contains('casual-cutout'));
       portrait.classList.toggle('sweater-cutout', source.classList.contains('sweater-cutout'));
       portrait.style.objectPosition = getComputedStyle(source).objectPosition;

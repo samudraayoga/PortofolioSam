@@ -1,5 +1,5 @@
 /* Living Teyvat Interface — cinematic layer for the portfolio. */
-:root { --light-x: 50vw; --light-y: 50vh; --world-progress: 0; --world-pan: 0px; }
+:root { --light-x: 50vw; --light-y: 50vh; }
 .hero-profession > span:first-child { display: inline-flex; align-items: center; gap: .24em; white-space: nowrap; }
 .hero-profession .typed {
   position: relative;
@@ -62,8 +62,8 @@ body:has(a:hover,button:hover) .elemental-cursor { width: 36px; height: 36px; ma
 /* 3. Scroll-driven world camera. */
 .world-atmosphere { position: fixed; z-index: 8; inset: 0; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.1s ease; }
 .world-atmosphere > i { position: absolute; inset: -12%; transition: background 1.3s ease, opacity 1s ease; }
-.world-glow { background: radial-gradient(circle at 70% calc(25% + var(--world-pan)), rgba(124, 215, 255, .13), transparent 34%); transform: translateY(calc(var(--world-progress) * -26px)); }
-.world-haze { background: linear-gradient(180deg, transparent 34%, rgba(90, 176, 199, .05) 58%, transparent 83%); transform: translateY(calc(var(--world-progress) * 34px)); }
+.world-glow { background: radial-gradient(circle at 70% 25%, rgba(124, 215, 255, .13), transparent 34%); }
+.world-haze { background: linear-gradient(180deg, transparent 34%, rgba(90, 176, 199, .05) 58%, transparent 83%); }
 .world-stars { opacity: 0; background: radial-gradient(circle,#eafaff 0 1px,transparent 1.6px) 0 0/117px 103px; }
 body[data-world-chapter="keahlian"] .world-atmosphere,
 body[data-world-chapter="perjalanan"] .world-atmosphere,
@@ -76,7 +76,7 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 /* 5–6. Project domain entrance and interactive data preview. */
 .work-card { --art-x: 50%; --art-y: 50%; }
 .journey-progress-indicator { position:fixed; z-index:100; top:0; left:0; width:100%; height:2px; background:rgba(237,221,166,.14); pointer-events:none; }
-.journey-progress-indicator i { display:block; width:calc(var(--world-progress, 0) * 100%); height:100%; background:linear-gradient(90deg,#81cddd,#f2dda1 72%,#fff6c8); box-shadow:0 0 12px rgba(218,201,139,.85); transition:width .12s linear; }
+.journey-progress-indicator i { display:block; width:100%; height:100%; background:linear-gradient(90deg,#81cddd,#f2dda1 72%,#fff6c8); box-shadow:0 0 12px rgba(218,201,139,.85); transform:scaleX(0); transform-origin:left; will-change:transform; }
 .work-art { perspective: 950px; }
 .work-card::before { content:''; position:absolute; z-index:6; inset:0; pointer-events:none; opacity:0; background:radial-gradient(300px circle at var(--spotlight-x,50%) var(--spotlight-y,40%),rgba(255,249,218,.23),transparent 62%); mix-blend-mode:soft-light; transition:opacity .35s ease; }
 .work-card { position:relative; overflow:hidden; transition:transform .45s cubic-bezier(.16,.8,.2,1),box-shadow .45s ease,border-color .45s ease; }
@@ -110,24 +110,18 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
 .journey-route::after { content:''; position:absolute; inset:0; background:linear-gradient(#a5e0d0,#f3db99 72%,#f9ecc2); box-shadow:0 0 11px rgba(159,220,202,.7); transform:scaleY(0); transform-origin:top; }
 .journey-awakened .journey-route::after { animation:chronicle-route-draw .95s .12s cubic-bezier(.16,.8,.2,1) forwards; }
 .journey-item { position:relative; z-index:2; transition:background-color .32s ease,box-shadow .32s ease; }
-.journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body,.journey-toggle) { opacity:0; }
+.journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body) { opacity:0; }
 .journey-awakened .journey-item .journey-node { animation:chronicle-node-arrive .62s calc(.28s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
 .journey-awakened .journey-item .journey-date { animation:chronicle-copy-arrive .48s calc(.34s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
 .journey-awakened .journey-item .journey-body { animation:chronicle-copy-arrive .5s calc(.4s + var(--ley-delay)) cubic-bezier(.16,.8,.2,1) both; }
-.journey-awakened .journey-item .journey-toggle { animation:chronicle-control-arrive .42s calc(.48s + var(--ley-delay)) ease-out both; }
 .journey-map-label { position:absolute; left:245px; top:16px; color:rgba(239,221,169,.72); font:600 7px/1 var(--sans); letter-spacing:.2em; }
 .journey-waypoint { position:absolute; left:50%; top:50%; display:grid; place-items:center; min-width:20px; height:20px; padding:0 4px; border:1px solid rgba(238,219,159,.65); border-radius:50%; color:#f9e7b5; background:#102d3bd9; font:600 6px/1 var(--sans); letter-spacing:.04em; transform:translate(-50%,-50%) rotate(-45deg); }
 .journey-body { position:relative; }
 .journey-body::before { content:''; position:absolute; right:calc(100% + 13px); top:17px; width:42px; height:1px; opacity:0; background:linear-gradient(90deg,#9ed7c1,#f1d99a); box-shadow:0 0 9px rgba(158,215,193,.68); transform:scaleX(0); transform-origin:left; transition:opacity .18s ease; }
-.journey-item:hover .journey-body::before,.journey-expanded .journey-body::before { animation:ley-detail-channel .55s cubic-bezier(.16,.8,.2,1) both; }
+.journey-item:hover .journey-body::before { animation:ley-detail-channel .55s cubic-bezier(.16,.8,.2,1) both; }
 .journey-item:hover .journey-node { transform:rotate(45deg) scale(1.06); box-shadow:0 0 0 6px rgba(240,217,159,.09),0 0 22px rgba(158,215,193,.58); filter:brightness(1.12); }
-.journey-toggle { transition:transform .3s cubic-bezier(.16,.8,.2,1),background-color .25s ease,box-shadow .3s ease; }
-.journey-item:hover .journey-toggle,.journey-expanded .journey-toggle { background:#315665d9; box-shadow:0 0 0 5px rgba(240,217,159,.07),0 0 18px rgba(158,215,193,.28); }
-.journey-expanded { background:linear-gradient(90deg,rgba(20,58,73,.25),transparent 78%); box-shadow:inset 2px 0 rgba(240,217,159,.7); }
-.journey-detail-pulse .journey-node { animation:ley-detail-pulse .76s cubic-bezier(.16,.8,.2,1) both!important; }
-.journey-details { margin-top:0; padding:18px 22px 17px; border:1px solid rgba(221,201,145,.32); border-left:2px solid rgba(239,217,159,.78); background:linear-gradient(100deg,rgba(15,48,65,.76),rgba(24,62,76,.36)); box-shadow:0 16px 38px rgba(3,20,36,.18); backdrop-filter:blur(8px); }
 @media (min-width:1101px) {
-  .journey-item { grid-template-columns:180px 42px minmax(0,720px) 42px; justify-content:start; }
+  .journey-item { grid-template-columns:180px 42px minmax(0,720px); justify-content:start; }
 }
 
 /* The AI case opens as a compact domain, then resolves into readable project detail. */
@@ -271,7 +265,7 @@ body[data-world-chapter="kontak"] .world-glow { background: radial-gradient(circ
   #portrait { translate:none!important; }
   .world-atmosphere,.journey-progress-indicator,.elemental-cursor,.hydro-cursor-drop,.hydro-page-ripple,.chapter-signature,.domain-gate,.project-data-flow,.wish-finale,.constellation-energy-channel { display:none!important; }
   .journey-route::after { transform:scaleY(1); transition:none; }
-  .journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body,.journey-toggle) { opacity:1; }
+  .journey-ready .journey-item :is(.journey-date,.journey-node,.journey-body) { opacity:1; }
   .journey-item,.journey-item * { animation:none!important; transition:none!important; }
   .vision::before,.hydro-awakening *,.character-stage .portrait-card,.character-stage .portrait-window img,.character-stage .vision,.chapter-nav a.active { animation:none!important; }
   .character-select-trigger,.character-selection-ui { display:none; }

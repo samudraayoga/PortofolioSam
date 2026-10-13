@@ -1,0 +1,52 @@
+/* Scroll rendering budget: preserve the visual language without full-page repaints. */
+.portfolio-page .paper {
+  background-attachment: scroll, scroll, scroll;
+}
+
+.unified-interface :is(.character-archive, .project-archive, .quest-journal),
+.portfolio-page .paper :is(.talent-card, .work-card, .skill-detail, .education-ribbon) {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* These pointer-following fixed gradients were nearly invisible but forced a
+   viewport-sized blend pass on every frame. Local hover light remains intact. */
+.portfolio-page::after,
+.portfolio-page .paper::after {
+  display: none;
+}
+
+.unified-interface .world-atmosphere {
+  contain: strict;
+  mix-blend-mode: normal;
+  will-change: opacity;
+}
+.unified-interface .world-atmosphere > i,
+.unified-interface .world-fog-banks,
+.unified-interface .world-mote-field {
+  will-change: transform;
+}
+.unified-interface .world-fog-banks i {
+  filter: none;
+  opacity: .42;
+  will-change: transform;
+}
+
+/* While the viewport is moving, spend the frame budget on scrolling. The
+   ambience resumes 140 ms after the final scroll event. */
+body.is-scrolling .world-atmosphere *,
+body.is-scrolling .living-landscape *,
+body.is-scrolling .panel-shimmer,
+body.is-scrolling .hero-idle-motes i,
+body.is-scrolling .orbit,
+body.is-scrolling .vision {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 800px), (prefers-reduced-motion: reduce) {
+  .unified-interface .world-fog-banks,
+  .unified-interface .world-mote-field,
+  .unified-interface .panel-shimmer {
+    display: none;
+  }
+}

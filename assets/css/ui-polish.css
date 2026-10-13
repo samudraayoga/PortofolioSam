@@ -20,16 +20,16 @@
     radial-gradient(ellipse at 50% 35%,transparent 34%,#123d572e 72%,#0b304c66);
 }
 .portrait-window > #portrait { filter: saturate(.9); }
-.portrait-window:has(> #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout)),
-#profile-dialog .character-visual:has(> img:is(.formal-cutout,.casual-cutout,.sweater-cutout)) {
+.portrait-window:has(> #portrait:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout)),
+#profile-dialog .character-visual:has(> img:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout)) {
   background: radial-gradient(ellipse at 50% 30%,#31566a,#163b50 62%,#102d40);
 }
-.night .portrait-window:has(> #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout)),
-.night #profile-dialog .character-visual:has(> img:is(.formal-cutout,.casual-cutout,.sweater-cutout)) {
+.night .portrait-window:has(> #portrait:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout)),
+.night #profile-dialog .character-visual:has(> img:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout)) {
   background: radial-gradient(ellipse at 50% 30%,#24445e,#122c42 62%,#0e2538);
 }
-.portrait-window > #portrait:is(.formal-cutout,.casual-cutout,.sweater-cutout),
-#profile-dialog .character-visual > img:is(.formal-cutout,.casual-cutout,.sweater-cutout) { filter: none; }
+.portrait-window > #portrait:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout),
+#profile-dialog .character-visual > img:is(.formal-cutout,.urban-cutout,.casual-cutout,.sweater-cutout) { filter: none; }
 /* Preserve headroom for the casual portraits, including transition clones. */
 .portrait-window > img:is(.casual-cutout,.sweater-cutout),
 #profile-dialog .character-visual > img:is(.casual-cutout,.sweater-cutout) {
@@ -37,6 +37,9 @@
 }
 .character-stage[data-outfit="sweater"] .character-title-card small::after {
   content: ' / Casual Resolve'; color: #f2d99f;
+}
+.character-stage[data-outfit="urban"] .character-title-card small::after {
+  content: ' / Urban Strategist'; color: #f2d99f;
 }
 .portrait-window > #portrait { position: relative; z-index: 0; }
 .portrait-window > .portrait-crossfade { z-index: 1; }

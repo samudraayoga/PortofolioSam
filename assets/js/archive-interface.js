@@ -90,14 +90,6 @@
 
       if (animated) triggerHostMotion(index, direction);
 
-      const oldToggle = $('.journey-toggle[aria-expanded="true"]', oldPanel);
-      if (oldToggle) {
-        oldToggle.setAttribute('aria-expanded', 'false');
-        oldPanel.classList.remove('journey-expanded');
-        const detail = document.getElementById(oldToggle.getAttribute('aria-controls'));
-        if (detail) detail.hidden = true;
-      }
-
       stopPanelAnimation(oldPanel);
       stopPanelAnimation(nextPanel);
       const reveal = () => {
@@ -184,13 +176,15 @@
     fog.innerHTML = '<i></i><i></i>';
     const motes = document.createElement('div');
     motes.className = 'world-mote-field';
-    for (let index = 0; index < 26; index += 1) {
+    for (let index = 0; index < 12; index += 1) {
       const mote = document.createElement('i');
       mote.style.cssText = `--mote-x:${(index * 37 + 11) % 100}%;--mote-y:${(index * 53 + 7) % 100}%;--mote-size:${index % 6 === 0 ? 3 : index % 3 === 0 ? 2 : 1}px;--mote-delay:${(index % 11) * -.73}s;--mote-duration:${12 + index % 9}s`;
       motes.append(mote);
     }
     atmosphere.append(fog, motes);
   }
+  const ambientFog = $('.world-fog-banks', atmosphere);
+  const ambientMotes = $('.world-mote-field', atmosphere);
 
   const ambientPanels = $$('.character-archive, .project-archive, .quest-journal, .education-ribbon');
   ambientPanels.forEach(panel => {
@@ -251,16 +245,10 @@
   addEventListener('pointermove', event => {
     if (reduced.matches || !finePointer.matches || ambientPointerFrame) return;
     ambientPointerFrame = requestAnimationFrame(() => {
-      root.style.setProperty('--ambient-x', `${(event.clientX / innerWidth - .5).toFixed(3)}`);
-      root.style.setProperty('--ambient-y', `${(event.clientY / innerHeight - .5).toFixed(3)}`);
       const ambientX = (event.clientX / innerWidth - .5) * 18;
       const ambientY = (event.clientY / innerHeight - .5) * 12;
-      root.style.setProperty('--ambient-x-px', `${ambientX.toFixed(2)}px`);
-      root.style.setProperty('--ambient-y-px', `${ambientY.toFixed(2)}px`);
-      root.style.setProperty('--ambient-fog-x', `${(-ambientX * .55).toFixed(2)}px`);
-      root.style.setProperty('--ambient-fog-y', `${(-ambientY * .42).toFixed(2)}px`);
-      root.style.setProperty('--ambient-mote-x', `${(-ambientX * .24).toFixed(2)}px`);
-      root.style.setProperty('--ambient-mote-y', `${(-ambientY * .18).toFixed(2)}px`);
+      if (ambientFog) ambientFog.style.transform = `translate3d(${(-ambientX * .55).toFixed(2)}px,${(-ambientY * .42).toFixed(2)}px,0)`;
+      if (ambientMotes) ambientMotes.style.transform = `translate3d(${(-ambientX * .24).toFixed(2)}px,${(-ambientY * .18).toFixed(2)}px,0)`;
       ambientPointerFrame = 0;
     });
   }, {passive: true});

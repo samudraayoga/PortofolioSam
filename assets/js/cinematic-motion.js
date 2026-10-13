@@ -24,6 +24,9 @@
   atmosphere.setAttribute('aria-hidden', 'true');
   atmosphere.innerHTML = '<i class="world-glow"></i><i class="world-haze"></i><i class="world-stars"></i>';
   body.append(atmosphere);
+  const progressFill = $('.journey-progress-indicator i');
+  const worldGlow = $('.world-glow', atmosphere);
+  const worldHaze = $('.world-haze', atmosphere);
 
   const vision = $('.vision');
   if (vision) {
@@ -186,31 +189,49 @@
     journeyRoute.style.bottom = `${Math.max(0, listRect.height - last)}px`;
   }
 
+  const chapters = ['beranda', 'profil', 'keahlian', 'karya', 'perjalanan', 'kontak'];
+  let chapterPositions = [];
+  let maxScroll = 1;
+  let metricsDirty = true;
   let scrollFrame = 0;
+  let scrollIdleTimer = 0;
+
+  function measureWorld() {
+    maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    chapterPositions = chapters.map(id => {
+      const section = document.getElementById(id);
+      return section ? [id, section.getBoundingClientRect().top + scrollY] : null;
+    }).filter(Boolean);
+    layoutJourneyRoute();
+    metricsDirty = false;
+  }
+
   function updateWorld() {
     scrollFrame = 0;
-    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-    const progress = Math.max(0, Math.min(1, scrollY / max));
-    root.style.setProperty('--world-progress', progress.toFixed(4));
-    root.style.setProperty('--world-pan', `${(progress * -34).toFixed(2)}px`);
+    if (metricsDirty) measureWorld();
+    const progress = Math.max(0, Math.min(1, scrollY / maxScroll));
+    if (progressFill) progressFill.style.transform = `scaleX(${progress.toFixed(4)})`;
+    if (worldGlow) worldGlow.style.transform = `translate3d(0,${(progress * -26).toFixed(2)}px,0)`;
+    if (worldHaze) worldHaze.style.transform = `translate3d(0,${(progress * 34).toFixed(2)}px,0)`;
     if (nav) nav.style.setProperty('--chapter-progress', progress.toFixed(4));
-    layoutJourneyRoute();
-    const chapters = ['beranda', 'profil', 'keahlian', 'karya', 'perjalanan', 'kontak'];
     let current = 'beranda';
-    chapters.forEach(id => {
-      const section = document.getElementById(id);
-      if (section && section.getBoundingClientRect().top < innerHeight * .54) current = id;
-    });
-    body.dataset.worldChapter = current;
+    const marker = scrollY + innerHeight * .54;
+    chapterPositions.forEach(([id, top]) => { if (top < marker) current = id; });
+    if (body.dataset.worldChapter !== current) body.dataset.worldChapter = current;
   }
   addEventListener('scroll', () => {
+    if (!body.classList.contains('is-scrolling')) body.classList.add('is-scrolling');
+    clearTimeout(scrollIdleTimer);
+    scrollIdleTimer = setTimeout(() => body.classList.remove('is-scrolling'), 140);
     if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
   }, {passive: true});
   addEventListener('resize', () => {
+    metricsDirty = true;
     if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
   }, {passive: true});
   if (journey && 'ResizeObserver' in window) {
     new ResizeObserver(() => {
+      metricsDirty = true;
       if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
     }).observe(journey);
   }
@@ -239,12 +260,10 @@
     pointerX = event.clientX;
     pointerY = event.clientY;
     if (!pointerFrame) pointerFrame = requestAnimationFrame(() => {
-      root.style.setProperty('--light-x', `${pointerX}px`);
-      root.style.setProperty('--light-y', `${pointerY}px`);
       cursor.style.transform = `translate3d(${pointerX}px,${pointerY}px,0)`;
       pointerFrame = 0;
     });
-    if (Math.hypot(pointerX - lastDropX, pointerY - lastDropY) > 34) {
+    if (Math.hypot(pointerX - lastDropX, pointerY - lastDropY) > 60) {
       drop(pointerX, pointerY);
       lastDropX = pointerX;
       lastDropY = pointerY;

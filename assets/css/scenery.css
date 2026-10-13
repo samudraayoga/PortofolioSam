@@ -100,12 +100,6 @@
   border-color: #cdbb8580;
   color: #e6ce99;
 }
-.portfolio-page .paper .journey-toggle {
-  background: #163d4b9c;
-  border-color: #cdbb8566;
-  color: #efdbad;
-}
-.portfolio-page .paper .journey-toggle:hover { background: #3c6068cc; }
 .portfolio-page .paper .education-ribbon > svg { color: #e5cc94; }
 .portfolio-page .paper .education-ribbon .education-year { color: #ccd9d2; }
 

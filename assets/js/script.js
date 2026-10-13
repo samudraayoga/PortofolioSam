@@ -117,42 +117,6 @@
     });
   });
 
-  const journeyButtons = $$('.journey-toggle');
-  function setJourneyExpanded(button, expand) {
-    const detail = document.getElementById(button.getAttribute('aria-controls'));
-    const item = button.closest('.journey-item');
-    const startHeight = detail.getBoundingClientRect().height;
-    detail.getAnimations().forEach(animation => animation.cancel());
-    button.setAttribute('aria-expanded', String(expand));
-    item?.classList.toggle('journey-expanded', expand);
-    item?.closest('.journey-list')?.classList.toggle('has-expanded', journeyButtons.some(control => control.getAttribute('aria-expanded') === 'true'));
-    if (expand && item) {
-      item.classList.remove('journey-detail-pulse');
-      void item.offsetWidth;
-      item.classList.add('journey-detail-pulse');
-      setTimeout(() => item.classList.remove('journey-detail-pulse'), 760);
-    }
-    if (reducedMotion.matches) { detail.hidden = !expand; return; }
-    detail.hidden = false;
-    const endHeight = expand ? detail.scrollHeight : 0;
-    detail.style.overflow = 'hidden';
-    const effect = detail.animate([
-      {height: `${startHeight}px`, opacity: expand ? 0 : 1, transform: expand ? 'translateY(-8px)' : 'translateY(0)', clipPath: expand ? 'inset(0 0 100% 0)' : 'inset(0 0 0 0)'},
-      {height: `${endHeight}px`, opacity: expand ? 1 : 0, transform: expand ? 'translateY(0)' : 'translateY(-8px)', clipPath: expand ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)'}
-    ], {duration: 420, easing: 'cubic-bezier(.16,.8,.2,1)'});
-    effect.finished.then(() => {
-      detail.hidden = button.getAttribute('aria-expanded') !== 'true';
-      detail.style.overflow = '';
-    }).catch(() => {});
-  }
-  journeyButtons.forEach(button => button.addEventListener('click', () => {
-    const expand = button.getAttribute('aria-expanded') !== 'true';
-    if (expand) journeyButtons.forEach(other => {
-      if (other !== button && other.getAttribute('aria-expanded') === 'true') setJourneyExpanded(other, false);
-    });
-    setJourneyExpanded(button, expand);
-  }));
-
   function closeDialog(dialog) {
     if (window.SamudraCharacterReveal?.close(dialog) || window.SamudraProjectPortal?.closeDialog(dialog)) return;
     dialog.close();
@@ -208,13 +172,23 @@
   });
 
   const links = $$('a', nav);
+  let navSections = [];
+  function measureActiveNav() {
+    navSections = links.map(link => {
+      const section = $(link.getAttribute('href'));
+      return section ? [link.getAttribute('href'), section.getBoundingClientRect().top + window.scrollY] : null;
+    }).filter(Boolean);
+  }
   function updateActiveNav() {
     const y = window.scrollY + Math.min(window.innerHeight * .35, 230);
     let active = '#profil';
-    for (const link of links) { const section = $(link.getAttribute('href')); if (section && section.getBoundingClientRect().top + window.scrollY <= y) active = link.getAttribute('href'); }
+    for (const [href, top] of navSections) { if (top <= y) active = href; }
     links.forEach(link => { const current = link.getAttribute('href') === active; link.classList.toggle('active', current); if (current) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
   }
   let ticking = false;
   window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(() => { updateActiveNav(); ticking = false; }); ticking = true; } }, { passive: true });
+  window.addEventListener('resize', () => { measureActiveNav(); updateActiveNav(); }, { passive: true });
+  window.addEventListener('load', () => { measureActiveNav(); updateActiveNav(); }, { once: true });
+  measureActiveNav();
   updateActiveNav();
 })();
