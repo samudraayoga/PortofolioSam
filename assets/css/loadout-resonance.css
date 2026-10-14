@@ -1,8 +1,8 @@
 /* Tech Stack — Loadout Resonance.
    A focused equipment-awakening sequence layered onto the existing arsenal. */
 .unified-interface .tech-arsenal.loadout-resonance {
-  --resonance-gold: #f4dda0;
-  --resonance-hydro: #72d8ed;
+  --resonance-gold: var(--celestial-gold-bright, #f4dda0);
+  --resonance-hydro: var(--celestial-hydro, #72d8ed);
   contain: layout paint;
 }
 
@@ -44,11 +44,11 @@
 }
 
 .unified-interface .loadout-resonance.is-awakening .loadout-energy-pulse {
-  animation: loadout-current-awaken .62s var(--path-delay, 420ms) var(--archive-ease) both;
+  animation: loadout-current-awaken var(--motion-reveal, .62s) var(--path-delay, 420ms) var(--ease-celestial-reveal, var(--archive-ease)) both;
 }
 
 .unified-interface .loadout-resonance.is-awake.is-visible .loadout-energy-pulse {
-  animation: loadout-current-idle 9.6s var(--idle-delay, 0s) linear infinite;
+  animation: loadout-current-idle var(--motion-idle-cycle, 9.6s) var(--idle-delay, 0s) linear infinite;
 }
 
 .unified-interface .loadout-resonance.is-inspecting .loadout-energy-pulse {
@@ -60,6 +60,12 @@
   opacity: .95;
   stroke-dasharray: 12 7;
   filter: drop-shadow(0 0 6px rgba(244, 221, 160, .82));
+}
+
+.unified-interface .loadout-resonance.has-activation .loadout-energy-pulse.is-linked {
+  opacity: .78;
+  stroke: var(--resonance-gold);
+  stroke-dasharray: 10 8;
 }
 
 .unified-interface .loadout-resonance::before {
@@ -77,7 +83,7 @@
 }
 
 .unified-interface .loadout-resonance.is-awake.is-visible::before {
-  animation: loadout-resonance-wave 9.6s 2.1s ease-in-out infinite;
+  animation: loadout-resonance-wave var(--motion-idle-cycle, 9.6s) 2.1s ease-in-out infinite;
 }
 
 .unified-interface .loadout-resonance .tech-sigil {
@@ -93,7 +99,16 @@
 
 .unified-interface .about .loadout-resonance.is-awakening .tech-sigil,
 .unified-interface .about .loadout-resonance.is-awake .tech-sigil {
-  animation: loadout-sigil-awaken .68s var(--resonance-delay, 0ms) var(--archive-ease) both;
+  animation: loadout-sigil-awaken var(--motion-reveal, .68s) var(--resonance-delay, 0ms) var(--ease-celestial-reveal, var(--archive-ease)) both;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-control {
+  border-radius: 8px;
+}
+
+.unified-interface .loadout-resonance .tech-sigil-control:focus-visible {
+  outline: 2px solid rgba(114, 216, 237, .88);
+  outline-offset: 7px;
 }
 
 .unified-interface .loadout-resonance .tech-sigil-frame::after {
@@ -163,19 +178,41 @@
 
 .unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-sigil-frame::after {
   opacity: 1;
-  border-top-color: var(--tech-hover, var(--resonance-gold));
+  border-top-color: var(--resonance-gold);
   border-right-color: rgba(244, 221, 160, .72);
   transform: rotate(18deg) scale(1);
 }
 
 .unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-glyph {
-  color: var(--tech-hover, var(--resonance-gold));
+  color: var(--resonance-gold);
   filter: drop-shadow(0 0 5px currentColor);
   transform: scale(1.055);
 }
 
 .unified-interface .loadout-resonance .tech-sigil.is-inspected .tech-sigil-copy strong {
   color: #ffe9b0;
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-activated .tech-sigil-frame {
+  animation: none !important;
+  border-color: rgba(255, 231, 171, .86);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(114, 216, 237, .15), transparent 58%),
+    linear-gradient(145deg, rgba(31, 78, 93, .96), rgba(7, 32, 49, .97));
+  box-shadow: inset 0 0 0 5px rgba(255, 249, 222, .04), var(--celestial-active-ring);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-activated .tech-glyph,
+.unified-interface .loadout-resonance .tech-sigil.is-activated .tech-sigil-copy strong {
+  color: var(--resonance-gold);
+}
+
+.unified-interface .loadout-resonance .tech-sigil.is-activating .tech-sigil-frame::after {
+  animation: loadout-node-activate var(--motion-transition, .9s) var(--ease-celestial-reveal, var(--archive-ease)) both;
+}
+
+.unified-interface .loadout-resonance .tech-sigil[data-celestial-state='transitioning'] .tech-glyph {
+  filter: drop-shadow(0 0 7px rgba(114, 216, 237, .76));
 }
 
 body.is-scrolling .loadout-resonance *,
@@ -227,6 +264,13 @@ body.is-scrolling .loadout-resonance::before {
   100% { opacity: 0; transform: translate3d(315%, 0, 0); }
 }
 
+@keyframes loadout-node-activate {
+  0% { opacity: 0; transform: rotate(-28deg) scale(.72); }
+  34% { opacity: 1; border-color: var(--resonance-hydro); }
+  72% { opacity: .9; border-color: var(--resonance-gold); }
+  100% { opacity: .5; transform: rotate(152deg) scale(1.08); }
+}
+
 @media (max-width: 800px) {
   .unified-interface .loadout-resonance::before { display: none; }
   .unified-interface .loadout-energy-base { opacity: .7; }
@@ -247,4 +291,5 @@ body.is-scrolling .loadout-resonance::before {
     animation: none !important;
   }
   .unified-interface .loadout-resonance .tech-sigil-frame { animation: none !important; }
+  .unified-interface .loadout-resonance .tech-sigil-control:focus-visible { outline-offset: 4px; }
 }

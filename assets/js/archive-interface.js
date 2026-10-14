@@ -7,7 +7,11 @@
   const body = document.body;
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
-  const ease = 'cubic-bezier(.2,.75,.2,1)';
+  const motion = window.CelestialUI?.motion || {
+    exit: 180, focus: 220, feedback: 320, panel: 430, reveal: 620, sequence: 760, transition: 900,
+    cinematic: 1400, easing: {reveal: 'cubic-bezier(.16,.8,.2,1)'}
+  };
+  const ease = motion.easing.reveal;
 
   root.classList.add('unified-motion-ready');
 
@@ -41,7 +45,7 @@
       host.classList.remove(`${transition}-switching`);
       void host.offsetWidth;
       host.classList.add(`${transition}-switching`);
-      hostTimer = setTimeout(() => host.classList.remove(`${transition}-switching`), transition === 'project' ? 920 : 780);
+      hostTimer = setTimeout(() => host.classList.remove(`${transition}-switching`), transition === 'project' ? motion.transition : motion.sequence);
     }
 
     function playIncoming(panel, direction) {
@@ -55,11 +59,11 @@
         {opacity: 0, transform: `translateX(${offset}px)`, filter: 'brightness(1.45) blur(2px)'},
         {opacity: 1, transform: 'translateX(0)', filter: 'brightness(1) blur(0)'}
       ];
-      panel.animate(frames, {id: 'archive-panel-transition', duration: project ? 540 : 430, easing: ease});
+      panel.animate(frames, {id: 'archive-panel-transition', duration: project ? motion.reveal : motion.panel, easing: ease});
       panel.classList.remove('panel-entering');
       void panel.offsetWidth;
       panel.classList.add('panel-entering');
-      setTimeout(() => panel.classList.remove('panel-entering'), project ? 920 : 760);
+      setTimeout(() => panel.classList.remove('panel-entering'), project ? motion.transition : motion.sequence);
     }
 
     function finishSelection(index, focus = false, animated = true) {
@@ -110,7 +114,7 @@
       ] : [
         {opacity: 1, transform: 'translateX(0)', filter: 'brightness(1)'},
         {opacity: 0, transform: `translateX(${-direction * 8}px)`, filter: 'brightness(1.25)'}
-      ], {id: 'archive-panel-transition', duration: transition === 'project' ? 220 : 170, easing: 'ease-out'});
+      ], {id: 'archive-panel-transition', duration: transition === 'project' ? motion.focus : motion.exit, easing: 'ease-out'});
       outgoing.finished.then(reveal, reveal);
     }
 
@@ -219,7 +223,7 @@
       setTimeout(() => {
         characterStage.classList.remove('hero-materializing');
         characterStage.classList.add('hero-materialized');
-      }, reduced.matches ? 0 : 1750);
+      }, reduced.matches ? 0 : motion.cinematic + motion.feedback);
     };
     if (body.classList.contains('codex-intro-running')) {
       document.addEventListener('celestialgatecomplete', materialize, {once: true});
@@ -234,7 +238,7 @@
       characterStage.classList.remove('portrait-transmuting');
       void characterStage.offsetWidth;
       characterStage.classList.add('portrait-transmuting');
-      portraitShiftTimer = setTimeout(() => characterStage.classList.remove('portrait-transmuting'), 900);
+      portraitShiftTimer = setTimeout(() => characterStage.classList.remove('portrait-transmuting'), motion.transition);
     });
   }
 
@@ -249,14 +253,20 @@
   }
 
   let ambientPointerFrame = 0;
+  let ambientPointerX = innerWidth / 2;
+  let ambientPointerY = innerHeight / 2;
   addEventListener('pointermove', event => {
-    if (reduced.matches || !finePointer.matches || ambientPointerFrame) return;
+    if (reduced.matches || !finePointer.matches || document.hidden || body.classList.contains('is-scrolling')) return;
+    ambientPointerX = event.clientX;
+    ambientPointerY = event.clientY;
+    if (ambientPointerFrame) return;
     ambientPointerFrame = requestAnimationFrame(() => {
-      const ambientX = (event.clientX / innerWidth - .5) * 18;
-      const ambientY = (event.clientY / innerHeight - .5) * 12;
+      ambientPointerFrame = 0;
+      if (document.hidden || body.classList.contains('is-scrolling')) return;
+      const ambientX = (ambientPointerX / innerWidth - .5) * 18;
+      const ambientY = (ambientPointerY / innerHeight - .5) * 12;
       if (ambientFog) ambientFog.style.transform = `translate3d(${(-ambientX * .55).toFixed(2)}px,${(-ambientY * .42).toFixed(2)}px,0)`;
       if (ambientMotes) ambientMotes.style.transform = `translate3d(${(-ambientX * .24).toFixed(2)}px,${(-ambientY * .18).toFixed(2)}px,0)`;
-      ambientPointerFrame = 0;
     });
   }, {passive: true});
 

@@ -10,6 +10,7 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)');
+  const motion = window.CelestialUI?.motion || {exit: 180, sequence: 760, transition: 900};
   const accents = ['#f1d58f', '#86d5ee', '#a8dfc7', '#d4b8ef'];
   let currentIndex = Math.max(0, buttons.findIndex(button => button.getAttribute('aria-selected') === 'true'));
   let prepareTimer = 0;
@@ -112,7 +113,7 @@
   function animateTraveller() {
     cancelAnimationFrame(travelFrame);
     const length = route.getTotalLength();
-    const duration = 720;
+    const duration = motion.sequence;
     let startTime = 0;
 
     function frame(time) {
@@ -158,14 +159,14 @@
       journal.classList.add('ley-memory-travelling');
       drawRoute(button, panel);
       animateTraveller();
-    }, 190);
+    }, motion.exit);
 
     settleTimer = setTimeout(() => {
       journal.classList.remove('ley-memory-travelling');
       journal.classList.add('ley-memory-settled');
       buttons.forEach(item => item.classList.remove('ley-origin'));
       drawRoute(button, panel);
-    }, 1010);
+    }, motion.transition + 100);
   }
 
   const selectionObserver = new MutationObserver(records => {

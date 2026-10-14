@@ -2,6 +2,7 @@
   'use strict';
   const hero = document.querySelector('.portfolio-page .hero');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const motion = window.CelestialUI?.motion || {transition: 900, cinematic: 1400, easing: {transition: 'cubic-bezier(.22,.7,.18,1)'}};
   let timer;
   if (hero && !hero.querySelector('.celestial-sky')) {
     const sky = document.createElement('div');
@@ -35,13 +36,13 @@
         {opacity: 0, transform: 'scale(.01)'},
         {opacity: .24, transform: 'scale(1)', offset: .58},
         {opacity: 0, transform: 'scale(1.08)'}
-      ], {duration: 1050, easing: 'cubic-bezier(.2,.74,.2,1)'});
+      ], {duration: motion.transition, easing: motion.easing.transition});
       effect.finished.finally(() => wave.remove());
     }
     timer = setTimeout(() => {
       document.body.classList.remove('theme-transforming');
       delete document.documentElement.dataset.themeDirection;
-    }, 1450);
+    }, motion.cinematic);
   }
   window.SamudraCelestialTheme = {transition};
 })();

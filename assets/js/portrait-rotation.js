@@ -7,6 +7,7 @@
   if (!portrait || !stage || !card || !control) return;
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const motion = window.CelestialUI?.motion || {reveal: 620};
   const portraits = {
     formal: {src: 'assets/samudra-formal-cutout.webp', alt: 'Formal portrait of Yoga Samudra Heriyanto in a grey suit with subtle cyan rim lighting'},
     urban: {src: 'assets/samudra-urban-cutout-v1.webp', alt: 'Urban casual portrait of Yoga Samudra Heriyanto in a black jacket and glasses holding a phone with cyan and gold rim lighting'},
@@ -79,7 +80,7 @@
     stage.dispatchEvent(new CustomEvent('portraitchange', {detail: {outfit, automatic: true}}));
 
     if (typeof old.animate === 'function') {
-      const animation = old.animate([{opacity: 1}, {opacity: 0}], {duration: 650, easing: 'ease-in-out'});
+      const animation = old.animate([{opacity: 1}, {opacity: 0}], {duration: motion.reveal, easing: 'ease-in-out'});
       fade = animation;
       const cleanup = () => {
         old.remove();

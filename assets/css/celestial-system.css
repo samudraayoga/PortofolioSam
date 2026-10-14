@@ -1,0 +1,92 @@
+/* Celestial UI System
+   Shared visual and motion grammar for the portfolio's game-interface layers. */
+:root {
+  --celestial-gold: #d3bc8e;
+  --celestial-gold-bright: #f4dda0;
+  --celestial-hydro: #72d8ed;
+  --celestial-hydro-soft: rgba(114, 216, 237, .2);
+  --celestial-ivory: #ece5d8;
+  --celestial-ink: #e7eef0;
+  --celestial-muted: #adc0c7;
+  --celestial-night: #081827;
+  --celestial-panel: rgba(14, 39, 54, .88);
+  --celestial-line: rgba(216, 197, 151, .32);
+  --celestial-line-idle: rgba(216, 197, 151, .22);
+  --celestial-line-focus: rgba(244, 221, 160, .78);
+
+  /* Shared tempo sheet: one rhythm across every game-interface system. */
+  --motion-instant: 120ms;
+  --motion-exit: 180ms;
+  --motion-focus: 220ms;
+  --motion-feedback: 320ms;
+  --motion-panel: 430ms;
+  --motion-reveal: 620ms;
+  --motion-sequence: 760ms;
+  --motion-transition: 900ms;
+  --motion-cinematic: 1400ms;
+  --motion-stagger-tight: 45ms;
+  --motion-stagger: 70ms;
+  --motion-stagger-wide: 120ms;
+  --motion-idle-short: 4.8s;
+  --motion-idle-cycle: 9.6s;
+  --motion-idle-long: 32s;
+  --ease-celestial-focus: cubic-bezier(.2, .72, .2, 1);
+  --ease-celestial-reveal: cubic-bezier(.16, .8, .2, 1);
+  --ease-celestial-transition: cubic-bezier(.22, .7, .18, 1);
+  --ease-celestial-exit: cubic-bezier(.4, 0, 1, 1);
+}
+
+.unified-interface {
+  --celestial-focus-ring: 0 0 0 1px rgba(244, 221, 160, .34), 0 0 22px rgba(114, 216, 237, .2);
+  --celestial-active-ring: 0 0 0 1px rgba(255, 235, 181, .58), 0 0 28px rgba(114, 216, 237, .3);
+  --celestial-panel-material: linear-gradient(145deg, rgba(9, 29, 44, .94), rgba(21, 55, 68, .84));
+}
+
+/* Components opt in through data attributes. The state names are deliberately
+   generic so Archive, Journal and Codex can reuse the same behavior later. */
+.unified-interface [data-celestial-component] {
+  --celestial-local-gold: var(--celestial-gold-bright);
+  --celestial-local-energy: var(--celestial-hydro);
+}
+
+.unified-interface [data-celestial-interactive='true'] {
+  transition:
+    color var(--motion-focus) ease,
+    border-color var(--motion-focus) ease,
+    box-shadow var(--motion-focus) ease,
+    filter var(--motion-focus) ease,
+    transform var(--motion-focus) var(--ease-celestial-focus);
+}
+
+.unified-interface [data-celestial-interactive='true']:focus-visible {
+  outline: 2px solid rgba(114, 216, 237, .9);
+  outline-offset: 7px;
+}
+
+.unified-interface [data-celestial-state='dormant'] {
+  --celestial-state-light: var(--celestial-line-idle);
+}
+
+.unified-interface [data-celestial-state='focused'] {
+  --celestial-state-light: var(--celestial-line-focus);
+}
+
+.unified-interface [data-celestial-state='activated'] {
+  --celestial-state-light: var(--celestial-gold-bright);
+}
+
+.unified-interface [data-celestial-state='transitioning'] {
+  --celestial-state-light: var(--celestial-hydro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-focus: 0ms;
+    --motion-feedback: 0ms;
+    --motion-panel: 0ms;
+    --motion-reveal: 0ms;
+    --motion-sequence: 0ms;
+    --motion-transition: 0ms;
+    --motion-cinematic: 0ms;
+  }
+}

@@ -4,7 +4,8 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(hover:hover) and (pointer:fine)');
-  const root = document.documentElement;
+  const motion = window.CelestialUI?.motion || {panel: 430, transition: 900, cinematic: 1400, staggerWide: 120};
+  const motionBudget = window.CelestialMotionBudget;
   const body = document.body;
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -60,7 +61,7 @@
     selectButton.addEventListener('click', () => {
       focus(true);
       characterStage.classList.add('character-select-flare');
-      setTimeout(() => characterStage.classList.remove('character-select-flare'), 900);
+      setTimeout(() => characterStage.classList.remove('character-select-flare'), motion.transition);
     });
     portraitCard.addEventListener('pointerenter', () => focus(true));
     portraitCard.addEventListener('pointerleave', () => focus(false));
@@ -77,12 +78,12 @@
       if (event.detail?.automatic || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       void characterStage.offsetWidth;
       characterStage.classList.add('outfit-shifting');
-      outfitTimer = setTimeout(() => characterStage.classList.remove('outfit-shifting'), 450);
+      outfitTimer = setTimeout(() => characterStage.classList.remove('outfit-shifting'), motion.panel);
     });
 
     $('.character-constellation-link', selection)?.addEventListener('click', () => {
       characterStage.classList.add('constellation-departing');
-      setTimeout(() => characterStage.classList.remove('constellation-departing'), 1000);
+      setTimeout(() => characterStage.classList.remove('constellation-departing'), motion.transition + 100);
     });
   }
 
@@ -121,7 +122,7 @@
     journey.append(mapLabel);
     journeyItems.forEach((item, index) => {
       item.style.setProperty('--ley-index', index);
-      item.style.setProperty('--ley-delay', `${index * 120}ms`);
+      item.style.setProperty('--ley-delay', `${index * motion.staggerWide}ms`);
       const waypoint = document.createElement('span');
       waypoint.className = 'journey-waypoint';
       waypoint.setAttribute('aria-hidden', 'true');
@@ -154,7 +155,7 @@
       contact.classList.remove('wish-acquired');
       void contact.offsetWidth;
       contact.classList.add('wish-acquired');
-      setTimeout(() => contact.classList.remove('wish-acquired'), 1800);
+      setTimeout(() => contact.classList.remove('wish-acquired'), motion.cinematic + motion.panel);
     });
   }
 
@@ -193,8 +194,7 @@
   let chapterPositions = [];
   let maxScroll = 1;
   let metricsDirty = true;
-  let scrollFrame = 0;
-  let scrollIdleTimer = 0;
+  let fallbackScrollFrame = 0;
 
   function measureWorld() {
     maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
@@ -206,36 +206,39 @@
     metricsDirty = false;
   }
 
-  function updateWorld() {
-    scrollFrame = 0;
+  function updateWorld(frameState) {
+    fallbackScrollFrame = 0;
     if (metricsDirty) measureWorld();
-    const progress = Math.max(0, Math.min(1, scrollY / maxScroll));
+    const y = frameState?.y ?? window.scrollY;
+    const viewportHeight = frameState?.viewportHeight ?? window.innerHeight;
+    const progress = Math.max(0, Math.min(1, y / maxScroll));
     if (progressFill) progressFill.style.transform = `scaleX(${progress.toFixed(4)})`;
     if (worldGlow) worldGlow.style.transform = `translate3d(0,${(progress * -26).toFixed(2)}px,0)`;
     if (worldHaze) worldHaze.style.transform = `translate3d(0,${(progress * 34).toFixed(2)}px,0)`;
     if (nav) nav.style.setProperty('--chapter-progress', progress.toFixed(4));
     let current = 'beranda';
-    const marker = scrollY + innerHeight * .54;
+    const marker = y + viewportHeight * .54;
     chapterPositions.forEach(([id, top]) => { if (top < marker) current = id; });
     if (body.dataset.worldChapter !== current) body.dataset.worldChapter = current;
   }
-  addEventListener('scroll', () => {
-    if (!body.classList.contains('is-scrolling')) body.classList.add('is-scrolling');
-    clearTimeout(scrollIdleTimer);
-    scrollIdleTimer = setTimeout(() => body.classList.remove('is-scrolling'), 140);
-    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
-  }, {passive: true});
-  addEventListener('resize', () => {
-    metricsDirty = true;
-    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
-  }, {passive: true});
+  function requestWorldUpdate() {
+    if (motionBudget) motionBudget.requestScrollFrame();
+    else if (!fallbackScrollFrame) fallbackScrollFrame = requestAnimationFrame(updateWorld);
+  }
+  if (motionBudget) {
+    motionBudget.onResize(() => { metricsDirty = true; });
+    motionBudget.onScroll(updateWorld);
+  } else {
+    addEventListener('scroll', requestWorldUpdate, {passive: true});
+    addEventListener('resize', () => { metricsDirty = true; requestWorldUpdate(); }, {passive: true});
+  }
   if (journey && 'ResizeObserver' in window) {
     new ResizeObserver(() => {
       metricsDirty = true;
-      if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWorld);
+      requestWorldUpdate();
     }).observe(journey);
   }
-  updateWorld();
+  requestWorldUpdate();
 
   let pointerFrame = 0;
   let pointerX = innerWidth / 2;
@@ -249,7 +252,7 @@
   if (finePointer.matches && !reduced.matches) body.append(cursor);
 
   function drop(x, y) {
-    if (!finePointer.matches || reduced.matches) return;
+    if (!finePointer.matches || reduced.matches || document.hidden || body.classList.contains('is-scrolling')) return;
     const particle = document.createElement('i');
     particle.className = 'hydro-cursor-drop';
     particle.style.cssText = `left:${x}px;top:${y}px;--drop-x:${(Math.random() - .5) * 22}px;--drop-y:${8 + Math.random() * 17}px`;
@@ -257,6 +260,7 @@
     particle.addEventListener('animationend', () => particle.remove(), {once: true});
   }
   addEventListener('pointermove', event => {
+    if (document.hidden || body.classList.contains('is-scrolling')) return;
     pointerX = event.clientX;
     pointerY = event.clientY;
     if (!pointerFrame) pointerFrame = requestAnimationFrame(() => {
@@ -270,7 +274,7 @@
     }
   }, {passive: true});
   addEventListener('pointerdown', event => {
-    if (!finePointer.matches || reduced.matches) return;
+    if (!finePointer.matches || reduced.matches || body.classList.contains('is-scrolling')) return;
     for (let index = 0; index < 6; index += 1) setTimeout(() => drop(event.clientX, event.clientY), index * 24);
   }, {passive: true});
 

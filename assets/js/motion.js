@@ -4,7 +4,12 @@
   const finePointer = matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)');
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
-  const ease = 'cubic-bezier(.2,.75,.2,1)';
+  const motion = window.CelestialUI?.motion || {
+    exit: 180, focus: 220, feedback: 320, panel: 430, reveal: 620,
+    sequence: 760, transition: 900, cinematic: 1400, stagger: 70,
+    easing: {reveal: 'cubic-bezier(.16,.8,.2,1)', exit: 'cubic-bezier(.4,0,1,1)'}
+  };
+  const ease = motion.easing.reveal;
   let firstVisit = true;
 
   try {
@@ -238,7 +243,7 @@
   }
   function animate(element, frames, options = {}) {
     if (!element || reduced.matches) return null;
-    return element.animate(frames, {duration: 520, easing: ease, fill: 'both', ...options});
+    return element.animate(frames, {duration: motion.reveal, easing: ease, fill: 'both', ...options});
   }
   function reveal(element, index = 0) {
     if (!element || element.classList.contains('motion-seen')) return;
@@ -247,7 +252,7 @@
     animate(element, [
       {opacity: 0, transform: 'translateY(22px)'},
       {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 620, delay: Math.min(index * 70, 280)});
+    ], {duration: motion.reveal, delay: Math.min(index * motion.stagger, motion.stagger * 4)});
   }
 
   // Opening sequence: the first visit opens the codex; return visits stay brief.
@@ -258,23 +263,23 @@
     animate($('.landscape'), [
       {opacity: .45, transform: 'scale(1.075)'},
       {opacity: 1, transform: 'scale(1.025)'}
-    ], {duration: 1200 * introFactor, delay: introDelay, easing: 'cubic-bezier(.16,.72,.2,1)'});
+    ], {duration: motion.cinematic * introFactor, delay: introDelay, easing: motion.easing.reveal});
     $$('.orbit').forEach((element, index) => animate(element, [
       {opacity: 0, scale: .86},
       {opacity: 1, scale: 1}
-    ], {duration: 850 * introFactor, delay: introDelay + (firstVisit ? 180 + index * 100 : index * 45)}));
+    ], {duration: motion.transition * introFactor, delay: introDelay + (firstVisit ? motion.exit + index * 100 : index * 45)}));
     animate($('.portrait-card'), [
       {opacity: 0, clipPath: 'inset(0 0 100% 0)'},
       {opacity: 1, clipPath: 'inset(0 0 0 0)'}
-    ], {duration: 780 * introFactor, delay: introDelay + (firstVisit ? 300 : 80), fill: 'backwards'});
+    ], {duration: motion.sequence * introFactor, delay: introDelay + (firstVisit ? motion.feedback : 80), fill: 'backwards'});
     $$('.hero-copy > *').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 600 * introFactor, delay: introDelay + (firstVisit ? 260 : 70) + Math.min(index * (firstVisit ? 80 : 35), firstVisit ? 400 : 175)}));
+    ], {duration: motion.reveal * introFactor, delay: introDelay + (firstVisit ? 260 : motion.stagger) + Math.min(index * (firstVisit ? 80 : 35), firstVisit ? 400 : 175)}));
     $$('.case-hero :is(.case-eyebrow,.case-product,h1,.case-lead,.case-hero-actions,.case-summary,.case-hero-foot)').forEach((element, index) => animate(element, [
       {opacity: 0, transform: 'translateY(18px)'},
       {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 600, delay: 90 + index * 75}));
+    ], {duration: motion.reveal, delay: 90 + index * motion.stagger}));
   }
   if (!showGate) startOpeningSequence();
 
@@ -368,7 +373,7 @@
     animate(skillPanel, [
       {opacity: 0, transform: `translateX(${direction * 14}px)`},
       {opacity: 1, transform: 'translateX(0)'}
-    ], {duration: 320});
+    ], {duration: motion.feedback});
   }).observe(skillPanel, {childList: true});
 
   // Character Archive keeps long-form profile material inside one focused panel.
@@ -385,7 +390,7 @@
     animate(panel, [
       {opacity: 0, transform: 'translateX(18px)'},
       {opacity: 1, transform: 'translateX(0)'}
-    ], {duration: 360});
+    ], {duration: motion.feedback});
     if (focus) tab.focus();
   }
   archiveTabs.forEach((tab, index) => {
@@ -468,7 +473,7 @@
     const effect = animate(dialog, [
       {opacity: 1, transform: 'scale(1) translateY(0)'},
       {opacity: 0, transform: 'scale(.975) translateY(10px)'}
-    ], {duration: 190, easing: 'ease-in'});
+    ], {duration: motion.exit, easing: motion.easing.exit});
     effect?.finished.finally(() => {
       delete dialog.dataset.closing;
       dialog.close();
@@ -525,7 +530,7 @@
         {color: 'inherit', transform: 'translateX(0)'},
         {color: '#9a7437', transform: 'translateX(5px)', offset: .45},
         {color: 'inherit', transform: 'translateX(0)'}
-      ], {duration: 720, delay: 420 + index * 310});
+      ], {duration: motion.sequence, delay: motion.panel + index * motion.feedback});
     });
   }
   flowButton?.addEventListener('click', playFlow);
@@ -542,7 +547,7 @@
       {opacity: 0, transform: 'scale(.2)'},
       {opacity: .16, transform: 'scale(1.2)', offset: .5},
       {opacity: 0, transform: 'scale(1.7)'}
-    ], {duration: 650});
+    ], {duration: motion.reveal});
     effect?.finished.finally(() => wash.remove());
   });
 

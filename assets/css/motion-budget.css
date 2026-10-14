@@ -1,0 +1,118 @@
+/* Motion budget
+   Effects remain intact; only their tempo and off-screen runtime are coordinated. */
+
+/* 1. Shared response bands. */
+.motion-budget-ready :is(
+  .btn,
+  .theme-toggle,
+  .sound-toggle,
+  .language-toggle,
+  .copy-email,
+  .archive-tabs [role='tab'],
+  .project-archive-nav [role='tab'],
+  .quest-journal-index [role='tab'],
+  .tech-sigil-control,
+  .constellation-node
+) {
+  transition-duration: var(--motion-focus);
+  transition-timing-function: var(--ease-celestial-focus);
+}
+
+.motion-budget-ready :is(
+  .archive-panel,
+  .work-card,
+  .journey-item,
+  .constellation-insight,
+  .codex-entry-meta
+) {
+  transition-duration: var(--motion-panel);
+  transition-timing-function: var(--ease-celestial-reveal);
+}
+
+/* 2. Entrance effects use the same reveal / sequence / cinematic cadence. */
+.motion-budget-ready .unified-arrival {
+  transition-duration: var(--motion-reveal), var(--motion-sequence);
+  transition-timing-function: var(--ease-celestial-reveal);
+}
+.motion-budget-ready .unified-arrival.is-arrived::after { animation-duration: var(--motion-reveal); }
+.motion-budget-ready .hero-materializing .materialization-scan { animation-duration: var(--motion-cinematic); }
+.motion-budget-ready .hero-materializing .portrait-card { animation-duration: var(--motion-cinematic); }
+.motion-budget-ready .hero-materializing .portrait-caption { animation-duration: var(--motion-sequence); }
+.motion-budget-ready .celestial-constellation.constellation-revealed::after { animation-duration: var(--motion-cinematic); }
+.motion-budget-ready .constellation-revealed .monoceros-reference { animation-duration: var(--motion-cinematic); }
+.motion-budget-ready .constellation-revealed .gateway-links path { animation-duration: var(--motion-cinematic); }
+.motion-budget-ready .constellation-revealed .constellation-node { animation-duration: var(--motion-reveal); }
+.motion-budget-ready .loadout-resonance.is-awakening .tech-sigil { animation-duration: var(--motion-reveal); }
+.motion-budget-ready .project-archive.project-switching .archive-motion-trace,
+.motion-budget-ready .quest-journal.quest-switching .archive-motion-trace { animation-duration: var(--motion-sequence); }
+.motion-budget-ready .memory-switching .domain-memory-projection,
+.motion-budget-ready .ley-memory-travelling .ley-memory-layer,
+.motion-budget-ready .character-codex-ready.codex-opening .codex-stage { animation-duration: var(--motion-transition); }
+
+/* 3. Idle motion runs only for the chapter the visitor can currently see. */
+.motion-budget-ready #beranda[data-motion-active='false'] :is(
+  .sparkle,
+  .orbit,
+  .vision,
+  #portrait,
+  .hero-idle-motes i
+),
+.motion-budget-ready #profil[data-motion-active='false'] :is(
+  .loadout-energy-pulse,
+  .character-archive .panel-shimmer,
+  .codex-orbit,
+  .codex-star
+),
+.motion-budget-ready #keahlian[data-motion-active='false'] :is(
+  .celestial-nebula,
+  .celestial-dust i,
+  .gateway-energy path,
+  .node-star,
+  .panel-shimmer
+),
+.motion-budget-ready #karya[data-motion-active='false'] :is(
+  .project-data-flow i,
+  .project-archive .panel-shimmer,
+  .work-card.is-active .work-art > img
+),
+.motion-budget-ready #perjalanan[data-motion-active='false'] :is(
+  .journey-waypoint,
+  .quest-journal .panel-shimmer,
+  .education-ribbon .panel-shimmer
+),
+.motion-budget-ready #kontak[data-motion-active='false'] :is(
+  .wish-comet,
+  .wish-finale i,
+  .wish-finale strong
+) {
+  animation-play-state: paused !important;
+}
+
+.motion-budget-ready #beranda[data-motion-active='false'] .portrait-window::before,
+.motion-budget-ready #profil[data-motion-active='false'] .tech-sigil-frame::after {
+  animation-play-state: paused !important;
+}
+
+/* The same policy applies when the browser tab is hidden. */
+.motion-suspended *,
+.motion-suspended *::before,
+.motion-suspended *::after {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 800px) {
+  :root {
+    --motion-reveal: 520ms;
+    --motion-sequence: 680ms;
+    --motion-transition: 820ms;
+    --motion-cinematic: 1180ms;
+    --motion-stagger: 55ms;
+    --motion-stagger-wide: 95ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-budget-ready [data-motion-budget='chapter'] * {
+    animation-play-state: paused !important;
+  }
+}

@@ -10,6 +10,7 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)');
+  const motion = window.CelestialUI?.motion || {focus: 220, transition: 900, feedback: 320, staggerTight: 45};
   const accents = ['#9ed7c1', '#a9bdf3', '#a8d8b4', '#dab5ef'];
   let currentIndex = Math.max(0, buttons.findIndex(button => button.getAttribute('aria-selected') === 'true'));
   let switchTimer = 0;
@@ -42,7 +43,7 @@
   const fragmentHost = projection.querySelector('.domain-memory-fragments');
   for (let index = 0; index < 7; index += 1) {
     const fragment = document.createElement('i');
-    fragment.style.cssText = `--fragment-x:${12 + (index * 31) % 78}%;--fragment-y:${15 + (index * 23) % 66}%;--fragment-size:${index % 3 === 0 ? 6 : 4}px;--fragment-delay:${index * 45}ms;--fragment-drift:${index % 2 ? 13 : -13}px`;
+    fragment.style.cssText = `--fragment-x:${12 + (index * 31) % 78}%;--fragment-y:${15 + (index * 23) % 66}%;--fragment-size:${index % 3 === 0 ? 6 : 4}px;--fragment-delay:${index * motion.staggerTight}ms;--fragment-drift:${index % 2 ? 13 : -13}px`;
     fragmentHost.append(fragment);
   }
 
@@ -109,7 +110,7 @@
     switchTimer = setTimeout(() => {
       archive.classList.remove('memory-switching');
       buttons.forEach(item => item.classList.remove('memory-sending'));
-    }, 1120);
+    }, motion.transition + motion.focus);
   }
 
   const selectionObserver = new MutationObserver(records => {

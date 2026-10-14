@@ -179,16 +179,24 @@
       return section ? [link.getAttribute('href'), section.getBoundingClientRect().top + window.scrollY] : null;
     }).filter(Boolean);
   }
-  function updateActiveNav() {
-    const y = window.scrollY + Math.min(window.innerHeight * .35, 230);
+  function updateActiveNav(frameState) {
+    const scrollY = frameState?.y ?? window.scrollY;
+    const viewportHeight = frameState?.viewportHeight ?? window.innerHeight;
+    const y = scrollY + Math.min(viewportHeight * .35, 230);
     let active = '#profil';
     for (const [href, top] of navSections) { if (top <= y) active = href; }
     links.forEach(link => { const current = link.getAttribute('href') === active; link.classList.toggle('active', current); if (current) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
   }
-  let ticking = false;
-  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(() => { updateActiveNav(); ticking = false; }); ticking = true; } }, { passive: true });
-  window.addEventListener('resize', () => { measureActiveNav(); updateActiveNav(); }, { passive: true });
-  window.addEventListener('load', () => { measureActiveNav(); updateActiveNav(); }, { once: true });
+  const motionBudget = window.CelestialMotionBudget;
+  if (motionBudget) {
+    motionBudget.onResize(measureActiveNav);
+    motionBudget.onScroll(updateActiveNav);
+  } else {
+    let ticking = false;
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(() => { updateActiveNav(); ticking = false; }); ticking = true; } }, { passive: true });
+    window.addEventListener('resize', () => { measureActiveNav(); updateActiveNav(); }, { passive: true });
+  }
+  window.addEventListener('load', () => { measureActiveNav(); motionBudget?.requestScrollFrame(); updateActiveNav(); }, { once: true });
   measureActiveNav();
   updateActiveNav();
 })();

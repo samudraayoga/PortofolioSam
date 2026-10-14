@@ -9,6 +9,7 @@
 
   const ns = 'http://www.w3.org/2000/svg';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motion = window.CelestialUI?.motion || {instant: 120, sequence: 760, cinematic: 1400, stagger: 70};
   const names = {
     fullstack: 'Full-Stack Development',
     ai: 'AI & Automation',
@@ -192,7 +193,7 @@
         node.classList.remove('is-inviting');
         void node.offsetWidth;
         node.classList.add('is-inviting');
-        setTimeout(() => node.classList.remove('is-inviting'), 1500);
+        setTimeout(() => node.classList.remove('is-inviting'), motion.cinematic);
       }
       scheduleInvitation();
     }, 4200);
@@ -245,7 +246,7 @@
     const align = direction < 0 ? 'end' : 'start';
     const group = svgElement('g', {
       class: 'skill-point',
-      style: `--point-delay:${.72 + index * .1}s`
+      style: `--point-delay:${(motion.sequence + index * motion.stagger) / 1000}s`
     });
     group.append(
       svgElement('line', {class: 'skill-leader', x1: x + direction * 17, y1: y, x2: x + direction * 27, y2: y}),
@@ -343,7 +344,7 @@
     void stage.offsetWidth;
     stage.classList.add('talent-focused', 'talent-unlocking', 'network-awake');
     resetButton.hidden = false;
-    setTimeout(() => stage.classList.remove('talent-unlocking'), reducedMotion.matches ? 0 : 1500);
+    setTimeout(() => stage.classList.remove('talent-unlocking'), reducedMotion.matches ? 0 : motion.cinematic);
   }
 
   function requestActivation(skill) {
@@ -353,7 +354,7 @@
     nodeButtons.forEach(button => button.classList.remove('is-inviting'));
     stage.classList.add('talent-focused', 'talent-collapsing');
     resetButton.hidden = false;
-    activationTimer = setTimeout(() => renderSkill(skill, previousSkill), reducedMotion.matches ? 0 : 150);
+    activationTimer = setTimeout(() => renderSkill(skill, previousSkill), reducedMotion.matches ? 0 : motion.instant);
   }
 
   nodeButtons.forEach(button => {

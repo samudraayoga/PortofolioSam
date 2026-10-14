@@ -4,6 +4,7 @@
   if (!chapters.length) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const mobile = matchMedia('(max-width:800px)');
+  const motion = window.CelestialUI?.motion || {feedback: 320, reveal: 620, stagger: 70};
   const running = new Map();
   let observer;
 
@@ -39,14 +40,14 @@
     const art = chapter.querySelector('.work-art');
     const copy = [...chapter.querySelector('.work-body').children];
     if (mobile.matches) {
-      play(art, [{opacity: 0}, {opacity: 1}], {duration: 280});
-      copy.forEach(element => play(element, [{opacity: 0}, {opacity: 1}], {duration: 260, delay: 100}));
+      play(art, [{opacity: 0}, {opacity: 1}], {duration: motion.feedback});
+      copy.forEach(element => play(element, [{opacity: 0}, {opacity: 1}], {duration: motion.feedback, delay: 100}));
     } else {
       chapter.classList.add('quest-drawing');
-      play(art, [{opacity: 0, clipPath: 'inset(0 100% 0 0)'}, {opacity: 1, clipPath: 'inset(0 0 0 0)'}], {duration: 600, delay: 160});
+      play(art, [{opacity: 0, clipPath: 'inset(0 100% 0 0)'}, {opacity: 1, clipPath: 'inset(0 0 0 0)'}], {duration: motion.reveal, delay: 160});
       const sweep = art.querySelector('.quest-light-sweep');
-      play(sweep, [{opacity: 0, left: '-20%'}, {opacity: .6, left: '35%', offset: .5}, {opacity: 0, left: '100%'}], {duration: 600, delay: 160});
-      copy.forEach((element, index) => play(element, [{opacity: 0, transform: 'translateY(10px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 350, delay: 330 + index * 55}));
+      play(sweep, [{opacity: 0, left: '-20%'}, {opacity: .6, left: '35%', offset: .5}, {opacity: 0, left: '100%'}], {duration: motion.reveal, delay: 160});
+      copy.forEach((element, index) => play(element, [{opacity: 0, transform: 'translateY(10px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: motion.feedback, delay: 330 + index * motion.stagger}));
     }
   }
 

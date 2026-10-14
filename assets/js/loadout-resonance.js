@@ -4,15 +4,40 @@
   const arsenal = document.querySelector('.tech-arsenal');
   const grid = arsenal?.querySelector('.tech-sigil-grid');
   const sigils = grid ? [...grid.querySelectorAll('.tech-sigil')] : [];
-  if (!arsenal || !grid || sigils.length < 2) return;
+  const controls = sigils.map(sigil => sigil.querySelector('.tech-sigil-control'));
+  if (!arsenal || !grid || sigils.length < 2 || controls.some(control => !control)) return;
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const celestial = window.CelestialUI;
+  const motion = celestial?.motion || {feedback: 320, reveal: 620, sequence: 760, transition: 900, cinematic: 1400, panel: 430, stagger: 70, staggerWide: 120};
   let awakeTimer = 0;
+  let activationTimer = 0;
   let ringTimers = [];
   let resizeFrame = 0;
+  let activeIndex = -1;
 
   arsenal.classList.add('loadout-resonance');
+  arsenal.dataset.celestialComponent = 'loadout-resonance';
+  arsenal.dataset.celestialPhase = 'dormant';
   document.documentElement.classList.add('loadout-resonance-ready');
+
+  sigils.forEach((sigil, index) => {
+    sigil.dataset.celestialComponent = 'loadout-node';
+    sigil.dataset.celestialInteractive = 'true';
+    celestial?.setInteractive(sigil, 'loadout-node');
+    controls[index].dataset.celestialInteractive = 'true';
+    controls[index].setAttribute('aria-pressed', 'false');
+  });
+
+  const announcer = document.createElement('span');
+  announcer.className = 'sr-only';
+  announcer.setAttribute('aria-live', 'polite');
+  arsenal.append(announcer);
+
+  function setSigilState(sigil, state, detail = {}) {
+    if (celestial?.setState) celestial.setState(sigil, state, detail);
+    else sigil.dataset.celestialState = state;
+  }
 
   const field = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   field.classList.add('loadout-energy-field');
@@ -81,7 +106,7 @@
         path.dataset.to = String(nextIndex);
         path.setAttribute('d', d);
         if (layer === 'pulse') {
-          path.style.setProperty('--path-delay', `${390 + routeIndex * 125}ms`);
+          path.style.setProperty('--path-delay', `${motion.feedback + motion.stagger + routeIndex * motion.staggerWide}ms`);
           path.style.setProperty('--idle-delay', `${routeIndex * .18}s`);
         }
         field.append(path);
@@ -96,6 +121,7 @@
 
   function clearTimers() {
     clearTimeout(awakeTimer);
+    clearTimeout(activationTimer);
     ringTimers.forEach(clearTimeout);
     ringTimers = [];
   }
@@ -105,31 +131,42 @@
     drawEnergyRoute();
     if (reduced.matches) {
       arsenal.classList.add('is-awake', 'is-visible');
+      arsenal.dataset.celestialPhase = 'idle';
       sigils.forEach(sigil => sigil.classList.add('is-awakened'));
       return;
     }
 
     arsenal.classList.add('is-awakening', 'is-visible');
+    arsenal.dataset.celestialPhase = 'revealing';
     const order = routeOrder();
     sigils.forEach((sigil, index) => {
+      setSigilState(sigil, 'transitioning', {source: 'loadout-awakening'});
       const routeIndex = order.indexOf(index);
-      const delay = routeIndex === 0 ? 90 : 520 + routeIndex * 125;
+      const delay = routeIndex === 0 ? 90 : motion.reveal - 100 + routeIndex * motion.staggerWide;
       sigil.style.setProperty('--resonance-delay', `${delay}ms`);
       ringTimers.push(setTimeout(() => {
         sigil.classList.add('is-awakened');
-        setTimeout(() => sigil.classList.remove('is-awakened'), 760);
+        setTimeout(() => sigil.classList.remove('is-awakened'), motion.sequence);
       }, delay + 110));
     });
 
     awakeTimer = setTimeout(() => {
       arsenal.classList.remove('is-awakening');
       arsenal.classList.add('is-awake');
-    }, 1850);
+      arsenal.dataset.celestialPhase = 'idle';
+      sigils.forEach(sigil => setSigilState(sigil, 'dormant', {source: 'loadout-awakened'}));
+    }, motion.cinematic + motion.panel);
   }
 
-  function highlightRoute(index) {
+  function highlightRoute(index, focused = false) {
     arsenal.classList.toggle('is-inspecting', index >= 0);
-    sigils.forEach((sigil, sigilIndex) => sigil.classList.toggle('is-inspected', sigilIndex === index));
+    arsenal.classList.toggle('has-activation', activeIndex >= 0);
+    sigils.forEach((sigil, sigilIndex) => {
+      sigil.classList.toggle('is-inspected', sigilIndex === index);
+      if (focused && sigilIndex === index) setSigilState(sigil, 'focused', {source: 'loadout-focus'});
+      else if (sigilIndex === activeIndex) setSigilState(sigil, 'activated', {source: 'loadout-activation'});
+      else setSigilState(sigil, 'dormant', {source: 'loadout-idle'});
+    });
     field.querySelectorAll('.loadout-energy-pulse').forEach(path => {
       const from = Number(path.dataset.from);
       const to = Number(path.dataset.to);
@@ -137,9 +174,58 @@
     });
   }
 
+  function activate(index) {
+    clearTimeout(activationTimer);
+    activeIndex = activeIndex === index ? -1 : index;
+
+    sigils.forEach((sigil, sigilIndex) => {
+      const active = sigilIndex === activeIndex;
+      sigil.classList.toggle('is-activated', active);
+      sigil.classList.remove('is-activating');
+      controls[sigilIndex].setAttribute('aria-pressed', String(active));
+    });
+
+    if (activeIndex < 0) {
+      highlightRoute(-1);
+      announcer.textContent = document.documentElement.lang === 'id'
+        ? 'Pilihan loadout dilepas.'
+        : 'Loadout selection cleared.';
+      return;
+    }
+
+    const activeSigil = sigils[activeIndex];
+    const label = activeSigil.querySelector('.tech-sigil-copy strong')?.textContent.trim() || 'Technology';
+    activeSigil.classList.add('is-activating');
+    highlightRoute(activeIndex);
+    setSigilState(activeSigil, 'transitioning', {source: 'loadout-activation'});
+    announcer.textContent = document.documentElement.lang === 'id'
+      ? `${label} diaktifkan pada loadout.`
+      : `${label} activated in the loadout.`;
+
+    activationTimer = setTimeout(() => {
+      activeSigil.classList.remove('is-activating');
+      setSigilState(activeSigil, 'activated', {source: 'loadout-activation-complete'});
+    }, reduced.matches ? 0 : motion.transition);
+  }
+
   sigils.forEach((sigil, index) => {
-    sigil.addEventListener('pointerenter', () => highlightRoute(index));
-    sigil.addEventListener('pointerleave', () => highlightRoute(-1));
+    const control = controls[index];
+    sigil.addEventListener('pointerenter', () => highlightRoute(index, true));
+    sigil.addEventListener('pointerleave', () => highlightRoute(activeIndex));
+    control.addEventListener('focus', () => highlightRoute(index, true));
+    control.addEventListener('blur', () => highlightRoute(activeIndex));
+    control.addEventListener('click', () => activate(index));
+    control.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      clearTimeout(activationTimer);
+      activeIndex = -1;
+      sigils.forEach((item, itemIndex) => {
+        item.classList.remove('is-activated', 'is-activating');
+        controls[itemIndex].setAttribute('aria-pressed', 'false');
+      });
+      highlightRoute(-1);
+    });
   });
 
   if (reduced.matches || !('IntersectionObserver' in window)) awaken();
@@ -162,7 +248,9 @@
     clearTimers();
     arsenal.classList.remove('is-awakening');
     arsenal.classList.add('is-awake');
+    arsenal.dataset.celestialPhase = 'idle';
     sigils.forEach(sigil => sigil.classList.remove('is-awakened'));
+    highlightRoute(activeIndex);
   });
 
   addEventListener('pagehide', clearTimers, {once: true});

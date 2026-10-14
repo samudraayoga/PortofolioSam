@@ -10,6 +10,7 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = matchMedia('(min-width: 801px) and (hover: hover) and (pointer: fine)');
+  const motion = window.CelestialUI?.motion || {sequence: 760, transition: 900};
   const entries = [
     {number: '01', label: 'Character Overview', accent: '#f1d38e'},
     {number: '02', label: 'Origin Record', accent: '#89d9eb'},
@@ -75,11 +76,11 @@
       requestAnimationFrame(() => activePanel(index)?.classList.add('codex-entry-revealing'));
     }
 
-    revealTimer = setTimeout(() => panel?.classList.remove('codex-entry-revealing'), 900);
+    revealTimer = setTimeout(() => panel?.classList.remove('codex-entry-revealing'), motion.transition);
     settleTimer = setTimeout(() => {
       codex.classList.remove('codex-opening');
       codex.classList.add('codex-resting');
-    }, 820);
+    }, motion.sequence);
   }
 
   const selectionObserver = new MutationObserver(records => {
