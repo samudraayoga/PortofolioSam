@@ -223,6 +223,7 @@
       setTimeout(() => {
         characterStage.classList.remove('hero-materializing');
         characterStage.classList.add('hero-materialized');
+        characterStage.closest('.hero')?.classList.add('hero-snapshot-ready');
       }, reduced.matches ? 0 : motion.cinematic + motion.feedback);
     };
     if (body.classList.contains('codex-intro-running')) {

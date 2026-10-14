@@ -1,0 +1,117 @@
+/* The opening scene settles into a readable professional introduction. */
+.unified-interface .hero-copy { max-width: 540px; }
+.unified-interface .hero-copy .eyebrow { margin-bottom: 19px; }
+.unified-interface .hero-copy h1 {
+  margin-bottom: 7px;
+  color: #fffaf0;
+  font-size: clamp(49px, 5vw, 69px);
+  line-height: 1.12;
+  text-wrap: balance;
+  text-shadow: 0 4px 25px rgba(4, 26, 40, .35);
+}
+.unified-interface .hero-copy .hero-profession {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 9px;
+  min-height: 1.4em;
+  margin: 0 0 23px;
+  font-size: clamp(19px, 2.1vw, 27px);
+  font-weight: 500;
+}
+.unified-interface .hero-copy .hero-profession strong { color: #f4dea5; font-weight: 500; }
+.unified-interface .hero-copy .hero-profession-secondary { color: #d7e5e2; white-space: nowrap; }
+.unified-interface .hero-copy .hero-profession .typed { color: #d7e5e2; }
+.unified-interface .hero-snapshot {
+  position: relative;
+  max-width: 480px;
+  padding: 16px 0 15px 20px;
+  border-left: 1px solid rgba(240, 217, 159, .75);
+  background: linear-gradient(90deg, rgba(7, 31, 45, .48), rgba(7, 31, 45, 0) 84%);
+}
+.unified-interface .hero-snapshot::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  background: #f3d99b;
+  box-shadow: 0 0 12px rgba(244, 215, 153, .5);
+}
+.unified-interface .hero-snapshot-focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 0;
+  margin: 0 0 10px;
+  color: #e9d49d;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .035em;
+  line-height: 1.5;
+}
+.unified-interface .hero-snapshot-focus span + span::before {
+  content: '◆';
+  display: inline-block;
+  margin: 0 10px;
+  color: #94cdd5;
+  font-size: 6px;
+  vertical-align: 2px;
+}
+.unified-interface .hero-snapshot .hero-intro {
+  max-width: 410px;
+  color: #f3f5f0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.unified-interface .hero-copy .hero-buttons { margin-top: 27px; }
+.unified-interface .hero-copy .hero-footnote { color: #c4d6d7; }
+
+/* The information arrives after the portrait scan, then stays still for reading. */
+.unified-motion-ready .hero:not(.hero-snapshot-ready) .hero-copy > :is(.eyebrow, h1, .hero-profession, .hero-snapshot, .hero-buttons, .hero-footnote) {
+  opacity: 0;
+}
+.unified-motion-ready .hero-snapshot-ready .hero-copy > :is(.eyebrow, h1, .hero-profession, .hero-snapshot, .hero-buttons, .hero-footnote) {
+  animation: hero-snapshot-arrive var(--motion-reveal, 620ms) var(--ease-celestial-reveal, cubic-bezier(.16, .8, .2, 1)) both;
+}
+.unified-motion-ready .hero-snapshot-ready .hero-copy > h1 { animation-delay: 85ms; }
+.unified-motion-ready .hero-snapshot-ready .hero-copy > .hero-profession { animation-delay: 165ms; }
+.unified-motion-ready .hero-snapshot-ready .hero-copy > .hero-snapshot { animation-delay: 245ms; }
+.unified-motion-ready .hero-snapshot-ready .hero-copy > .hero-buttons { animation-delay: 325ms; }
+.unified-motion-ready .hero-snapshot-ready .hero-copy > .hero-footnote { animation-delay: 405ms; }
+@keyframes hero-snapshot-arrive {
+  from { opacity: 0; transform: translate3d(0, 13px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (max-width: 800px) {
+  .unified-interface .hero-copy { max-width: none; }
+  .unified-interface .hero-copy h1 { font-size: clamp(39px, 7vw, 54px); }
+}
+@media (max-width: 600px) {
+  .unified-interface .hero-copy h1 { margin-bottom: 5px; font-size: clamp(35px, 10vw, 44px); }
+  .unified-interface .hero-copy .hero-profession { justify-content: center; margin-bottom: 18px; font-size: clamp(16px, 4.35vw, 21px); }
+  .unified-interface .hero-snapshot {
+    width: min(100%, 390px);
+    margin-inline: auto;
+    padding: 12px 12px 14px;
+    border-left: 0;
+    border-top: 1px solid rgba(240, 217, 159, .62);
+    background: linear-gradient(180deg, rgba(7, 31, 45, .5), rgba(7, 31, 45, 0));
+  }
+  .unified-interface .hero-snapshot::before { top: -4px; left: calc(50% - 4px); }
+  .unified-interface .hero-snapshot-focus { justify-content: center; font-size: 10px; }
+  .unified-interface .hero-snapshot-focus span + span::before { margin-inline: 7px; }
+  .unified-interface .hero-snapshot .hero-intro { margin-inline: auto; font-size: 13px; line-height: 1.6; }
+  .unified-interface .hero-copy .hero-buttons { margin-top: 23px; }
+}
+@media (max-width: 340px) {
+  .unified-interface .hero-copy h1 { font-size: 34px; }
+  .unified-interface .hero-snapshot-focus { font-size: 9px; }
+  .unified-interface .hero-snapshot-focus span + span::before { margin-inline: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .unified-motion-ready .hero:not(.hero-snapshot-ready) .hero-copy > :is(.eyebrow, h1, .hero-profession, .hero-snapshot, .hero-buttons, .hero-footnote) { opacity: 1; }
+  .unified-motion-ready .hero-snapshot-ready .hero-copy > :is(.eyebrow, h1, .hero-profession, .hero-snapshot, .hero-buttons, .hero-footnote) { animation: none; }
+}
