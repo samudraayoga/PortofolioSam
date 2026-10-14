@@ -1,0 +1,174 @@
+/* Mobile validation pass
+   Keeps the cinematic reveal system intact while tightening layout, touch,
+   and scroll behaviour for phones and tablets. */
+
+@media (max-width: 800px) {
+  .portfolio-page { overflow-x: clip; }
+
+  .desktop-nav.open {
+    max-height: calc(100svh - 88px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .archive-tabs,
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index {
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 17px;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+
+  .archive-tabs::-webkit-scrollbar,
+  .unified-interface .project-archive-nav::-webkit-scrollbar,
+  .unified-interface .quest-journal-index::-webkit-scrollbar { display: none; }
+
+  .archive-tabs > [role='tab'],
+  .unified-interface .project-archive-nav > [role='tab'],
+  .unified-interface .quest-journal-index > [role='tab'] { scroll-snap-align: start; }
+
+  .brand,
+  .scroll-link,
+  .work-link,
+  .contact-email,
+  .site-footer a {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .scroll-link,
+  .work-link,
+  .contact-email,
+  .site-footer a { display: inline-flex; }
+}
+
+@media (max-width: 600px) {
+  /* motion.css gives the desktop navigation a relative anchor. Restore the
+     full-width overlay model when the menu becomes a mobile disclosure. */
+  .desktop-nav,
+  .desktop-nav.open {
+    position: absolute;
+    top: 69px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 12;
+  }
+
+  /* A four-column loadout keeps all eight sigils visible without turning the
+     opening chapter into a long inventory list. Route geometry is calculated
+     from the live item positions, so its energy trace still follows the grid. */
+  .unified-interface .tech-sigil-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 19px 4px;
+    margin-top: 18px;
+  }
+
+  .unified-interface .tech-sigil-control {
+    min-height: 78px;
+    gap: 8px;
+  }
+
+  .unified-interface .tech-sigil-frame {
+    width: 46px;
+    height: 46px;
+    border-radius: 9px;
+  }
+
+  .unified-interface .tech-sigil-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .unified-interface .tech-sigil-copy strong { font-size: 7.5px; }
+  .unified-interface .tech-sigil-copy small {
+    font-size: 4.75px;
+    line-height: 1.3;
+    letter-spacing: .45px;
+  }
+
+  .archive-tabs {
+    gap: 2px;
+    scroll-padding-inline: 0;
+  }
+
+  .archive-tabs > [role='tab'] { min-height: 44px; }
+
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index {
+    grid-auto-columns: minmax(205px, 86%);
+    gap: 7px;
+    padding: 14px;
+    scroll-padding-inline: 14px;
+  }
+
+  .unified-interface .project-archive-stage,
+  .unified-interface .journey-list { padding: 16px; }
+
+  .unified-interface .journey-item { padding: 20px; }
+
+  .unified-interface .journey-details {
+    padding: 14px;
+    font-size: 11px;
+    line-height: 1.72;
+  }
+
+  .contact-buttons {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 48px;
+    width: min(100%, 330px);
+    margin-inline: auto;
+  }
+
+  .contact-buttons > .btn:first-child { min-width: 0; }
+  .contact-buttons .copy-email { width: 48px; padding-inline: 0; }
+  .contact-buttons .linkedin { grid-column: 1 / -1; justify-content: center; }
+  .contact-email { justify-content: center; }
+
+  .site-footer a { padding-block: 8px; }
+}
+
+@media (max-width: 340px) {
+  /* Preserve a complete celestial brand mark rather than clipping the wordmark
+     between the audio, language, theme, and menu controls. */
+  .brand {
+    flex: 0 0 44px;
+    width: 44px;
+    gap: 0;
+    overflow: visible;
+  }
+
+  .brand-name { display: none; }
+  .brand-mark {
+    display: block;
+    width: 28px;
+    height: 32px;
+  }
+
+  .header-actions { gap: 5px; }
+
+  .unified-interface .tech-sigil-frame {
+    width: 44px;
+    height: 44px;
+  }
+
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index {
+    grid-auto-columns: minmax(195px, 85%);
+    padding-inline: 12px;
+  }
+
+  .unified-interface .project-archive-stage,
+  .unified-interface .journey-list { padding: 14px; }
+
+  .contact { padding-inline: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-tabs,
+  .unified-interface .project-archive-nav,
+  .unified-interface .quest-journal-index { scroll-behavior: auto; }
+}

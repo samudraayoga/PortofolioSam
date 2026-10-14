@@ -112,3 +112,31 @@ A clean desktop route at 1680 × 906 CSS pixels produced:
 The 390 × 844 mobile verification route produced **57.9 FPS**, a **17.1 ms** p95 frame, no horizontal overflow, and no frames below 20 FPS. Mobile still keeps the intended lightweight policy: global fog, mote field, and panel shimmer are not rendered below the 800 px breakpoint, while the core reveals and interaction states remain available.
 
 Browser verification also confirmed that `is-scrolling` is cleared after settling, world and motion chapter state return to the correct section, active navigation remains synchronized, and the console reports no warnings or errors.
+
+## Mobile validation and adjustment pass
+
+The final responsive pass was checked at 320 × 700, 390 × 844, and 768 × 1024 CSS pixels. It keeps the cinematic reveals, constellation awakening, archive projections, and ley-line playback intact while making the surrounding interface more compact and touch-safe.
+
+- The 320 px layout has no document-level horizontal overflow, and all 43 rendered links and buttons meet a minimum 44 px touch dimension.
+- At 320 px the full wordmark becomes the existing celestial star mark, preventing the brand from being clipped between the four header controls.
+- The mobile navigation now opens as a full-width overlay with four 44 px rows. A later motion rule had previously changed its positioning context and compressed it into a narrow column.
+- The eight-item Tech Stack is now a 4 × 2 loadout tray on phones. Its grid height is 175 px and the complete arsenal block is approximately 229 px at 390 px wide, down from roughly 443 px, without removing sigils or resonance animation.
+- Character Codex, Project Archive, and Quest Journal tabs use native momentum scrolling, proximity snap, contained horizontal overscroll, and partial next-card visibility as an affordance.
+- Quest detail copy is 11 px with a 1.72 line height on phones.
+- Contact actions form a stable two-row layout: conversation and copy actions share the first row, while LinkedIn receives the second row. Email and footer links retain 44 px touch height.
+- Project selection, Quest selection, Character Codex tabs, Tech Stack activation, Constellation awakening, and the mobile menu were exercised successfully.
+- The 768 px tablet layout keeps its desktop navigation, four-column loadout, and stacked cinematic hero without horizontal overflow.
+
+After a warm-up, the 390 × 844 mobile scroll route produced:
+
+| Metric | Result |
+| --- | ---: |
+| Average | **59.3 FPS** |
+| p95 frame | **17.6 ms** |
+| Worst frame | **33.8 ms** |
+| Estimated dropped frames | **4 / 268** |
+| Frames below 20 FPS | **0** |
+| Long tasks | **0** |
+| Cumulative layout shift | **0.0047** |
+
+The browser console reported no warnings or errors. The viewport override used for testing was reset afterward.

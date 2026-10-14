@@ -1,0 +1,192 @@
+/* Project Impact Ledger
+   Recruiter-facing evidence presented as a compact celestial stat panel. */
+
+.unified-interface #karya .work-impact-lead {
+  margin-bottom: 15px;
+  color: var(--archive-copy);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.unified-interface .impact-ledger {
+  position: relative;
+  margin: 0 0 15px;
+  padding: 12px 0 0;
+  border-top: 1px solid rgba(226, 204, 151, .28);
+  isolation: isolate;
+}
+
+.unified-interface .impact-ledger::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -4px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(245, 222, 163, .82);
+  background: #12384a;
+  box-shadow: 0 0 11px rgba(110, 214, 237, .42);
+  transform: rotate(45deg);
+}
+
+.unified-interface .impact-ledger::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: -1px;
+  width: 22%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f5dfa7, rgba(116, 219, 239, .7), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.unified-interface .impact-ledger-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  padding-left: 12px;
+  text-transform: uppercase;
+}
+
+.unified-interface .impact-ledger-head > span {
+  color: var(--archive-gold);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .18em;
+}
+
+.unified-interface .impact-ledger-head > strong {
+  padding: 3px 7px;
+  border: 1px solid rgba(126, 217, 232, .22);
+  color: var(--archive-muted);
+  background: rgba(8, 31, 45, .48);
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: .13em;
+}
+
+.unified-interface .impact-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border: 1px solid rgba(216, 197, 151, .19);
+  background: linear-gradient(110deg, rgba(14, 46, 60, .58), rgba(7, 29, 43, .42));
+}
+
+.unified-interface .impact-metrics > div {
+  min-width: 0;
+  padding: 9px 8px 8px;
+}
+
+.unified-interface .impact-metrics > div + div { border-left: 1px solid rgba(216, 197, 151, .15); }
+
+.unified-interface .impact-metrics dt {
+  overflow: hidden;
+  margin: 0 0 3px;
+  color: var(--archive-gold-bright);
+  font: 600 14px/1.15 var(--serif);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unified-interface .impact-metrics dd {
+  margin: 0;
+  color: var(--archive-muted);
+  font-size: 7px;
+  line-height: 1.35;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.unified-interface #karya .impact-ownership {
+  display: grid;
+  gap: 3px;
+  min-height: 0;
+  margin: 8px 0 0;
+  padding: 0 0 0 9px;
+  border-left: 1px solid rgba(244, 221, 160, .62);
+  color: var(--archive-muted);
+  line-height: 1.45;
+}
+
+.unified-interface .impact-ownership span {
+  color: var(--archive-gold);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.unified-interface .impact-ownership strong {
+  color: var(--archive-copy);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .015em;
+}
+
+.unified-interface .project-archive.ambient-active .work-card.is-active:not(.panel-entering) .impact-ledger::after {
+  animation: impact-ledger-idle 7s 1.4s ease-in-out infinite;
+}
+
+.unified-interface .project-archive .work-card.panel-entering .impact-ledger {
+  animation: impact-ledger-reveal .48s .38s var(--archive-ease) both !important;
+}
+
+.unified-interface .project-archive .work-card.panel-entering .impact-metrics > div {
+  animation: impact-metric-awaken .4s var(--archive-ease) both;
+}
+
+.unified-interface .project-archive .work-card.panel-entering .impact-metrics > div:nth-child(1) { animation-delay: .48s; }
+.unified-interface .project-archive .work-card.panel-entering .impact-metrics > div:nth-child(2) { animation-delay: .56s; }
+.unified-interface .project-archive .work-card.panel-entering .impact-metrics > div:nth-child(3) { animation-delay: .64s; }
+.unified-interface .project-archive .work-card.panel-entering .impact-ownership { animation: impact-ownership-in .38s .7s ease-out both; }
+.unified-interface .project-archive .work-card.panel-entering .work-tech { animation-delay: .76s; }
+.unified-interface .project-archive .work-card.panel-entering .work-link { animation-delay: .82s; }
+
+@keyframes impact-ledger-reveal {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); filter: brightness(1.45); }
+  to { opacity: 1; clip-path: inset(0); filter: brightness(1); }
+}
+
+@keyframes impact-metric-awaken {
+  from { opacity: 0; transform: translateY(7px); filter: brightness(1.65); }
+  to { opacity: 1; transform: none; filter: brightness(1); }
+}
+
+@keyframes impact-ownership-in {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes impact-ledger-idle {
+  0%, 68%, 100% { opacity: 0; transform: translateX(0); }
+  76% { opacity: .78; }
+  92% { opacity: 0; transform: translateX(355%); }
+}
+
+@media (max-width: 600px) {
+  .unified-interface #karya .work-impact-lead { font-size: 11px; }
+  .unified-interface .impact-ledger { margin-bottom: 13px; }
+  .unified-interface .impact-ledger-head > strong { max-width: 52%; }
+  .unified-interface .impact-metrics > div { padding-inline: 7px; }
+  .unified-interface .impact-metrics dt { font-size: 13px; }
+  .unified-interface .impact-metrics dd { font-size: 6.5px; }
+  .unified-interface .impact-ownership strong { font-size: 8.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unified-interface .impact-ledger,
+  .unified-interface .impact-ledger::after,
+  .unified-interface .impact-metrics > div,
+  .unified-interface .impact-ownership {
+    animation: none !important;
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+    transform: none;
+  }
+}
