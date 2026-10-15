@@ -92,8 +92,8 @@
   matchMedia('(min-width: 601px)').addEventListener('change', e => { if (e.matches) closeMenu(); });
 
   const skillData = {
-    fullstack: ['JavaScript', 'React', 'Next.js', 'Python', 'Django', 'PostgreSQL'],
-    ai: ['Python', 'Machine Learning', 'Computer Vision', 'Multi-Agent Systems', 'RAG Architecture'],
+    fullstack: ['Next.js', 'Python', 'Node.js', 'PostgreSQL', 'Docker', 'Kubernetes', 'Kafka'],
+    ai: ['Python', 'Machine Learning', 'LLMs', 'Multi-Agent Systems', 'RAG Architecture'],
     systems: ['Computer Networks', 'Routing', 'Subnetting', 'IT Support', 'System Design', 'Network Troubleshooting'],
     project: ['Project Planning', 'Agile / Scrum', 'Stakeholder Management', 'Risk Management', 'Team Coordination', 'BPMN / Documentation']
   };

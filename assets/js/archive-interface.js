@@ -290,17 +290,39 @@
 
   if (reduced.matches || !('IntersectionObserver' in window)) revealAll();
   else {
+    const passingArrivals = new Set();
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
+        const owner = entry.target.closest('#profil, #keahlian, #karya, #perjalanan, #kontak')?.id;
+        const destination = body.dataset.chapterTravelTarget;
+        if (destination && owner !== destination) {
+          entry.target.classList.add('is-passing');
+          passingArrivals.add(entry.target);
+          return;
+        }
+        entry.target.classList.remove('is-passing');
+        passingArrivals.delete(entry.target);
         entry.target.classList.add('is-arrived');
         observer.unobserve(entry.target);
       });
     }, {threshold: .08, rootMargin: '0px 0px -7%'});
     arrivals.forEach(element => observer.observe(element));
+    document.addEventListener('celestialscrollsettled', () => {
+      passingArrivals.forEach(element => {
+        element.classList.remove('is-passing');
+        if (element.closest('#profil, #keahlian, #karya, #perjalanan, #kontak')?.id === body.dataset.motionChapter) {
+          element.classList.add('is-arrived');
+          observer.unobserve(element);
+        }
+      });
+      passingArrivals.clear();
+    });
     reduced.addEventListener('change', () => {
       if (!reduced.matches) return;
       observer.disconnect();
+      passingArrivals.forEach(element => element.classList.remove('is-passing'));
+      passingArrivals.clear();
       revealAll();
     });
   }

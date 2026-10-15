@@ -25,7 +25,7 @@
     fullstack: {
       anchor: [360, 108],
       labelSide: 'left',
-      points: [[300, 195], [275, 245], [265, 295], [295, 345], [350, 395], [415, 445]]
+      points: [[300, 190], [278, 237], [267, 284], [280, 331], [310, 378], [355, 425], [410, 472]]
     },
     ai: {
       anchor: [620, 176],
@@ -436,15 +436,35 @@
     if (skill !== activeSkill || !stage.classList.contains('talent-focused')) requestActivation(skill);
   }).observe(panel, {childList: true});
 
+  let revealTimer = 0;
+  function revealWhenSettled() {
+    clearTimeout(revealTimer);
+    if (stage.dataset.active !== 'true') return;
+    if (document.body.dataset.chapterTravelTarget && document.body.dataset.chapterTravelTarget !== 'keahlian') return;
+    if (!document.body.classList.contains('is-scrolling')) {
+      stage.classList.add('constellation-revealed');
+      scheduleInvitation();
+      return;
+    }
+    revealTimer = setTimeout(() => {
+      if (stage.dataset.active === 'true' && document.body.dataset.motionChapter === 'keahlian') {
+        stage.classList.add('constellation-revealed');
+        scheduleInvitation();
+      }
+    }, 240);
+  }
+
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
       const visible = entries[0].isIntersecting;
       stage.dataset.active = String(visible);
-      if (visible) {
-        stage.classList.add('constellation-revealed');
-        scheduleInvitation();
-      } else clearTimeout(invitationTimer);
+      if (visible) revealWhenSettled();
+      else {
+        clearTimeout(revealTimer);
+        clearTimeout(invitationTimer);
+      }
     }, {threshold: .2}).observe(stage);
+    document.addEventListener('celestialscrollsettled', revealWhenSettled);
   } else {
     stage.classList.add('constellation-revealed');
     stage.dataset.active = 'true';

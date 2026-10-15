@@ -6,6 +6,7 @@
   const samples = [];
   const chapters = new Map();
   const longTasks = [];
+  const longFrames = [];
   const layoutShifts = [];
   const layoutShiftEvents = [];
   const startedAt = performance.now();
@@ -93,11 +94,14 @@
         totalBlockingMs: Number(longTasks.reduce((sum, value) => sum + Math.max(0, value - 50), 0).toFixed(2)),
         worstMs: Number(Math.max(0, ...longTasks).toFixed(2))
       },
+      longFrames: longFrames.slice(-20).sort((a, b) => b.durationMs - a.durationMs).slice(0, 8),
       cumulativeLayoutShift: Number(layoutShifts.reduce((sum, value) => sum + value, 0).toFixed(4)),
       layoutShiftEvents: layoutShiftEvents
         .sort((a, b) => b.value - a.value)
         .slice(0, 5),
       runningAnimations: document.getAnimations().filter(animation => animation.playState === 'running').length,
+      supportsLongAnimationFrames: typeof PerformanceObserver !== 'undefined'
+        && PerformanceObserver.supportedEntryTypes?.includes('long-animation-frame') || false,
       resources: resourceSummary()
     };
   }
@@ -114,6 +118,21 @@
   }
 
   observe('longtask', entry => longTasks.push(entry.duration));
+  observe('long-animation-frame', entry => {
+    longFrames.push({
+      chapter: chapterName(),
+      durationMs: Number(entry.duration.toFixed(1)),
+      renderMs: Number(Math.max(0, entry.duration - (entry.renderStart - entry.startTime)).toFixed(1)),
+      afterStyleStartMs: Number(Math.max(0, entry.duration - (entry.styleAndLayoutStart - entry.startTime)).toFixed(1)),
+      scripts: [...entry.scripts].sort((a, b) => b.duration - a.duration).slice(0, 3).map(script => ({
+        file: script.sourceURL?.split('/').pop() || 'unknown',
+        function: script.sourceFunctionName || script.invoker || 'unknown',
+        durationMs: Number(script.duration.toFixed(1)),
+        forcedLayoutMs: Number(script.forcedStyleAndLayoutDuration.toFixed(1))
+      }))
+    });
+    if (longFrames.length > 60) longFrames.shift();
+  });
   observe('layout-shift', entry => {
     if (entry.hadRecentInput) return;
     layoutShifts.push(entry.value);

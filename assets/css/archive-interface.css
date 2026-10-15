@@ -629,6 +629,7 @@
   margin-top: 18px;
   border-radius: 999px;
   background: rgba(13, 42, 56, .86);
+  overflow: hidden;
 }
 
 /* Visual motion is orchestrated by archive-interface.js; disable overlapping chapter spectacles. */

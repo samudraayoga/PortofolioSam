@@ -43,6 +43,26 @@ body.is-scrolling .vision {
   animation-play-state: paused !important;
 }
 
+/* A chapter crossed during a deliberate jump stays readable, but its large
+   blur/clip reveal waits until the visitor actually stops there. */
+.unified-motion-ready .unified-arrival.is-passing {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+.unified-interface .unified-arrival.is-passing::after {
+  animation: none !important;
+  transform: scaleX(1);
+}
+
+body.is-scrolling .celestial-constellation :is(.celestial-nebula, .celestial-dust i, .node-star),
+body.is-scrolling .loadout-resonance .loadout-energy-pulse,
+body.is-scrolling .loadout-resonance .tech-sigil-frame::after {
+  animation-play-state: paused !important;
+}
+
 /* Pointer parallax settles instantly while the viewport moves. The exact
    ambience position is retained, then animation resumes after scrollend. */
 body.is-scrolling :is(.world-fog-banks, .world-mote-field) {

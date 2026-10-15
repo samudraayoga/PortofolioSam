@@ -22,7 +22,6 @@
   let fade;
   let overlay;
   let manuallyPaused = false;
-  let hovered = false;
   let visible = !('IntersectionObserver' in window);
 
   function preload(key) {
@@ -39,8 +38,8 @@
   Object.keys(portraits).forEach(preload);
 
   function canPlay() {
-    return visible && !document.hidden && !reduced.matches && !manuallyPaused && !hovered
-      && !stage.contains(document.activeElement) && !document.querySelector('dialog[open]');
+    return visible && !document.hidden && !reduced.matches && !manuallyPaused
+      && !document.querySelector('dialog[open]');
   }
 
   function clearFade() {
@@ -110,19 +109,6 @@
     manuallyPaused = !manuallyPaused;
     syncControl();
     schedule();
-  });
-  card.addEventListener('pointerenter', event => {
-    if (event.pointerType === 'touch') return;
-    hovered = true;
-    schedule();
-  });
-  card.addEventListener('pointerleave', () => { hovered = false; schedule(); });
-  stage.addEventListener('focusin', schedule);
-  stage.addEventListener('focusout', event => {
-    if (!stage.contains(event.relatedTarget)) {
-      // Focus has not moved yet during focusout; schedule after the new target.
-      queueMicrotask(schedule);
-    }
   });
   document.addEventListener('visibilitychange', schedule);
   document.querySelectorAll('dialog').forEach(dialog => {

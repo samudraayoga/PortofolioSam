@@ -1,0 +1,104 @@
+/* A single travelling waypoint connects deliberate chapter navigation. */
+.chapter-handoff {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+.chapter-handoff.is-travelling { opacity: 1; }
+.chapter-handoff-route { display: block; width: 100%; height: 100%; }
+.chapter-handoff-route path {
+  fill: none;
+  stroke: url(#chapter-handoff-light);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.chapter-handoff-star {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #fff1b7;
+  background: #e7d59b;
+  box-shadow: 0 0 12px 3px #f6e0a78c, 0 0 26px #8ed7e770;
+  will-change: transform;
+}
+.chapter-handoff-burst {
+  position: fixed;
+  z-index: 35;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #fff0b6;
+  background: #f1d99f;
+  pointer-events: none;
+  box-shadow: 0 0 12px #f0d99fa6;
+  animation: chapter-waypoint-settle 700ms ease-out both;
+}
+.chapter-handoff-burst::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid #f5dfa999;
+  border-radius: 50%;
+  animation: chapter-waypoint-ring 700ms ease-out both;
+}
+@keyframes chapter-waypoint-settle {
+  from { opacity: .9; transform: translate(-50%, -50%) rotate(45deg) scale(.55); }
+  to { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scale(1.25); }
+}
+@keyframes chapter-waypoint-ring {
+  from { opacity: .8; transform: scale(.3); }
+  to { opacity: 0; transform: scale(1.8); }
+}
+
+/* The background's scene identity shifts only when the active chapter changes. */
+.world-atmosphere .chapter-weather {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+.world-atmosphere .chapter-weather-layer {
+  position: absolute;
+  inset: -4%;
+  display: block;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(1.015);
+  transition: opacity 960ms ease, transform 1200ms cubic-bezier(.22,.7,.18,1);
+}
+.world-atmosphere .chapter-weather-layer.is-current {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+.chapter-weather-layer[data-chapter='profil'] {
+  background: radial-gradient(ellipse at 20% 26%, #ebd8a30b, transparent 48%);
+}
+.chapter-weather-layer[data-chapter='keahlian'] {
+  background: radial-gradient(ellipse at 76% 22%, #8edbe21d, transparent 45%);
+}
+.chapter-weather-layer[data-chapter='karya'] {
+  background: radial-gradient(ellipse at 66% 45%, #74bdbb1a, transparent 52%);
+}
+.chapter-weather-layer[data-chapter='perjalanan'] {
+  background: radial-gradient(ellipse at 32% 34%, #e9c78c17, transparent 49%);
+}
+.chapter-weather-layer[data-chapter='kontak'] {
+  background: radial-gradient(ellipse at 50% 22%, #f0d69d1f, transparent 52%);
+}
+body[data-world-chapter='profil'] .world-atmosphere,
+body[data-world-chapter='karya'] .world-atmosphere { opacity: .8; }
+
+@media (max-width: 800px) {
+  .chapter-handoff-route { display: none; }
+  .chapter-handoff-star { width: 8px; height: 8px; left: -4px; top: -4px; }
+  .chapter-weather-layer[data-chapter] { opacity: 0; }
+  .chapter-weather-layer[data-chapter].is-current { opacity: .55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-handoff, .chapter-weather { display: none !important; }
+  .chapter-handoff-burst { display: none; }
+}

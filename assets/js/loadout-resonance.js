@@ -234,10 +234,14 @@
       entries.forEach(entry => {
         arsenal.classList.toggle('is-visible', entry.isIntersecting);
         if (!entry.isIntersecting) return;
+        if (document.body.dataset.chapterTravelTarget && document.body.dataset.chapterTravelTarget !== 'profil') return;
         awaken();
       });
     }, {threshold: .26, rootMargin: '0px 0px -8%'});
     observer.observe(arsenal);
+    document.addEventListener('celestialscrollsettled', () => {
+      if (arsenal.classList.contains('is-visible') && document.body.dataset.motionChapter === 'profil') awaken();
+    });
   }
 
   addEventListener('resize', scheduleRouteDraw, {passive: true});

@@ -44,6 +44,10 @@ body:has(#project-dialog[open]) .work-card-ai :is(.work-art > img,h3) { view-tra
 ::view-transition-new(project-mlbb-art),
 ::view-transition-new(project-mlbb-secondary),
 ::view-transition-new(project-ai-art) { animation: none; opacity: 1; mix-blend-mode: normal; height: 100%; object-fit: fill; }
+/* ERP's archive art is the overview/login image, while its case cover is the
+   inventory screen. Let the image content change inside the travelling frame. */
+::view-transition-old(project-erp-art) { animation: erp-memory-out 300ms ease-in both; }
+::view-transition-new(project-erp-art) { animation: erp-memory-in 430ms 170ms ease-out both; }
 ::view-transition-old(project-erp-title),
 ::view-transition-old(project-chat-title),
 ::view-transition-old(project-mlbb-title),
@@ -85,6 +89,8 @@ body:has(#project-dialog[open]) .work-card-ai :is(.work-art > img,h3) { view-tra
 .portal-arriving .case-cover { animation: portal-cover-arrive 640ms cubic-bezier(.22,.8,.22,1) both; }
 @keyframes portal-page-out { to { opacity: 0; } }
 @keyframes portal-page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes erp-memory-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes erp-memory-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes portal-cover-arrive { from { opacity: .3; transform: translateY(16px) scale(.965); } to { opacity: 1; transform: none; } }
 
 @media (max-width: 800px) {
