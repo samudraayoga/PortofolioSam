@@ -35,13 +35,15 @@
     systems: {
       anchor: [868, 530],
       labelSide: 'right',
-      points: [[826, 622], [805, 664], [779, 706], [748, 748], [713, 790], [675, 832]]
+      frameBranch: true,
+      points: [[830, 610], [808, 668], [780, 726], [746, 784], [705, 842], [657, 900]]
     },
     project: {
       anchor: [466, 777],
       labelSide: 'right',
-      labelWidth: 330,
-      points: [[385, 837], [339, 867], [293, 897], [247, 927], [201, 957], [155, 987]]
+      labelWidth: 270,
+      frameBranch: true,
+      points: [[402, 825], [352, 873], [304, 921], [256, 969], [208, 1017], [160, 1065]]
     }
   };
 
@@ -69,6 +71,7 @@
     <div class="celestial-dust" aria-hidden="true"></div>
     <div class="constellation-zoom-layer">
       <div class="narwhal-atlas">
+        <div class="galaxy-resonance" aria-hidden="true"></div>
         <img class="monoceros-reference" src="assets/monoceros-caeli-alpha-clean-v4.webp" alt="" aria-hidden="true" decoding="async">
         <svg class="celestial-map" viewBox="0 0 1080 1080" aria-hidden="true">
           <defs>
@@ -154,16 +157,6 @@
     <div class="mobile-skill-ledger" aria-hidden="true"></div>`;
   grid.before(stage);
 
-  const dust = stage.querySelector('.celestial-dust');
-  for (let index = 0; index < 88; index += 1) {
-    const star = document.createElement('i');
-    const x = (index * 47 + (index % 7) * 13) % 100;
-    const y = (index * 31 + (index % 5) * 17) % 100;
-    const size = index % 11 === 0 ? 2.4 : index % 4 === 0 ? 1.5 : .8;
-    star.style.cssText = `--x:${x}%;--y:${y}%;--s:${size}px;--d:${(index % 9) * .28}s`;
-    dust.append(star);
-  }
-
   const route = stage.querySelector('.skill-route');
   const routePulse = stage.querySelector('.skill-route-pulse');
   const skillPoints = stage.querySelector('.skill-points');
@@ -178,6 +171,9 @@
   const insightDescription = insight.querySelector('.insight-description');
   const insightSkills = insight.querySelector('.insight-skills');
   const nodeButtons = [...stage.querySelectorAll('[data-constellation-skill]')];
+  const atlasElement = stage.querySelector('.narwhal-atlas');
+  const screenCopy = stage.querySelector('.constellation-screen-copy');
+  const currentStatus = stage.querySelector('.constellation-current');
   let activeSkill = '';
   let activationTimer = 0;
   let invitationTimer = 0;
@@ -290,9 +286,73 @@
         return span;
       }));
     });
+    frameSelectedBranch();
+  }
+
+  // Frame the actual information bounds, not the entire illustration. Work in
+  // untransformed atlas coordinates so an in-flight camera/point animation
+  // cannot change the measurement. This runs on selection/layout changes only.
+  function frameSelectedBranch() {
+    const config = atlas[activeSkill];
+    if (!config?.frameBranch) {
+      delete stage.dataset.branchFramed;
+      return;
+    }
+    const width = stage.clientWidth;
+    const height = stage.clientHeight;
+    const atlasWidth = atlasElement.offsetWidth;
+    if (!width || !height || !atlasWidth) return;
+    const compact = matchMedia('(max-width: 700px)').matches;
+    const unit = atlasWidth / 1080;
+    const [anchorX, anchorY] = config.anchor;
+    const halo = 44 / unit;
+    let left = anchorX - halo;
+    let right = anchorX + halo;
+    let top = anchorY - halo;
+    let bottom = anchorY + halo;
+    const include = (x, y, w, h) => {
+      left = Math.min(left, x);
+      right = Math.max(right, x + w);
+      top = Math.min(top, y);
+      bottom = Math.max(bottom, y + h);
+    };
+    config.points.forEach(([x, y]) => include(x - 28, y - 28, 56, 56));
+    if (!compact) {
+      skillPoints.querySelectorAll('.skill-label').forEach(label => {
+        const box = label.getBBox();
+        include(box.x - 6, box.y - 6, box.width + 12, box.height + 12);
+      });
+      const badge = nodeButtons.find(button => button.dataset.constellationSkill === activeSkill).querySelector('.node-copy');
+      include(anchorX - badge.offsetWidth / unit / 2, anchorY - 64 / unit,
+        badge.offsetWidth / unit, badge.offsetHeight / unit);
+    }
+    const safeLeft = compact ? 28 : insight.offsetLeft + insight.offsetWidth + 32;
+    const safeRight = width - (compact ? 28 : 48);
+    const safeTop = compact
+      ? Math.max(screenCopy.offsetTop + screenCopy.offsetHeight, resetButton.offsetTop + resetButton.offsetHeight) + 24
+      : Math.max(96, resetButton.offsetTop + resetButton.offsetHeight + 24);
+    const safeBottom = compact
+      ? insight.offsetTop - 24
+      : Math.min(height - 48, currentStatus.offsetTop - 28);
+    if (safeRight <= safeLeft || safeBottom <= safeTop) return;
+    const scale = Math.min(compact ? 1.12 : 1.2,
+      (safeRight - safeLeft) / ((right - left) * unit),
+      (safeBottom - safeTop) / ((bottom - top) * unit));
+    const panX = (safeLeft + safeRight) / 2 - atlasElement.offsetLeft
+      - ((left + right) * unit / 2 - atlasWidth / 2) * scale;
+    const panY = (safeTop + safeBottom) / 2 - atlasElement.offsetTop
+      - ((top + bottom) * unit / 2 - atlasWidth / 2) * scale;
+    stage.style.setProperty('--branch-pan-x', `${panX.toFixed(2)}px`);
+    stage.style.setProperty('--branch-pan-y', `${panY.toFixed(2)}px`);
+    stage.style.setProperty('--branch-scale', scale.toFixed(4));
+    stage.dataset.branchFramed = 'true';
   }
   document.fonts?.ready.then(fitSkillLabels);
   addEventListener('resize', fitSkillLabels);
+  if ('ResizeObserver' in window) {
+    const framingObserver = new ResizeObserver(frameSelectedBranch);
+    [stage, insight, screenCopy, currentStatus].forEach(element => framingObserver.observe(element));
+  }
 
   function updateLedger(skills) {
     mobileLedger.replaceChildren(...skills.map((skill, index) => {
@@ -313,6 +373,8 @@
 
     activeSkill = skill;
     stage.dataset.activeSkill = skill;
+    stage.style.setProperty('--galaxy-node-x', `${config.anchor[0] / 10.8}%`);
+    stage.style.setProperty('--galaxy-node-y', `${config.anchor[1] / 10.8}%`);
     stage.dataset.previewSkill = '';
     currentKicker.textContent = 'Awakened region';
     currentLabel.textContent = names[skill];
@@ -344,6 +406,7 @@
     void stage.offsetWidth;
     stage.classList.add('talent-focused', 'talent-unlocking', 'network-awake');
     resetButton.hidden = false;
+    frameSelectedBranch();
     setTimeout(() => stage.classList.remove('talent-unlocking'), reducedMotion.matches ? 0 : motion.cinematic);
   }
 
@@ -393,6 +456,7 @@
     activeSkill = '';
     stage.dataset.activeSkill = '';
     stage.dataset.previewSkill = '';
+    delete stage.dataset.branchFramed;
     stage.classList.remove('talent-focused', 'talent-collapsing', 'talent-unlocking', 'network-awake', 'has-transit');
     route.removeAttribute('d');
     routePulse.removeAttribute('d');

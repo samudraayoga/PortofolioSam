@@ -9,10 +9,10 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const motion = window.CelestialUI?.motion || {reveal: 620};
   const portraits = {
-    formal: {src: 'assets/samudra-formal-cutout.webp', alt: 'Formal portrait of Yoga Samudra Heriyanto in a grey suit with subtle cyan rim lighting'},
+    formal: {src: 'assets/samudra-formal-blue-studio-v2.webp', alt: 'Studio portrait of Yoga Samudra Heriyanto in a grey suit with blue edge lighting and a softly lit face'},
     urban: {src: 'assets/samudra-urban-cutout-v1.webp', alt: 'Urban casual portrait of Yoga Samudra Heriyanto in a black jacket and glasses holding a phone with cyan and gold rim lighting'},
-    casual: {src: 'assets/samudra-casual-cutout.webp', alt: 'Casual seated portrait of Yoga Samudra Heriyanto in a brown shirt and glasses with warm lighting and a subtle cyan rim'},
-    sweater: {src: 'assets/samudra-sweater-cutout-v1.webp', alt: 'Casual portrait of Yoga Samudra Heriyanto wearing round glasses and a light camouflage-sleeve sweatshirt with arms crossed'}
+    casual: {src: 'assets/samudra-casual-studio-v3.webp', alt: 'Seated portrait of Yoga Samudra Heriyanto wearing glasses and a brown shirt with warm and blue studio lighting on the shoulders'},
+    sweater: {src: 'assets/samudra-sweater-studio-v2.webp', alt: 'Portrait of Yoga Samudra Heriyanto wearing round glasses and a camouflage-sleeve sweatshirt with arms crossed and blue-silver studio lighting on the clothing'}
   };
   const sequence = Object.keys(portraits);
   const decoded = new Map();

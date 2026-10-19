@@ -157,6 +157,18 @@
 .constellation-reset { min-height: 44px; font-size: 11px; letter-spacing: .04em; border-color: var(--ui-frame); }
 .mobile-skill-ledger { display: none; }
 
+/* Fit Systems/Project nodes and labels inside the reading area. Keep the
+   existing transform transition; only the destination changes per branch. */
+.celestial-constellation.talent-focused[data-branch-framed="true"] .narwhal-atlas {
+  transform: translate(calc(-50% + var(--branch-pan-x)), calc(-50% + var(--branch-pan-y))) scale(var(--branch-scale));
+}
+@media (prefers-reduced-motion: reduce) {
+  .celestial-constellation.talent-focused[data-branch-framed="true"] .narwhal-atlas {
+    transform: translate(calc(-50% + var(--branch-pan-x)), calc(-50% + var(--branch-pan-y))) scale(var(--branch-scale)) !important;
+    transition: none !important;
+  }
+}
+
 @media (min-width:701px) and (max-width:1050px) {
   .constellation-screen-copy { left: 24px; top: 26px; max-width: 215px; }
   .constellation-insight { left: 24px; width: 220px; bottom: 24px; }

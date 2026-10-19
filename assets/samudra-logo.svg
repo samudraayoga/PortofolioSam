@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 70 598 550" fill="none">
+  <title>Samudra</title>
+  <desc>A threefold ocean-blue sigil with three white rings.</desc>
+  <defs>
+    <linearGradient id="ocean" x1="180" y1="105" x2="495" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#57c6df"/>
+      <stop offset=".45" stop-color="#2186ac"/>
+      <stop offset="1" stop-color="#105579"/>
+    </linearGradient>
+  </defs>
+  <!-- Continuous pale rim preserves the silhouette on dark headers. -->
+  <path fill="#f4fcff" d="M78 108C130 89 192 92 243 121C287 77 405 77 455 121C505 92 567 89 620 108Q634 113 629 132C617 194 587 236 543 265C558 343 529 415 475 447Q461 455 445 446C438 506 409 562 364 599Q350 611 335 599C290 562 261 506 254 446Q238 455 223 447C169 415 140 343 155 265C111 236 81 194 69 132Q64 113 78 108Z"/>
+  <g fill="url(#ocean)">
+    <!-- Upper wings. -->
+    <path d="M82 127C189 87 276 157 332 273C208 287 107 243 82 127Z"/>
+    <path d="M616 127C509 87 422 157 366 273C490 287 591 243 616 127Z"/>
+    <!-- Crown and two inward-curling fins. -->
+    <path d="M258 134C301 95 393 95 440 133C366 114 335 149 384 201L350 248L314 201C364 152 325 115 258 134Z"/>
+    <path d="M168 277C173 315 197 348 224 333C240 324 249 307 254 298L313 301L281 354C251 332 222 346 229 379C232 397 247 415 257 432C190 415 156 350 168 277Z"/>
+    <path d="M530 277C525 315 501 348 474 333C458 324 449 307 444 298L385 301L417 354C447 332 476 346 469 379C466 397 451 415 441 432C508 415 542 350 530 277Z"/>
+    <!-- Descending petal. -->
+    <path d="M350 310C312 367 286 416 286 461C286 510 310 555 350 590C390 555 414 510 414 461C414 416 388 367 350 310Z"/>
+  </g>
+  <g stroke="#f4fcff" stroke-width="8">
+    <circle cx="167" cy="178" r="40"/>
+    <circle cx="531" cy="178" r="40"/>
+    <circle cx="350" cy="492" r="40"/>
+  </g>
+</svg>

@@ -1,5 +1,75 @@
 # Asset notes
 
+## Blue-silver sweater studio portrait — 19 October 2026
+
+`samudra-sweater-studio-v2.png` was edited from `samudra-sweater-cutout-v1.webp` with the built-in `image_gen` tool. The request prioritized preserving facial structure and original glasses reflections while applying blue and silver lighting to the sweatshirt. Visual review found the source eye placement, nose, jaw and smile maintained; this is a generative edit and is not claimed to be pixel-identical. The 1086 × 1448 transparent `samudra-sweater-studio-v2.webp` export (quality 92, lossless alpha) supplies the fourth hero rotation entry and its automatic profile reveal. The earlier cutout remains available.
+
+Final prompt:
+
+```text
+Use case: precise-object-edit.
+EDIT TARGET: the supplied transparent photo of a real person in a light grey camouflage-sleeve sweatshirt and round silver glasses.
+HIGHEST PRIORITY: THE USER EXPLICITLY REQUIRES NO CHANGE TO FACIAL STRUCTURE. Preserve the source head/face/neck/glasses verbatim. Treat the entire region above the sweatshirt neckline as LOCKED and do not regenerate, enhance, beautify, relight, smooth, reshape or reconstruct it. Copy the original head and face exactly: original jaw and chin shape, cheeks, nose, lips, small smile, eyes and gaze, round glasses geometry, existing green lens reflections, skin texture, hair strands, ears, head tilt, scale and position. No face retouching whatsoever. Do not add lights to the head, skin, glasses or neck.
+Only edit LIGHT ON THE FABRIC BELOW THE NECKLINE: tasteful moonlit studio lighting, restrained blue along the camera-right outer shoulder and camouflage sleeve, soft silver-white highlight along the opposite shoulder, gently deeper fabric-fold shadows at the crossed arms. Slightly lower the bright chest highlights to keep attention on the original face. Keep white/grey fabric recognizably neutral with blue confined to side lighting, realistic falloff, no neon outline. Preserve exact printed lettering, camouflage pattern, original garment construction and all folds. Do not replace or retype the shirt design.
+Hands, fingers, bracelet and skin remain unchanged. Preserve the exact arms-crossed pose and original composition. Keep dimensions 1086x1448, 3:4 vertical, same headroom and subject scale. Do not zoom, shift, crop, or rotate.
+Preserve true transparent alpha background and original silhouette; no background, no checkerboard, no stars, particles, halo, text additions or watermark.
+Return one minimally edited photograph. If any lighting improvement would require changing facial pixels, omit that lighting improvement. Facial fidelity takes absolute precedence over aesthetics.
+```
+
+## Casual studio portrait v3: facial-structure correction — 19 October 2026
+
+`samudra-casual-studio-v3.png` was re-edited from the accepted `samudra-casual-cutout.webp` with the built-in `image_gen` tool after the user rejected v2 for changing facial structure. The revision requests an unchanged head, face, glasses and neck, confining new lighting to the shirt and shoulders. Visual comparison found facial geometry and the original lens reflections substantially closer to the source. This is still a generative edit: minor skin and hair texture changes remain, and the face is not claimed to be pixel-identical. `samudra-casual-studio-v3.webp` (quality 92, lossless alpha) now supplies the third hero frame and its profile reveal. The original and earlier variants are retained.
+
+Final prompt:
+
+```text
+Use case: precise-object-edit.
+Input: the supplied transparent seated portrait is the ORIGINAL ACCEPTED PHOTOGRAPH and the ONLY edit target.
+CRITICAL CORRECTION: a previous edit changed this real person's facial structure and the user rejected it. Keep the entire head, face, glasses, eyes, hair, ears and neck UNEDITED, copied exactly from this source. Treat everything above the shirt collar as a locked region. Do not relight or retouch the face. Do not alter eyeglass reflections or reveal different eyes. Do not rebuild, redraw, enhance, beautify or reinterpret any portion of the head. Exact original facial geometry, cheek and jaw shapes, nose, lips, expression, glasses geometry, skin texture, hairstyle, tilt, position and scale are the highest priority, above lighting aesthetics.
+ONLY permitted modification: add subtle realistic cobalt-blue studio side lighting to the camera-right outer shoulder, collar and sleeve of the BROWN CORDUROY SHIRT, and gentle champagne highlights to the opposite shoulder and fabric. Make lighting fall on fabric volume and texture with softly deeper folds. Keep lights restrained, no neon outlines. Stop light spill before neck and face. Keep every other pixel as close to the source as possible. Hands, skin, shorts, watch and all anatomy remain unedited.
+Keep the exact source composition and dimensions 1086x1448 (3:4), same subject position, same framing and headroom, same transparent alpha silhouette. No repositioning, no crop, no pose changes, no clothing reconstruction.
+Background remains true fully transparent. No scenery, opaque fill, checkerboard, text, watermarks, symbols or particles.
+Output one minimally edited photographic asset. The original face must remain visibly identical, even if this means much subtler lighting than a typical stylized studio image.
+```
+
+## Warm-and-blue studio casual portrait — 19 October 2026
+
+Superseded by v3 above after the user identified facial-structure drift.
+
+`samudra-casual-blue-studio-v2.png` was edited from `samudra-casual-cutout.webp` with the built-in `image_gen` tool. The transparent studio edit combines a soft champagne key, blue lighting along the hair and shoulder, stronger corduroy texture, and reduced violet glasses glare. `samudra-casual-blue-studio-v2.webp` is the web export (quality 88, lossless alpha) used for the third hero rotation entry and copied automatically into the profile reveal. The earlier cutout is retained. Existing hero framing and lower fade remain in use.
+
+Final prompt:
+
+```text
+Use case: identity-preserve.
+Asset type: photorealistic transparent seated portrait for the third frame in a celestial-ocean personal portfolio hero.
+Input image: /Users/mac/Documents/Codex/2026-10-02/buatkan-desain-portofolio-web-yang-terinspirasi/outputs/samudra-portfolio/assets/samudra-casual-cutout.webp is the sole EDIT TARGET and identity reference.
+Primary request: edit this exact photograph with refined studio lighting: a soft champagne key light and a distinctly visible, elegant cobalt-blue edge light. Mood: quiet grandeur, warm and intimate with restrained mystery.
+Preserve invariants: exact recognizable facial identity and facial proportions, age, skin texture, natural expression, gaze, black hairstyle and head tilt, thick black glasses shape, brown corduroy short-sleeve shirt and pocket pen, watch, denim shorts, seated leaning-forward pose, hands and finger placement, crossed-leg position and body proportions. Preserve existing composition and subject scale within the original 1086x1448 3:4 canvas. Retain the entire existing subject, full head and headroom. Do not redesign the face, clothing or anatomy.
+Lighting: large soft champagne-neutral key from front camera-left, softly shaping cheek and jaw with gently deeper shadows. Natural warm skin, no orange cast. A real studio cobalt-blue strip light from rear camera-right wraps across the outer hair, shoulder, collar and sleeve, softly reflected into shirt folds; controlled cyan-blue accents, less intense than a fashion neon shoot. Keep the face the brightest and clearest focal point, eyes visible. Reveal the corduroy texture with warm highlights and cooler rich shadows. Slightly lower highlights on forearms and thigh so they do not outshine the face. Maintain realistic volume, tasteful deeper contrast and smooth light falloff.
+Glasses: modestly reduce distracting violet lens glare while retaining realistic lens transparency, small subtle softbox reflections, and the exact frame shape. Keep the actual eyes and gaze recognizable.
+Background: preserve fully transparent alpha with clean natural hair and clothing edges. No opaque background, no painted checkerboard. Preserve the existing 3:4 portrait framing for direct compositing over a navy-teal hero.
+Avoid: extra objects, stars, planets, particles, fog, baked halos, neon outlines, uniform blue skin filter, aggressive expression, face beautification or reshaping, plastic skin, changed hands, changes to clothes, logos, text, watermarks.
+Output: one finished realistic photographic edit with transparent background.
+```
+
+## Blue studio formal portrait — 19 October 2026
+
+`samudra-formal-blue-studio-v2.png` was edited from the user-supplied `abu.jpeg` with the built-in `image_gen` tool. This 1086 × 1448 transparent master uses a soft natural key light and cobalt-blue studio edge lighting on the hair, shoulder, and suit. `samudra-formal-blue-studio-v2.webp` is the web export (quality 88, lossless alpha). It replaces the first hero portrait, its rotation entry, and the profile fallback. The source photograph and previous cutout remain unchanged. The existing hero supplies the celestial ambience and lower fade.
+
+Final prompt:
+
+```text
+Use case: identity-preserve.
+Asset type: photorealistic transparent portrait cutout for an existing celestial-ocean personal portfolio hero.
+Input image: /Users/mac/myData/Foto/abu.jpeg is the sole edit target and identity reference.
+Edit this exact photograph into a premium blue-lit studio portrait. Preserve the same person's exact facial identity, facial proportions, natural skin texture, hairstyle, expression, gaze, age, body proportions, posture, grey suit, black shirt, hands placement and belt. Do not redesign or beautify the face.
+Lighting: refined cinematic studio lighting conveying quiet grandeur, majestic, mysterious and elegant. Soft neutral-warm large softbox key from front camera-left keeps both eyes and the face clearly recognizable and naturally colored. A distinctly visible but controlled cobalt-blue studio strip light from rear camera-right wraps physically across the hair edge, outer cheek/jaw, right shoulder and folds of the grey suit, with a restrained cyan-silver edge accent. Gentle cool fill on the opposite shoulder. Keep dark rich shadows and natural contrast, subtle professional editorial retouching retaining skin pores and fabric weave. Blue must look like real studio light falling on volume, never a uniform blue filter or neon outline. The main face remains natural, with tasteful blue spill only at its edge.
+Composition: vertical 3:4 canvas matching the source framing, standing three-quarter length visible through belt/upper thighs, centered head and torso, complete hair with comfortable headroom, preserve both shoulders and the source pose; don't zoom or crop tighter.
+Background: fully transparent alpha, precision natural hair edges, no opaque background or checkerboard painted into the image. Suitable to composite directly over a dark navy background.
+Avoid: text, watermark, logos, symbols, stars, galaxies, particles, fog, halos baked into the cutout, props, added accessories, changes to clothing, waxy skin, overexposure, aggressive expression. Generate just one finished photographic asset.
+```
+
 ## Casual portrait cutout
 
 `samudra-casual-cutout.webp` was edited with the built-in image_gen tool on 8 October 2026 from `samudra-casual.jpeg`. The seated pose, brown shirt, glasses and watch are retained; the surrounding wall, bench and objects are removed. The tighter crop and warm key light with restrained cyan edges complement the Formal photo without replacing the person's real appearance with an illustration. The original JPEG is retained unchanged. The 1086 × 1448 transparent result was converted to a 266,398-byte WebP with lossless alpha. Both hero tabs and the profile reveal use the same navy–teal day/night stage.

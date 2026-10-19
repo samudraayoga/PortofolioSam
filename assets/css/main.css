@@ -64,3 +64,7 @@ body.night .hero:before{background:linear-gradient(90deg,rgba(7,17,39,.94),rgba(
 .project-illustration img{display:block;width:100%;height:auto;border-radius:8px;}
 .project-illustration figcaption{font-size:11px;line-height:1.7;color:var(--muted);margin-top:9px;}
 .project-illustration figcaption a{display:inline-block;text-decoration:underline;text-underline-offset:3px;color:var(--ink);padding:6px 0;}
+
+/* Personal sigil: preserve its proportions at desktop and mobile sizes. */
+.brand-emblem{display:block;width:44px;height:40px;object-fit:contain;flex-shrink:0}
+@media(max-width:600px){.brand-emblem{width:36px;height:33px}}

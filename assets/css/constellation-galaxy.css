@@ -1,0 +1,129 @@
+/* An ambient sky, not another interface layer. All artwork is baked once;
+   idle animation changes only transform/opacity, never blur or canvas pixels. */
+.celestial-constellation .celestial-nebula,
+.celestial-constellation .celestial-dust {
+  inset: 0;
+  pointer-events: none;
+  background: none;
+  filter: none;
+  animation: none;
+  transform: none;
+  opacity: 0;
+  transition: opacity 1100ms ease;
+}
+.celestial-constellation .celestial-nebula {
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 69% 43%, rgba(69, 139, 190, .15), transparent 43%),
+    radial-gradient(ellipse at 77% 70%, rgba(101, 89, 160, .09), transparent 40%);
+  transition-delay: 220ms;
+  transition-duration: 1250ms;
+}
+.celestial-constellation.galaxy-ready.constellation-revealed .celestial-nebula { opacity: 1; }
+.celestial-constellation.galaxy-ready.constellation-revealed .celestial-dust { opacity: .85; }
+.celestial-constellation.galaxy-ready.talent-focused .celestial-nebula { opacity: .78; }
+.celestial-constellation.galaxy-ready.talent-focused .celestial-dust { opacity: .58; }
+.galaxy-far-stars,
+.galaxy-veil,
+.galaxy-near-field { position: absolute; display: block; pointer-events: none; }
+.galaxy-veil {
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 73% 31%, rgba(109, 89, 170, .2), transparent 29%),
+    radial-gradient(ellipse at 60% 69%, rgba(58, 151, 188, .15), transparent 32%);
+  animation: galaxy-veil-drift 48s -11s ease-in-out infinite alternate;
+}
+.galaxy-far-stars {
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  animation: galaxy-stellar-drift 90s -24s ease-in-out infinite alternate;
+}
+.galaxy-near-field { inset: 0; }
+.galaxy-twinkle,
+.galaxy-mote {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #d9effa;
+  box-shadow: 0 0 6px 1px rgba(130, 208, 236, .25);
+  opacity: .2;
+  animation: galaxy-twinkle var(--galaxy-period) var(--galaxy-delay) ease-in-out infinite;
+}
+.galaxy-mote {
+  width: 1.5px;
+  height: 1.5px;
+  background: #acd9e5;
+  animation-name: galaxy-mote-drift;
+}
+.galaxy-resonance {
+  position: absolute;
+  z-index: 0;
+  left: var(--galaxy-node-x, 50%);
+  top: var(--galaxy-node-y, 50%);
+  width: 40%;
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(159, 221, 231, .18), rgba(79, 165, 195, .11) 28%, transparent 70%);
+}
+.galaxy-ready.talent-unlocking .galaxy-resonance {
+  animation: galaxy-resonance var(--motion-cinematic, 1400ms) ease-out both;
+}
+
+/* Remove the old tiled polkadot sky even before textures are ready. The
+   contact chapter keeps sparse stars, but never receives the nebula. */
+.world-atmosphere .world-stars { background: none; animation: none; }
+.world-atmosphere .world-stars.galaxy-starfield { inset: 0; transform: none; animation: none; }
+.galaxy-world-stars { display: block; width: 100%; height: 100%; }
+body[data-world-chapter='keahlian'] .world-atmosphere .world-stars { opacity: .65; }
+body[data-world-chapter='kontak'] .world-atmosphere .world-stars { opacity: .36; }
+
+/* Freeze composition rather than hide it while scrolling. Nested #profil
+   intentionally isn't used here: #keahlian has its own motion budget. */
+.celestial-constellation:not(.constellation-revealed) .galaxy-motion,
+.celestial-constellation[data-active='false'] .galaxy-motion,
+#keahlian[data-motion-active='false'] .galaxy-motion,
+body.is-scrolling .galaxy-motion,
+body.is-scrolling .galaxy-resonance,
+.motion-suspended .galaxy-motion,
+.motion-suspended .galaxy-resonance { animation-play-state: paused !important; }
+
+@keyframes galaxy-veil-drift {
+  from { transform: translate3d(1.2%, -1%, 0) scale(1.02); opacity: .7; }
+  to { transform: translate3d(-1.3%, 1%, 0) scale(1.05); opacity: 1; }
+}
+@keyframes galaxy-stellar-drift {
+  from { transform: translate3d(.2%, .3%, 0); }
+  to { transform: translate3d(-.4%, -.5%, 0); }
+}
+@keyframes galaxy-twinkle {
+  0%, 100% { opacity: .13; }
+  47% { opacity: .6; }
+  64% { opacity: .25; }
+}
+@keyframes galaxy-mote-drift {
+  0% { opacity: 0; transform: translate3d(-7px, 10px, 0); }
+  25%, 65% { opacity: .35; }
+  100% { opacity: 0; transform: translate3d(9px, -16px, 0); }
+}
+@keyframes galaxy-resonance {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.55); }
+  32% { opacity: .85; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.35); }
+}
+@media (max-width: 800px) {
+  .celestial-constellation.galaxy-ready.constellation-revealed .celestial-nebula { opacity: .9; }
+  .celestial-constellation.galaxy-ready.talent-focused .celestial-nebula { opacity: .75; }
+  .galaxy-veil { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celestial-constellation .galaxy-motion { animation: none !important; transform: none; }
+  .celestial-constellation .galaxy-resonance { display: none; }
+  .celestial-constellation .celestial-nebula,
+  .celestial-constellation .celestial-dust { transition: none; }
+  .galaxy-mote { display: none; }
+  .galaxy-twinkle { opacity: .25; }
+}
