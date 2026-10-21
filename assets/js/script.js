@@ -94,7 +94,7 @@
   const skillData = {
     fullstack: ['Next.js', 'Python', 'Node.js', 'PostgreSQL', 'Docker', 'Kubernetes', 'Kafka'],
     ai: ['Python', 'Machine Learning', 'LLMs', 'Multi-Agent Systems', 'RAG Architecture'],
-    systems: ['Computer Networks', 'Routing', 'Subnetting', 'IT Support', 'System Design', 'Network Troubleshooting'],
+    systems: ['System Design', 'API Integration', 'Data Storage', 'Authentication', 'Message Queues', 'Background Workers'],
     project: ['Project Planning', 'Agile / Scrum', 'Stakeholder Management', 'Risk Management', 'Team Coordination', 'BPMN / Documentation']
   };
   const skillTabs = $$('[data-skill]');

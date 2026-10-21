@@ -217,7 +217,7 @@
 .talent-focused .constellation-focus-vignette { opacity: 1; }
 .celestial-constellation[data-active-skill="ai"] .constellation-focus-vignette { --focus-x: var(--galaxy-node-x); --focus-y: var(--galaxy-node-y); }
 .celestial-constellation[data-active-skill="systems"] .constellation-focus-vignette { --focus-x: var(--galaxy-node-x); --focus-y: var(--galaxy-node-y); }
-.celestial-constellation[data-active-skill="project"] .constellation-focus-vignette { --focus-x: 43.15%; --focus-y: 71.94%; }
+.celestial-constellation[data-active-skill="project"] .constellation-focus-vignette { --focus-x: var(--galaxy-node-x); --focus-y: var(--galaxy-node-y); }
 
 .constellation-nodes { position: absolute; z-index: 5; inset: 0; pointer-events: none; }
 .constellation-node {

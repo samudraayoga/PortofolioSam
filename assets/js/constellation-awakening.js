@@ -13,7 +13,7 @@
   const names = {
     fullstack: 'Full-Stack Development',
     ai: 'AI & Automation',
-    systems: 'Systems & Networks',
+    systems: 'System Design & Integration',
     project: 'Project Management'
   };
 
@@ -44,11 +44,13 @@
       points: [[841, 610], [825, 650], [804, 690], [774, 730], [723, 780], [642, 830]]
     },
     project: {
-      anchor: [466, 777],
+      anchor: [504, 745],
       labelSide: 'right',
       labelWidth: 270,
       frameBranch: true,
-      points: [[402, 825], [352, 873], [304, 921], [256, 969], [208, 1017], [160, 1065]]
+      // Follow the neck into the upper tusk contour, stopping before its tip.
+      guides: [[484, 777], [435, 830], [380, 875], [331, 915], [288, 955], [246, 1000]],
+      points: [[456, 810], [408, 852], [355, 894], [307, 936], [265, 978], [228, 1020]]
     }
   };
 
@@ -99,18 +101,18 @@
           <g class="gateway-links">
             <path pathLength="1" d="M360 108 C448 118 535 146 ${atlas.ai.anchor.join(' ')}"/>
             <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C694 276 786 410 ${atlas.systems.anchor.join(' ')}"/>
-            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 466 777"/>
-            <path pathLength="1" d="M466 777 C438 562 401 315 360 108"/>
-            <path class="convergence-link" pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 466 777"/>
-            <path class="tusk-link" pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
+            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 ${atlas.project.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.project.anchor.join(' ')} C438 562 401 315 360 108"/>
+            <path class="convergence-link" pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 ${atlas.project.anchor.join(' ')}"/>
+            <path class="tusk-link" pathLength="1" d="${atlas.project.route}"/>
           </g>
           <g class="gateway-energy">
             <path pathLength="1" d="M360 108 C448 118 535 146 ${atlas.ai.anchor.join(' ')}"/>
             <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C694 276 786 410 ${atlas.systems.anchor.join(' ')}"/>
-            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 466 777"/>
-            <path pathLength="1" d="M466 777 C438 562 401 315 360 108"/>
-            <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 466 777"/>
-            <path pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
+            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 ${atlas.project.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.project.anchor.join(' ')} C438 562 401 315 360 108"/>
+            <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 ${atlas.project.anchor.join(' ')}"/>
+            <path pathLength="1" d="${atlas.project.route}"/>
           </g>
           <g class="region-previews">
             <path class="region-preview region-fullstack" pathLength="1" d="${atlas.fullstack.route}"/>
@@ -136,8 +138,8 @@
           <button class="constellation-node node-ai" type="button" data-constellation-skill="ai" aria-label="Open AI and Automation constellation" aria-pressed="false">
             <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>II</small>AI &amp; Automation</span>
           </button>
-          <button class="constellation-node node-systems" type="button" data-constellation-skill="systems" aria-label="Open Systems and Networks constellation" aria-pressed="false">
-            <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>III</small>Systems</span>
+          <button class="constellation-node node-systems" type="button" data-constellation-skill="systems" aria-label="Open System Design and Integration constellation" aria-pressed="false">
+            <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>III</small>Architecture</span>
           </button>
           <button class="constellation-node node-project" type="button" data-constellation-skill="project" aria-label="Open Project Management constellation" aria-pressed="false">
             <span class="node-star" aria-hidden="true"><i></i></span><span class="node-copy"><small>IV</small>Project Management</span>
@@ -509,6 +511,23 @@
     const skill = selectedSkill();
     if (skill !== activeSkill || !stage.classList.contains('talent-focused')) requestActivation(skill);
   }).observe(panel, {childList: true});
+
+  // SVG labels sit outside the DOM translator; refresh them from the
+  // translated skill panel without replaying the constellation animation.
+  document.addEventListener('languagechange', () => {
+    if (!activeSkill) return;
+    const skills = [...panel.children].map(item => item.textContent.trim());
+    skillPoints.querySelectorAll('.skill-label').forEach((label, index) => {
+      label.dataset.label = skills[index];
+      label.textContent = skills[index];
+    });
+    updateLedger(skills);
+    insightSkills.querySelectorAll('li').forEach((entry, index) => {
+      entry.textContent = skills[index];
+    });
+    insightDescription.textContent = tabs.find(tab => tab.dataset.skill === activeSkill)?.querySelector('p')?.textContent || '';
+    fitSkillLabels();
+  });
 
   let revealTimer = 0;
   function revealWhenSettled() {

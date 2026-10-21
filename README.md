@@ -18,7 +18,7 @@ Pertahankan struktur folder repo: HTML di root, stylesheet di `assets/css`, Java
 - Panel profil sinematik: foto berkembang ke panel karakter, diikuti ornamen dan biodata. Foto mengikuti pilihan formal atau santai.
 - Transisi gambar dan judul dari kartu proyek ke studi kasus, termasuk saat kembali. Browser pendukung memakai View Transitions; file lokal dan browser lain memakai transisi sederhana.
 - Animasi menyesuaikan layar ponsel dan preferensi reduced motion.
-- Celestial Archive menampilkan Monoceros Caeli dari referensi pengguna, tiga bintang talent utama, kamera pan-and-zoom, serta jalur satelit yang berubah ketika pengguna memilih Full-Stack, AI, atau Systems.
+- Celestial Archive menampilkan Monoceros Caeli dari referensi pengguna, empat bintang talent utama, kamera pan-and-zoom, serta jalur satelit yang berubah ketika pengguna memilih Full-Stack, AI, Architecture, atau Project Management.
 - Living Teyvat Interface menambahkan Hydro Vision awakening, elemental cursor, world camera, domain entrance, Ley Line Journey, chapter signatures, reactive navigation, dan Wish finale.
 - Character Selection Scene membuat portrait dapat difokuskan, menampilkan element profile dan traits, memberi transisi Formal/Casual berbasis Hydro ripple, serta menghubungkan karakter ke konstelasi skill.
 - Talent card kini memicu Talent Unlock pada konstelasi, detail AI terbuka melalui segel Domain Record, dan timeline perjalanan memiliki waypoint serta Ley Line progress.
