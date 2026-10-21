@@ -3,8 +3,7 @@
   const portrait = document.querySelector('#portrait');
   const stage = portrait?.closest('.character-stage');
   const card = portrait?.closest('.portrait-card');
-  const control = card?.querySelector('.portrait-playback');
-  if (!portrait || !stage || !card || !control) return;
+  if (!portrait || !stage || !card) return;
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const motion = window.CelestialUI?.motion || {reveal: 620};
@@ -18,10 +17,10 @@
   const decoded = new Map();
   let outfit = sequence.find(key => portrait.classList.contains(`${key}-cutout`)) || sequence[0];
   let timer = 0;
+  let prepareTimer = 0;
   let request = 0;
   let fade;
   let overlay;
-  let manuallyPaused = false;
   let visible = !('IntersectionObserver' in window);
 
   function preload(key) {
@@ -38,7 +37,7 @@
   Object.keys(portraits).forEach(preload);
 
   function canPlay() {
-    return visible && !document.hidden && !reduced.matches && !manuallyPaused
+    return visible && !document.hidden && !reduced.matches
       && !document.querySelector('dialog[open]');
   }
 
@@ -54,7 +53,7 @@
     const nextOutfit = sequence[(sequence.indexOf(outfit) + 1) % sequence.length];
     const ready = await preload(nextOutfit);
     if (token !== request || !canPlay()) return;
-    if (!ready) { schedule(); return; } // Keep the last good portrait on errors.
+    if (!ready) { stage.dispatchEvent(new Event('portraitidle')); schedule(); return; } // Keep the last good portrait on errors.
 
     clearFade();
     const old = portrait.cloneNode(false);
@@ -93,30 +92,26 @@
 
   function schedule() {
     clearTimeout(timer);
+    clearTimeout(prepareTimer);
     timer = 0;
+    prepareTimer = 0;
     request += 1; // Invalidate any decode that finishes after a pause/navigation.
-    if (canPlay()) timer = setTimeout(changePortrait, 5000);
+    if (canPlay()) {
+      prepareTimer = setTimeout(() => {
+        if (canPlay()) stage.dispatchEvent(new Event('portraitprepare'));
+      }, 4350);
+      timer = setTimeout(changePortrait, 5000);
+    } else {
+      stage.dispatchEvent(new Event('portraitidle'));
+    }
   }
 
-  function syncControl() {
-    control.hidden = reduced.matches;
-    control.dataset.paused = String(manuallyPaused);
-    const label = manuallyPaused ? 'Resume automatic portrait changes' : 'Pause automatic portrait changes';
-    control.setAttribute('aria-label', label);
-    control.title = label;
-  }
-  control.addEventListener('click', () => {
-    manuallyPaused = !manuallyPaused;
-    syncControl();
-    schedule();
-  });
   document.addEventListener('visibilitychange', schedule);
   document.querySelectorAll('dialog').forEach(dialog => {
     new MutationObserver(schedule).observe(dialog, {attributes: true, attributeFilter: ['open']});
   });
   reduced.addEventListener('change', () => {
     clearFade();
-    syncControl();
     schedule();
   });
   if ('IntersectionObserver' in window) {
@@ -128,6 +123,5 @@
     }, {threshold: 0}).observe(card);
   }
   stage.dataset.outfit = outfit;
-  syncControl();
   schedule();
 })();

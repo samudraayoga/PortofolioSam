@@ -215,8 +215,8 @@
   transition: opacity .55s ease;
 }
 .talent-focused .constellation-focus-vignette { opacity: 1; }
-.celestial-constellation[data-active-skill="ai"] .constellation-focus-vignette { --focus-x: 57.4%; --focus-y: 16.3%; }
-.celestial-constellation[data-active-skill="systems"] .constellation-focus-vignette { --focus-x: 80.4%; --focus-y: 49.1%; }
+.celestial-constellation[data-active-skill="ai"] .constellation-focus-vignette { --focus-x: var(--galaxy-node-x); --focus-y: var(--galaxy-node-y); }
+.celestial-constellation[data-active-skill="systems"] .constellation-focus-vignette { --focus-x: var(--galaxy-node-x); --focus-y: var(--galaxy-node-y); }
 .celestial-constellation[data-active-skill="project"] .constellation-focus-vignette { --focus-x: 43.15%; --focus-y: 71.94%; }
 
 .constellation-nodes { position: absolute; z-index: 5; inset: 0; pointer-events: none; }

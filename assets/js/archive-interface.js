@@ -232,6 +232,34 @@
       setTimeout(materialize, 90);
     }
 
+    // Light lives behind the cutout and along the frame, never on the face.
+    const lightCard = $('.portrait-card', characterStage);
+    if (lightCard) {
+      for (const className of ['portrait-depth-light', 'portrait-afterglow']) {
+        const light = document.createElement('span');
+        light.className = className;
+        light.setAttribute('aria-hidden', 'true');
+        lightCard.append(light);
+      }
+      let lightTimer = 0;
+      const clearLight = () => {
+        clearTimeout(lightTimer);
+        characterStage.classList.remove('portrait-light-preparing', 'portrait-light-releasing');
+      };
+      characterStage.addEventListener('portraitprepare', () => {
+        clearLight();
+        if (!reduced.matches) characterStage.classList.add('portrait-light-preparing');
+      });
+      characterStage.addEventListener('portraitchange', () => {
+        clearLight();
+        if (reduced.matches) return;
+        characterStage.classList.add('portrait-light-releasing');
+        lightTimer = setTimeout(clearLight, 2600);
+      });
+      characterStage.addEventListener('portraitidle', clearLight);
+      reduced.addEventListener('change', clearLight);
+    }
+
     let portraitShiftTimer = 0;
     characterStage.addEventListener('portraitchange', () => {
       if (reduced.matches) return;

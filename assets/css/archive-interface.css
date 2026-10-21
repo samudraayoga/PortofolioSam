@@ -1151,3 +1151,46 @@ body[data-world-chapter='perjalanan'] .world-atmosphere { opacity: .7; }
     filter: none;
   }
 }
+
+/* A quiet depth pulse precedes the existing sweep; its edge light lingers. */
+.unified-interface .portrait-depth-light,
+.unified-interface .portrait-afterglow {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+.unified-interface .portrait-depth-light {
+  z-index: -1;
+  inset: -8% -16% 3%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 58% 44%,rgba(73,158,210,.24),rgba(50,123,176,.13) 37%,transparent 69%);
+}
+.unified-interface .portrait-afterglow {
+  z-index: 6;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  border-right-color: rgba(143,218,244,.48);
+  border-bottom-color: rgba(123,203,235,.28);
+  box-shadow: 6px 3px 22px -8px rgba(79,178,226,.36);
+}
+.unified-interface .portrait-light-preparing .portrait-depth-light {
+  animation: portrait-depth-gather .65s ease-in-out both;
+}
+.unified-interface .portrait-light-releasing .portrait-depth-light {
+  animation: portrait-depth-settle 1.8s ease-out both;
+}
+.unified-interface .portrait-light-releasing .portrait-afterglow {
+  animation: portrait-edge-linger 1.8s .55s ease-out both;
+}
+@keyframes portrait-depth-gather { from { opacity: 0; } to { opacity: 1; } }
+@keyframes portrait-depth-settle { from { opacity: 1; } to { opacity: 0; } }
+@keyframes portrait-edge-linger {
+  0% { opacity: 0; }
+  15% { opacity: .8; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .unified-interface .portrait-depth-light,
+  .unified-interface .portrait-afterglow { display: none; animation: none; }
+}

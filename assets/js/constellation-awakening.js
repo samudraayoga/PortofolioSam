@@ -28,15 +28,20 @@
       points: [[300, 190], [278, 237], [267, 284], [280, 331], [310, 378], [355, 425], [410, 472]]
     },
     ai: {
-      anchor: [620, 176],
+      anchor: [599, 176],
       labelSide: 'right',
-      points: [[602, 280], [590, 335], [570, 410], [550, 485], [530, 560]]
+      // Follow the inner cyan arc from the crown into the lower curl.
+      guides: [[619, 200], [637, 225], [661, 280], [667, 300], [672, 350], [664, 410], [656, 430], [630, 475], [617, 490], [600, 505]],
+      points: [[650, 250], [670, 320], [669, 385], [647, 450], [578, 515]]
     },
     systems: {
-      anchor: [868, 530],
+      anchor: [904, 550],
       labelSide: 'right',
       frameBranch: true,
-      points: [[830, 610], [808, 668], [780, 726], [746, 784], [705, 842], [657, 900]]
+      // Trace the tail junction and outer belly in the reference artwork.
+      // Extra contour knots preserve the bend without crowding skill labels.
+      guides: [[871, 560], [851, 580], [831, 637], [791, 710], [747, 760], [678, 810]],
+      points: [[841, 610], [825, 650], [804, 690], [774, 730], [723, 780], [642, 830]]
     },
     project: {
       anchor: [466, 777],
@@ -47,8 +52,8 @@
     }
   };
 
-  function spinePath({anchor, points}) {
-    const knots = [anchor, ...points];
+  function spinePath({anchor, points, guides = []}) {
+    const knots = [anchor, ...points, ...guides].sort((a, b) => a[1] - b[1]);
     return knots.reduce((path, [x, y], index) => {
       if (index === 0) return `M${x} ${y}`;
       const [previousX, previousY] = knots[index - 1];
@@ -92,19 +97,19 @@
             </filter>
           </defs>
           <g class="gateway-links">
-            <path pathLength="1" d="M360 108 C448 118 535 146 620 176"/>
-            <path pathLength="1" d="M620 176 C694 276 786 410 868 530"/>
-            <path pathLength="1" d="M868 530 C744 616 598 709 466 777"/>
+            <path pathLength="1" d="M360 108 C448 118 535 146 ${atlas.ai.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C694 276 786 410 ${atlas.systems.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 466 777"/>
             <path pathLength="1" d="M466 777 C438 562 401 315 360 108"/>
-            <path class="convergence-link" pathLength="1" d="M620 176 C584 350 526 610 466 777"/>
+            <path class="convergence-link" pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 466 777"/>
             <path class="tusk-link" pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
           </g>
           <g class="gateway-energy">
-            <path pathLength="1" d="M360 108 C448 118 535 146 620 176"/>
-            <path pathLength="1" d="M620 176 C694 276 786 410 868 530"/>
-            <path pathLength="1" d="M868 530 C744 616 598 709 466 777"/>
+            <path pathLength="1" d="M360 108 C448 118 535 146 ${atlas.ai.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C694 276 786 410 ${atlas.systems.anchor.join(' ')}"/>
+            <path pathLength="1" d="M${atlas.systems.anchor.join(' ')} C744 616 598 709 466 777"/>
             <path pathLength="1" d="M466 777 C438 562 401 315 360 108"/>
-            <path pathLength="1" d="M620 176 C584 350 526 610 466 777"/>
+            <path pathLength="1" d="M${atlas.ai.anchor.join(' ')} C584 350 526 610 466 777"/>
             <path pathLength="1" d="M466 777 C394 843 323 914 258 974"/>
           </g>
           <g class="region-previews">
@@ -171,6 +176,11 @@
   const insightDescription = insight.querySelector('.insight-description');
   const insightSkills = insight.querySelector('.insight-skills');
   const nodeButtons = [...stage.querySelectorAll('[data-constellation-skill]')];
+  nodeButtons.forEach(button => {
+    const [x, y] = atlas[button.dataset.constellationSkill].anchor;
+    button.style.left = `${x / 10.8}%`;
+    button.style.top = `${y / 10.8}%`;
+  });
   const atlasElement = stage.querySelector('.narwhal-atlas');
   const screenCopy = stage.querySelector('.constellation-screen-copy');
   const currentStatus = stage.querySelector('.constellation-current');
