@@ -13,8 +13,8 @@
   let firstVisit = true;
 
   try {
-    firstVisit = sessionStorage.getItem('samudra-celestial-bridge-opened-v5') !== 'true';
-    sessionStorage.setItem('samudra-celestial-bridge-opened-v5', 'true');
+    firstVisit = sessionStorage.getItem('samudra-celestial-bridge-opened-v7') !== 'true';
+    sessionStorage.setItem('samudra-celestial-bridge-opened-v7', 'true');
   } catch (_) { /* The full intro remains available when storage is blocked. */ }
 
   document.documentElement.classList.add('motion-ready');
@@ -51,7 +51,6 @@
       <div class="gate-world" aria-hidden="true">
       <img class="gate-bridge" src="assets/celestial-bridge.svg?v=20261023-2" alt="">
       <div class="bridge-energy"></div>
-      <div class="gate-threshold"></div>
       <div class="gate-structure" aria-hidden="true">
         <span class="gate-frame"></span>
         <span class="gate-crown">✦</span>
@@ -61,6 +60,7 @@
         <div class="gate-sigil"><i></i><i></i><i></i><span>✦</span></div>
       </div>
       </div>
+      <div class="gate-threshold" aria-hidden="true"></div>
       <div class="bridge-mist" aria-hidden="true"></div>
       <div class="gate-particles" aria-hidden="true">${Array.from({length:24}, (_,i) => `<i style="--x:${(i*37+9)%100}%;--y:${(i*23+17)%100}%;--delay:${-i*.7}s;--duration:${8+i%7}s"></i>`).join('')}</div>
       <div class="bridge-flash" aria-hidden="true"></div>
@@ -87,6 +87,7 @@
     const announceArrival = () => {
       if (arrivalSent) return;
       arrivalSent = true;
+      document.body.classList.add('gate-handoff');
       document.dispatchEvent(new CustomEvent('celestialgatecomplete'));
     };
     const removeIntro = () => {
@@ -96,7 +97,7 @@
       intro.removeEventListener('pointermove', followPointer);
       intro.remove();
       if (!location.hash && scrollY < 80) $('.theme-toggle')?.focus({preventScroll:true});
-      document.body.classList.remove('codex-intro-running');
+      document.body.classList.remove('codex-intro-running', 'gate-handoff');
       reduced.removeEventListener('change', skipIntro);
       document.removeEventListener('keydown', handleGateKeys);
     };
