@@ -393,10 +393,12 @@
 .unified-interface .works-section { padding-top: 82px; padding-bottom: 110px; }
 .unified-interface .project-archive {
   display: grid;
-  grid-template-columns: minmax(255px, 315px) minmax(0, 1fr);
-  min-height: 610px;
+  grid-template-columns: minmax(350px, 400px) minmax(0, 1fr);
+  min-height: 650px;
 }
 .unified-interface .project-archive-nav {
+  display: flex;
+  flex-direction: column;
   padding: 30px 0 30px 30px;
   border-right: 1px solid var(--archive-line);
 }
@@ -452,7 +454,8 @@
 .unified-interface :is(.project-archive-nav, .quest-journal-index) > button[aria-selected='true']::after { transform: scaleY(1); }
 .unified-interface .record-index {
   color: var(--archive-gold);
-  font-size: 9px;
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: .12em;
   padding-top: 2px;
 }
@@ -474,6 +477,30 @@
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.unified-interface .project-archive-nav > button {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 16px;
+  min-height: 88px;
+  max-width: 100%;
+  padding: 20px 27px 20px 16px;
+}
+.unified-interface .project-archive-nav > button[aria-selected='true'] { padding-left: 23px; }
+.unified-interface .project-archive-nav button small {
+  overflow: visible;
+  font-size: 9.5px;
+  line-height: 1.45;
+  text-overflow: clip;
+  white-space: normal;
+}
+.unified-interface .project-archive-nav button strong {
+  overflow: visible;
+  font-size: 16px;
+  line-height: 1.45;
+  text-overflow: clip;
+  white-space: normal;
 }
 .unified-interface .project-archive-stage { min-width: 0; padding: 28px 32px 32px; }
 .unified-interface .project-stage-heading {
@@ -521,6 +548,9 @@
 }
 .unified-interface #karya .work-art::after { border-color: rgba(233, 214, 163, .18); }
 .unified-interface #karya .work-art > img { transform: none; filter: none; }
+.unified-interface #karya .art-thesis-proof { padding: 12px; background: #112d39; }
+.unified-interface #karya .art-thesis-proof > img { width: 100%; height: 100%; object-fit: contain; }
+.unified-interface #karya .work-card-thesis .work-category { font-size: 9px; letter-spacing: 1px; }
 .unified-interface #karya .work-body {
   justify-content: center;
   min-width: 0;
@@ -677,7 +707,7 @@
   .unified-interface .portrait-window { height: 480px; }
   .unified-interface .orbit { width: 455px; height: 455px; }
   .unified-interface .orbit-two { width: 515px; height: 515px; }
-  .unified-interface .project-archive { grid-template-columns: 270px minmax(0, 1fr); }
+  .unified-interface .project-archive { grid-template-columns: 360px minmax(0, 1fr); }
   .unified-interface #karya .work-card { grid-template-columns: 1fr; min-height: 0; }
   .unified-interface #karya .work-card .work-art,
   .unified-interface #karya .work-card .work-body {

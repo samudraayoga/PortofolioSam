@@ -144,7 +144,7 @@
     hostSelector: '.project-archive',
     onSelect(index) {
       const counter = $('.project-stage-counter');
-      if (counter) counter.textContent = `${String(index + 1).padStart(2, '0')} / 04`;
+      if (counter) counter.textContent = `${String(index + 1).padStart(2, '0')} / 05`;
     }
   });
 
@@ -157,9 +157,9 @@
   });
 
   function selectHashProject() {
-    const match = location.hash.match(/^#project-(erp|ai|chat|mlbb)$/);
+    const match = location.hash.match(/^#project-(erp|ai|chat|mlbb|thesis)$/);
     if (!match || !projectController) return;
-    const order = ['erp', 'ai', 'chat', 'mlbb'];
+    const order = ['erp', 'ai', 'chat', 'mlbb', 'thesis'];
     projectController.select(order.indexOf(match[1]));
   }
   selectHashProject();

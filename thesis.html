@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#163847">
+  <meta name="description" content="Banana ripeness classification thesis using MobileNetV2 transfer learning and CLAHE preprocessing on approximately 1,800 images.">
+  <title>Banana Ripeness Classification — Samudra’s Work</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316384a'/%3E%3Cpath d='M32 5L39 25L59 32L39 39L32 59L25 39L5 32L25 25Z' fill='%23f0d99f'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261013-1">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/thesis.css?v=20261023-1">
+</head>
+<body class="case-page thesis-page">
+  <a class="skip-link" href="#case-study">Skip to case study</a>
+  <header class="case-header">
+    <div class="case-container case-nav">
+      <a class="case-brand" href="index.html" aria-label="Samudra, back to home"><span aria-hidden="true">✦</span> SAMUDRA</a>
+      <a class="case-back" href="index.html#project-thesis"><span aria-hidden="true">←</span> All work</a>
+    </div>
+  </header>
+  <main id="case-study">
+    <section class="case-hero">
+      <div class="case-container">
+        <div class="case-eyebrow"><span aria-hidden="true">✦</span> Case notes / 05</div>
+        <div class="case-hero-grid">
+          <div>
+            <p class="case-product">COMPUTER VISION · UNDERGRADUATE THESIS</p>
+            <h1>Banana Ripeness<br>Classification<span>.</span></h1>
+            <p class="case-lead">A four-class image classification study using MobileNetV2 transfer learning, with an experiment to measure how CLAHE preprocessing affects model performance.</p>
+            <div class="case-hero-actions"><a class="btn btn-gold" href="#documentation">View documentation <span aria-hidden="true">↓</span></a><a class="case-text-link" href="#method">Read the method <span aria-hidden="true">↗</span></a></div>
+          </div>
+          <div class="case-visual">
+            <figure class="thesis-cover"><img src="assets/thesis/01-project-overview.png" alt="Overview of the banana ripeness classification research" width="2560" height="1440" fetchpriority="high"></figure>
+            <aside class="case-summary" aria-label="Project information">
+              <span class="case-summary-mark" aria-hidden="true">✦</span>
+              <dl><div><dt>Dataset</dt><dd>Approximately 1,800 images</dd></div><div><dt>Task</dt><dd>Four-class classification</dd></div><div><dt>Model</dt><dd>MobileNetV2 transfer learning</dd></div></dl>
+            </aside>
+          </div>
+        </div>
+        <div class="case-hero-foot"><span>Python &amp; TensorFlow</span><span>MobileNetV2</span><span>CLAHE comparison</span></div>
+      </div>
+    </section>
+
+    <section class="case-container case-gallery-section" id="documentation" aria-labelledby="documentation-heading">
+      <div class="case-section-heading"><div><p class="case-eyebrow">Research documentation</p><h2 id="documentation-heading">From dataset to error analysis.</h2></div><p>Four concise visuals explain the research question, experiment, results, and the classes that remained difficult.</p></div>
+      <div class="thesis-gallery">
+        <figure><a href="assets/thesis/01-project-overview.png" target="_blank" rel="noopener noreferrer"><img src="assets/thesis/01-project-overview.png" alt="Project overview with the four banana ripeness classes" width="2560" height="1440" loading="lazy"></a><figcaption><span>01 / OVERVIEW</span><strong>Problem and dataset</strong></figcaption></figure>
+        <figure><a href="assets/thesis/02-experiment-design.png" target="_blank" rel="noopener noreferrer"><img src="assets/thesis/02-experiment-design.png" alt="Experiment design for MobileNetV2 transfer learning and CLAHE preprocessing" width="2560" height="1440" loading="lazy"></a><figcaption><span>02 / METHOD</span><strong>Experiment design</strong></figcaption></figure>
+        <figure><a href="assets/thesis/03-results.png" target="_blank" rel="noopener noreferrer"><img src="assets/thesis/03-results.png" alt="Comparison of classification results with and without CLAHE" width="2560" height="1440" loading="lazy"></a><figcaption><span>03 / RESULTS</span><strong>Model comparison</strong></figcaption></figure>
+        <figure><a href="assets/thesis/04-error-analysis.png" target="_blank" rel="noopener noreferrer"><img src="assets/thesis/04-error-analysis.png" alt="Error analysis for banana ripeness classification" width="2560" height="1440" loading="lazy"></a><figcaption><span>04 / ANALYSIS</span><strong>Error patterns</strong></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="case-container case-story" id="method" aria-labelledby="method-heading">
+      <div class="case-story-title"><p class="case-eyebrow">Research pipeline</p><h2 id="method-heading">A controlled comparison of image preprocessing.</h2></div>
+      <div class="case-story-copy">
+        <h3>Dataset preparation</h3>
+        <p>The study began with approximately <strong>1,800 banana images</strong> grouped into four stages: unripe, half-ripe, ripe, and overripe. Images were resized to 224 × 224 pixels, then augmented with flips and rotations to improve variation during training.</p>
+        <h3>Transfer learning experiment</h3>
+        <p>MobileNetV2 was used as the convolutional neural network backbone through transfer learning. Two pipelines were trained and evaluated: a baseline using the original images, and a second pipeline using CLAHE on the L channel in LAB color space.</p>
+        <h3>Evaluation</h3>
+        <p>The models were compared through predictions and confusion matrices. The analysis focused on overall classification behavior and the overripe class, where visual similarities made errors easier to observe.</p>
+      </div>
+    </section>
+
+    <section class="case-features-section" aria-labelledby="pipeline-heading">
+      <div class="case-container">
+        <div class="case-section-heading"><div><p class="case-eyebrow">What I built</p><h2 id="pipeline-heading">One study, four practical stages.</h2></div><p>The workflow covers data, preprocessing, model training, and evaluation.</p></div>
+        <div class="case-features">
+          <article><span class="case-feature-number">01 / DATA</span><h3>Prepare the dataset</h3><p>Organize four ripeness labels, resize every image, and create train and evaluation inputs.</p></article>
+          <article><span class="case-feature-number">02 / PREPROCESSING</span><h3>Test CLAHE</h3><p>Apply local contrast enhancement on the luminance channel while preserving color information.</p></article>
+          <article><span class="case-feature-number">03 / MODEL</span><h3>Fine-tune MobileNetV2</h3><p>Use a pretrained CNN backbone to learn the visual differences between ripeness stages.</p></article>
+          <article><span class="case-feature-number">04 / EVALUATION</span><h3>Inspect the errors</h3><p>Compare confusion matrices and review which adjacent ripeness stages the model confuses.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-container case-stack-section" aria-labelledby="stack-heading">
+      <div class="case-section-heading"><div><p class="case-eyebrow">Research stack</p><h2 id="stack-heading">Tools used in the experiment.</h2></div><p>A compact stack for reproducible computer vision work.</p></div>
+      <dl class="case-stack"><div><dt>Python</dt><dd>Dataset processing, experiment orchestration, and evaluation.</dd></div><div><dt>TensorFlow</dt><dd>Model training and inference for the four-class classifier.</dd></div><div><dt>MobileNetV2</dt><dd>Pretrained convolutional backbone used for transfer learning.</dd></div><div><dt>OpenCV / CLAHE</dt><dd>Contrast preprocessing applied in LAB color space.</dd></div></dl>
+    </section>
+  </main>
+  <footer class="case-container case-footer"><a href="index.html#project-thesis">← Back to all work</a><p>© 2026 Yoga Samudra Heriyanto</p></footer>
+</body>
+</html>

@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="assets/css/celestial-theme.css?v=20261005-1">
   <link rel="stylesheet" href="assets/css/cinematic-motion.css?v=20261012-1">
   <link rel="stylesheet" href="assets/css/ui-polish.css?v=20261016-1">
-  <link rel="stylesheet" href="assets/css/archive-interface.css?v=20261019-2">
+  <link rel="stylesheet" href="assets/css/archive-interface.css?v=20261023-2">
   <link rel="stylesheet" href="assets/css/celestial-system.css?v=20261014-2">
   <link rel="stylesheet" href="assets/css/loadout-resonance.css?v=20261014-1">
   <link rel="stylesheet" href="assets/css/domain-memory-projection.css?v=20261013-1">
@@ -176,13 +176,14 @@
         <div class="project-archive">
           <nav class="project-archive-nav" role="tablist" aria-label="Project archive">
             <div class="archive-nav-heading"><span>Project Archive</span><small>Selected creations</small></div>
-            <button id="project-tab-erp" type="button" role="tab" aria-selected="true" aria-controls="project-erp" tabindex="0" data-archive-project="project-erp"><span class="record-index">01</span><span><small>Fullstack Developer</small><strong>ERP Raho Premier</strong></span></button>
-            <button id="project-tab-ai" type="button" role="tab" aria-selected="false" aria-controls="project-ai" tabindex="-1" data-archive-project="project-ai"><span class="record-index">02</span><span><small>AI Engineering · ERP Integration</small><strong>AI Agent for ERP KPIs</strong></span></button>
-            <button id="project-tab-chat" type="button" role="tab" aria-selected="false" aria-controls="project-chat" tabindex="-1" data-archive-project="project-chat"><span class="record-index">03</span><span><small>Full-Stack · System Design</small><strong>AI-Powered WhatsApp Chatbot</strong></span></button>
-            <button id="project-tab-mlbb" type="button" role="tab" aria-selected="false" aria-controls="project-mlbb" tabindex="-1" data-archive-project="project-mlbb"><span class="record-index">04</span><span><small>iOS App · Front End · Design</small><strong>MLBB Heroes Matchup</strong></span></button>
+            <button id="project-tab-erp" type="button" role="tab" aria-selected="true" aria-controls="project-erp" tabindex="0" data-archive-project="project-erp"><span class="record-index">1</span><span><small>Fullstack Developer</small><strong>ERP Raho Premier</strong></span></button>
+            <button id="project-tab-ai" type="button" role="tab" aria-selected="false" aria-controls="project-ai" tabindex="-1" data-archive-project="project-ai"><span class="record-index">2</span><span><small>AI Engineering · ERP Integration</small><strong>AI Agent for ERP KPIs</strong></span></button>
+            <button id="project-tab-chat" type="button" role="tab" aria-selected="false" aria-controls="project-chat" tabindex="-1" data-archive-project="project-chat"><span class="record-index">3</span><span><small>Full-Stack · System Design</small><strong>AI-Powered WhatsApp Chatbot</strong></span></button>
+            <button id="project-tab-mlbb" type="button" role="tab" aria-selected="false" aria-controls="project-mlbb" tabindex="-1" data-archive-project="project-mlbb"><span class="record-index">4</span><span><small>iOS App · Front End · Design</small><strong>MLBB Heroes Matchup</strong></span></button>
+            <button id="project-tab-thesis" type="button" role="tab" aria-selected="false" aria-controls="project-thesis" tabindex="-1" data-archive-project="project-thesis"><span class="record-index">5</span><span><small>Computer Vision · Undergraduate Thesis</small><strong>Banana Ripeness Classification</strong></span></button>
           </nav>
           <div class="project-archive-stage">
-            <div class="project-stage-heading"><span>Selected creation</span><strong class="project-stage-counter" aria-live="polite">01 / 04</strong></div>
+            <div class="project-stage-heading"><span>Selected creation</span><strong class="project-stage-counter" aria-live="polite">01 / 05</strong></div>
             <div class="works-grid">
               <article id="project-erp" class="work-card work-card-erp is-active" role="tabpanel" aria-labelledby="project-tab-erp">
                 <div class="work-art art-erp-proof"><img src="assets/erp/overview.png" alt="ERP Raho Premier project overview featuring the sign-in page and project information" width="2852" height="1398" loading="lazy" decoding="async"></div>
@@ -245,6 +246,21 @@
                   </section>
                   <div class="work-tech" aria-label="Core technologies"><span>Swift</span><span>SwiftUI</span><span>JSON</span></div>
                   <a href="mlbb.html" class="work-link">Explore the MLBB project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+              </article>
+              <article id="project-thesis" class="work-card work-card-thesis" role="tabpanel" aria-labelledby="project-tab-thesis" hidden>
+                <div class="work-art art-thesis-proof"><img src="assets/thesis/01-project-overview.png" alt="Banana ripeness classification research overview showing four ripeness stages" width="2560" height="1440" loading="lazy" decoding="async"></div>
+                <div class="work-body">
+                  <div class="work-category">Computer Vision · Undergraduate Thesis</div>
+                  <h3>Banana Ripeness Classification</h3>
+                  <p class="work-impact-lead">Classifies four banana ripeness stages from approximately 1,800 images with MobileNetV2 transfer learning and evaluates CLAHE preprocessing.</p>
+                  <section class="impact-ledger" aria-label="Project impact summary">
+                    <div class="impact-ledger-head"><span>Research summary</span><strong>Image classification</strong></div>
+                    <dl class="impact-metrics"><div><dt>≈1.8K</dt><dd>Source images</dd></div><div><dt>04</dt><dd>Ripeness classes</dd></div><div><dt class="impact-metric-text">MobileNetV2</dt><dd>Transfer learning</dd></div></dl>
+                    <p class="impact-ownership"><span>My contribution</span><strong>Dataset preparation · Model training · CLAHE experiment · Evaluation</strong></p>
+                  </section>
+                  <div class="work-tech" aria-label="Core technologies"><span>Python</span><span>TensorFlow</span><span>MobileNetV2</span><span>OpenCV</span></div>
+                  <a href="thesis.html" class="work-link">Explore the thesis project<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
                 </div>
               </article>
             </div>
