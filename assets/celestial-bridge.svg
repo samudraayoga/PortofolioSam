@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="none"><defs>
+<linearGradient id="floor" x2="0" y2="1"><stop stop-color="#6e989b"/><stop offset=".35" stop-color="#476871"/><stop offset="1" stop-color="#162f43"/></linearGradient>
+
+<linearGradient id="gold"><stop stop-color="#8a805e"/><stop offset=".5" stop-color="#f6e1a7"/><stop offset="1" stop-color="#8f8966"/></linearGradient>
+<radialGradient id="light"><stop stop-color="#f9e5b7" stop-opacity=".5"/><stop offset="1" stop-color="#e6e9cb" stop-opacity="0"/></radialGradient>
+</defs>
+<!-- A broad landing supports the gate; the approach narrows without tall pillars. -->
+<path d="M610 590H990L1020 626H580Z" fill="#91aaa7" stroke="#dbcfa5"/>
+<path d="M580 626H1020V641H580Z" fill="#294e60" stroke="#a99e7d"/>
+<path d="M650 618H950L1375 1000H225Z" fill="url(#floor)" stroke="#a4b0a1" stroke-width="2"/>
+<ellipse cx="800" cy="645" rx="170" ry="75" fill="url(#light)"/>
+<path d="M633.31 633H966.69" stroke="#0b2639" stroke-width="2"/><path d="M633.31 635H966.69" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M611.06 653H988.94" stroke="#0b2639" stroke-width="2"/><path d="M611.06 655H988.94" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M581.02 680H1018.98" stroke="#0b2639" stroke-width="2"/><path d="M581.02 682H1018.98" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M542.08 715H1057.92" stroke="#0b2639" stroke-width="2"/><path d="M542.08 717H1057.92" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M489.79 762H1110.21" stroke="#0b2639" stroke-width="2"/><path d="M489.79 764H1110.21" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M420.81 824H1179.19" stroke="#0b2639" stroke-width="2"/><path d="M420.81 826H1179.19" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M328.47 907H1271.53" stroke="#0b2639" stroke-width="2"/><path d="M328.47 909H1271.53" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M226.11 999H1373.89" stroke="#0b2639" stroke-width="2"/><path d="M226.11 1001H1373.89" stroke="#b3bba4" stroke-width="1" opacity=".35"/>
+<path d="M710 618L455.00 1000" stroke="#092939" stroke-width="2" opacity=".55"/>
+<path d="M770 618L685.00 1000" stroke="#092939" stroke-width="2" opacity=".55"/>
+<path d="M830 618L915.00 1000" stroke="#092939" stroke-width="2" opacity=".55"/>
+<path d="M890 618L1145.00 1000" stroke="#092939" stroke-width="2" opacity=".55"/>
+<!-- Low stone curbs with gold inlays follow the floor perspective. -->
+<path d="M650 618L225 1000H203L638 618Z M950 618L1375 1000H1397L962 618Z" fill="#193a4b"/>
+<path d="M638 618L203 1000V982L638 612Z M962 618L1397 1000V982L962 612Z" fill="#4d6a73"/>
+<path d="M638 612L203 982M962 612L1397 982" fill="none" stroke="url(#gold)" stroke-width="3"/>
+<path d="M665 620L255 1000M935 620L1345 1000" stroke="#d1c696" stroke-width="1.5" opacity=".6"/>
+<path d="M792 620L761 1000M808 620L839 1000" stroke="#e8d5a1" stroke-width="1.5" opacity=".65"/>
+<path d="M800 649L808 657L800 665L792 657Z" fill="#a9d5d3" stroke="#efdfae" opacity=".8"/>
+<path d="M800 695L812 707L800 719L788 707Z" fill="#a9d5d3" stroke="#efdfae" opacity=".8"/>
+<path d="M800 762L818 780L800 798L782 780Z" fill="#a9d5d3" stroke="#efdfae" opacity=".8"/>
+<path d="M800 862L827 889L800 916L773 889Z" fill="#a9d5d3" stroke="#efdfae" opacity=".8"/>
+</svg>

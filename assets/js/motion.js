@@ -13,8 +13,8 @@
   let firstVisit = true;
 
   try {
-    firstVisit = sessionStorage.getItem('samudra-codex-opened') !== 'true';
-    sessionStorage.setItem('samudra-codex-opened', 'true');
+    firstVisit = sessionStorage.getItem('samudra-celestial-bridge-opened-v5') !== 'true';
+    sessionStorage.setItem('samudra-celestial-bridge-opened-v5', 'true');
   } catch (_) { /* The full intro remains available when storage is blocked. */ }
 
   document.documentElement.classList.add('motion-ready');
@@ -24,10 +24,10 @@
   const heroElement = $('.hero');
   const showGate = portfolioPage && firstVisit && !reduced.matches;
   const compactGate = matchMedia('(max-width: 800px)').matches;
-  const gateExitDuration = compactGate ? 1850 : 2500;
-  const gateOpeningDuration = compactGate ? 1610 : 2180;
-  const gateHeroDelay = compactGate ? 930 : 1380;
-  const gateScannerDelay = compactGate ? 1210 : 1760;
+  const gateExitDuration = compactGate ? 2300 : 2800;
+  const gateOpeningDuration = gateExitDuration;
+  const gateHeroDelay = gateExitDuration * .76;
+  const gateScannerDelay = gateExitDuration * .84;
 
   // Celestial World Gate appears once per browsing session. Its explicit entry
   // gesture also gives the default soundtrack a reliable browser unlock point.
@@ -38,15 +38,20 @@
     intro.style.setProperty('--gate-opening-duration', `${gateOpeningDuration}ms`);
     intro.setAttribute('role', 'dialog');
     intro.setAttribute('aria-modal', 'true');
-    intro.setAttribute('aria-labelledby', 'celestial-gate-title');
+    intro.setAttribute('aria-label', 'Portfolio entrance');
     intro.setAttribute('aria-describedby', 'celestial-gate-description');
     const indonesian = document.documentElement.lang.toLowerCase().startsWith('id');
     intro.innerHTML = `
-      <div class="gate-scenery" aria-hidden="true"></div>
+      <div class="gate-backdrop" aria-hidden="true">
+      <div class="gate-scenery"></div>
       <div class="gate-starfield" aria-hidden="true"></div>
       <i class="gate-cloud gate-cloud-far" aria-hidden="true"></i>
       <i class="gate-cloud gate-near" aria-hidden="true"></i>
-      <div class="gate-threshold" aria-hidden="true"></div>
+      </div>
+      <div class="gate-world" aria-hidden="true">
+      <img class="gate-bridge" src="assets/celestial-bridge.svg?v=20261023-2" alt="">
+      <div class="bridge-energy"></div>
+      <div class="gate-threshold"></div>
       <div class="gate-structure" aria-hidden="true">
         <span class="gate-frame"></span>
         <span class="gate-crown">✦</span>
@@ -55,10 +60,12 @@
         <span class="gate-seam"></span>
         <div class="gate-sigil"><i></i><i></i><i></i><span>✦</span></div>
       </div>
+      </div>
+      <div class="bridge-mist" aria-hidden="true"></div>
+      <div class="gate-particles" aria-hidden="true">${Array.from({length:24}, (_,i) => `<i style="--x:${(i*37+9)%100}%;--y:${(i*23+17)%100}%;--delay:${-i*.7}s;--duration:${8+i%7}s"></i>`).join('')}</div>
+      <div class="bridge-flash" aria-hidden="true"></div>
       <div class="gate-copy">
-        <p class="gate-kicker">${indonesian ? 'PERJALANAN SEORANG DEVELOPER' : 'A DEVELOPER’S JOURNEY'}</p>
-        <strong id="celestial-gate-title">SAMUDRA</strong>
-        <p id="celestial-gate-description" class="gate-instruction"><span aria-hidden="true">✦</span>${indonesian ? 'Klik di mana saja untuk masuk' : 'Click anywhere to enter'}<span aria-hidden="true">✦</span></p>
+        <p id="celestial-gate-description" class="gate-instruction"><span aria-hidden="true">✦</span>Click anywhere to continue<span aria-hidden="true">✦</span></p>
       </div>
       <button class="gate-enter" type="button" aria-label="${indonesian ? 'Masuki dunia portofolio Samudra' : 'Enter Samudra’s portfolio world'}"><span class="gate-enter-label">${indonesian ? 'Masuki Dunia' : 'Enter the World'}</span></button>
       <button class="gate-skip" type="button">${indonesian ? 'Lewati intro' : 'Skip intro'}</button>`;
@@ -66,7 +73,13 @@
     document.body.classList.add('codex-intro-running');
     const enterButton = $('.gate-enter', intro);
     const skipButton = $('.gate-skip', intro);
-    let openingTimer;
+    const world = $('.gate-world', intro);
+    const followPointer = event => {
+      if (opening || !finePointer.matches) return;
+      world.style.setProperty('--look-x', `${(event.clientX / innerWidth - .5) * -12}px`);
+      world.style.setProperty('--look-y', `${(event.clientY / innerHeight - .5) * -5}px`);
+    };
+    intro.addEventListener('pointermove', followPointer, {passive:true});
     let scannerTimer;
     let cleanupTimer;
     let opening = false;
@@ -77,11 +90,12 @@
       document.dispatchEvent(new CustomEvent('celestialgatecomplete'));
     };
     const removeIntro = () => {
-      clearTimeout(openingTimer);
       clearTimeout(scannerTimer);
       clearTimeout(cleanupTimer);
       announceArrival();
+      intro.removeEventListener('pointermove', followPointer);
       intro.remove();
+      if (!location.hash && scrollY < 80) $('.theme-toggle')?.focus({preventScroll:true});
       document.body.classList.remove('codex-intro-running');
       reduced.removeEventListener('change', skipIntro);
       document.removeEventListener('keydown', handleGateKeys);
@@ -94,11 +108,10 @@
       if (opening) return;
       opening = true;
       enterButton.disabled = true;
-      intro.classList.add('gate-resonating');
+      intro.classList.add('gate-resonating', 'gate-opening');
       startOpeningSequence();
-      openingTimer = setTimeout(() => intro.classList.add('gate-opening'), compactGate ? 240 : 320);
       scannerTimer = setTimeout(announceArrival, gateScannerDelay);
-      cleanupTimer = setTimeout(removeIntro, gateExitDuration + 80);
+      cleanupTimer = setTimeout(removeIntro, gateExitDuration);
     };
     function handleGateKeys(event) {
       if (event.key === 'Escape') {
