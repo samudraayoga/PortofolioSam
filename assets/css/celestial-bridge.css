@@ -15,14 +15,13 @@
 .celestial-gate .gate-sigil{width:65px;height:65px;top:49%}
 .celestial-gate .gate-sigil span{font-size:24px}
 .celestial-gate .gate-door i{width:50px;top:42%}.celestial-gate .gate-door-left i{right:-26px}.celestial-gate .gate-door-right i{left:-26px}
-.celestial-gate .gate-threshold{top:40%;height:40%;z-index:-1}
 .celestial-gate .gate-copy{bottom:5.5%;text-shadow:0 2px 16px #061c33,0 0 45px #061c33;width:90%}
 .celestial-gate .gate-instruction{margin:0;letter-spacing:.22em;font-size:11px}
 .celestial-gate .gate-skip{opacity:1!important;background:#112e4180;border:1px solid #e4d3a344;bottom:22px;right:24px;color:#f3e7c9;backdrop-filter:none}
 .bridge-energy{position:absolute;left:50%;top:60%;width:100%;height:45%;transform:translateX(-50%);clip-path:polygon(49.4% 0,50.6% 0,53% 100%,47% 100%);background:linear-gradient(0deg,#d4eef588,#bce8efaa);opacity:0;filter:none}
 .bridge-mist{position:absolute;z-index:3;inset:50% -20% -20%;pointer-events:none;background:radial-gradient(ellipse at 15% 35%,#bedcdd80,transparent 30%),radial-gradient(ellipse at 85% 45%,#c3dfdf77,transparent 32%);filter:none;animation:bridge-fog 14s ease-in-out infinite alternate}
 .gate-particles{position:absolute;inset:0;z-index:6;pointer-events:none}.gate-particles i{position:absolute;left:var(--x);top:var(--y);width:3px;height:3px;background:#fcf0c8;border-radius:50%;box-shadow:0 0 10px #d8ecdc;animation:bridge-dust var(--duration) var(--delay) ease-in-out infinite}
-.bridge-flash{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#edfaff55,transparent 72%);opacity:0;z-index:9;pointer-events:none}
+.bridge-flash{position:absolute;inset:0;background:linear-gradient(125deg,#fff9ed,#f8fcff 48%,#effaff);opacity:0;z-index:9;pointer-events:none}
 .celestial-gate.gate-resonating .bridge-energy{animation:bridge-charge calc(var(--gate-opening-duration) * .22) ease-in-out forwards}
 .celestial-gate.gate-resonating .gate-sigil{animation:gate-sigil-resonance calc(var(--gate-opening-duration) * .2) ease-in-out both}
 .celestial-gate.gate-resonating .gate-frame{animation:gate-frame-soft-glow calc(var(--gate-opening-duration) * .2) ease-in-out both}
@@ -33,7 +32,7 @@
 .celestial-gate.gate-opening .gate-door-right{animation:gate-leaf-right calc(var(--gate-opening-duration) * .4) calc(var(--gate-opening-duration) * .2) ease-in-out both}
 .celestial-gate.gate-opening .gate-sigil{animation:gate-sigil-release calc(var(--gate-opening-duration) * .24) calc(var(--gate-opening-duration) * .12) ease-in-out both}
 .celestial-gate.gate-opening .gate-seam{animation:gate-seam-fade calc(var(--gate-opening-duration) * .3) ease-out both}
-.celestial-gate.gate-opening .gate-threshold{animation:gate-light-pass calc(var(--gate-opening-duration) * .28) calc(var(--gate-opening-duration) * .68) ease-in-out both}
+.celestial-gate.gate-opening .gate-threshold{animation:gate-light-pass var(--gate-opening-duration) linear both}
 .celestial-gate.gate-opening .bridge-flash{animation:bridge-flash var(--gate-opening-duration) linear both}
 .celestial-gate.gate-opening .bridge-mist{animation:bridge-fog-pass var(--gate-opening-duration) var(--camera-ease) both}
 /* Far scenery shares the camera direction and timing, with a smaller travel scale. */
@@ -46,8 +45,9 @@
 @keyframes bridge-charge{0%{opacity:0;clip-path:polygon(47% 100%,53% 100%,53% 100%,47% 100%)}70%,100%{opacity:.45;clip-path:polygon(49.4% 0,50.6% 0,53% 100%,47% 100%)}}
 /* A single interpolation prevents acceleration from restarting at intermediate keyframes. */
 @keyframes bridge-travel{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(18)}}
-@keyframes bridge-depart{0%,94%{opacity:1}100%{opacity:0}}
-@keyframes bridge-flash{0%,82%{opacity:0}92%{opacity:.3}100%{opacity:0}}
+/* One brief exposure peak, then the whole illuminated scene resolves into the hero. */
+@keyframes bridge-depart{0%,90%{opacity:1}100%{opacity:0}}
+@keyframes bridge-flash{0%,76%{opacity:0}82%{opacity:.3}86%,100%{opacity:1}}
 @keyframes bridge-fog{from{transform:translateX(-3%)}to{transform:translateX(3%) translateY(-3%)}}
 @keyframes bridge-fog-pass{to{transform:scale(2.4);opacity:0}}
 @keyframes bridge-dust{0%,100%{opacity:0;transform:translateY(25px)}50%{opacity:.85}90%{transform:translate(15px,-50px)}}
@@ -58,9 +58,9 @@
 .celestial-gate.gate-opening::before{content:'';position:absolute;inset:0;z-index:8;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 40%,#d6eeee16 85%,#d6eeee30);animation:bridge-speed-edge var(--gate-opening-duration) linear both}
 @keyframes bridge-speed-edge{0%,52%{opacity:0}88%,100%{opacity:1}}
 /* Lighting stays viewport-sized instead of multiplying the 18x camera scale. */
-.celestial-gate .gate-threshold{inset:0;width:100%;height:100%;border-radius:0;transform:none;box-shadow:none;background:radial-gradient(ellipse at 50% 40%,#dcf7ff45,transparent 65%);z-index:5;will-change:opacity}
+.celestial-gate .gate-threshold{inset:0;width:100%;height:100%;border-radius:0;transform:scale(.35,.7);transform-origin:50% 40%;box-shadow:none;background:radial-gradient(ellipse at 50% 40%,#fff7df80 0%,#e7fbff55 24%,#bcebf028 48%,transparent 74%);z-index:5;will-change:transform,opacity}
 .celestial-gate .gate-sigil{filter:none!important}
-@keyframes gate-light-pass{0%{opacity:0}65%{opacity:.35}100%{opacity:0}}
+@keyframes gate-light-pass{0%,24%{opacity:0;transform:scale(.35,.7)}42%{opacity:.28;transform:scale(.45,.8)}64%{opacity:.65;transform:scale(.72,1)}82%,100%{opacity:1;transform:scale(1)}}
 @keyframes gate-frame-soft-glow{from{opacity:.75}to{opacity:1}}
 @keyframes gate-leaf-left{from{transform:rotateY(0)}to{transform:rotateY(-88deg)}}
 @keyframes gate-leaf-right{from{transform:rotateY(0)}to{transform:rotateY(88deg)}}
@@ -68,9 +68,13 @@
 body.codex-intro-running:not(.gate-handoff) main{visibility:hidden}
 body.codex-intro-running:not(.gate-handoff) main *,body.codex-intro-running:not(.gate-handoff) main *::before,body.codex-intro-running:not(.gate-handoff) main *::after{animation-play-state:paused!important}
 
-/* Light originates behind the leaves, with no animated blur or screen wash. */
+/* The closed leaves occlude an inner arch; its silhouette follows their tall curve.
+   Static gradients supply the bloom without blur, animated shadows or blend modes. */
 .celestial-gate .gate-seam{background:linear-gradient(transparent,#e4f4ec99 28% 72%,transparent);box-shadow:none}
-.celestial-gate .gate-structure::before{content:'';position:absolute;inset:2%;border-radius:48% 48% 3px 3px;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 48%,#f5fcffbf 0%,#c6edf58c 30%,#8dc5d438 62%,transparent 88%)}
-.celestial-gate.gate-opening .gate-structure::before{animation:gate-aperture-light var(--gate-opening-duration) linear both}
+.gate-aperture{position:absolute;inset:2% 2.5%;border-radius:50% 50% 10px 10px / 100% 100% 10px 10px;z-index:0;pointer-events:none;opacity:0;transform:translateZ(-1px);background:radial-gradient(ellipse at 50% 54%,#fffbed 0%,#f1fcff 18%,#d5eff7 43%,#a0cedf 70%,#588ca7 100%)}
+.gate-floor-light{position:absolute;left:0;top:60%;width:100%;height:40%;pointer-events:none;opacity:0;clip-path:polygon(43% 0,57% 0,76% 100%,24% 100%);background:radial-gradient(ellipse at 50% 0,#fff4d5b3 0%,#d9f5ee70 22%,#b9ecf32e 48%,transparent 76%);transform-origin:50% 0}
+.celestial-gate.gate-opening .gate-aperture{animation:gate-aperture-light var(--gate-opening-duration) linear both}
+.celestial-gate.gate-opening .gate-floor-light{animation:gate-floor-spill var(--gate-opening-duration) linear both}
 @keyframes gate-seam-fade{from{opacity:.55;transform:translateX(-50%) scaleY(.72)}to{opacity:0;transform:translateX(-50%) scaleY(.72)}}
-@keyframes gate-aperture-light{0%,16%{opacity:0}38%{opacity:.6}65%{opacity:.85}82%{opacity:.25}100%{opacity:0}}
+@keyframes gate-aperture-light{0%,20%{opacity:0}38%{opacity:.8}56%,100%{opacity:1}}
+@keyframes gate-floor-spill{0%,26%{opacity:0;transform:scaleX(.3)}46%{opacity:.5;transform:scaleX(.75)}68%,100%{opacity:.78;transform:scaleX(1)}}

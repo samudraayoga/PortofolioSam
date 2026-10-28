@@ -13,8 +13,8 @@
   let firstVisit = true;
 
   try {
-    firstVisit = sessionStorage.getItem('samudra-celestial-bridge-opened-v7') !== 'true';
-    sessionStorage.setItem('samudra-celestial-bridge-opened-v7', 'true');
+    firstVisit = sessionStorage.getItem('samudra-celestial-bridge-opened-v8') !== 'true';
+    sessionStorage.setItem('samudra-celestial-bridge-opened-v8', 'true');
   } catch (_) { /* The full intro remains available when storage is blocked. */ }
 
   document.documentElement.classList.add('motion-ready');
@@ -50,8 +50,10 @@
       </div>
       <div class="gate-world" aria-hidden="true">
       <img class="gate-bridge" src="assets/celestial-bridge.svg?v=20261023-2" alt="">
+      <div class="gate-floor-light"></div>
       <div class="bridge-energy"></div>
       <div class="gate-structure" aria-hidden="true">
+        <span class="gate-aperture"></span>
         <span class="gate-frame"></span>
         <span class="gate-crown">✦</span>
         <span class="gate-door gate-door-left"><i></i></span>
